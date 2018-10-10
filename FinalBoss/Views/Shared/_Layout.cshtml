@@ -8,11 +8,33 @@
 
     <title>Final Boss</title>
     
+    <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/lib/semantic-ui/semantic.min.css" rel="stylesheet" />
 </head>
 <body>
-<div class="ui container">
-    @RenderBody()
-</div>
+    <div id="top-menu">
+        <div class="ui container">
+            <div class="ui large top borderless inverted blue menu">
+                <div class="header item">
+                    Final Boss
+                </div>
+                <div class="ui category search item">
+                    <div class="ui transparent icon inverted input">
+                        <input class="prompt" type="text" placeholder="Search games...">
+                        <i class="search link icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </div>
+                <div class="right menu">
+                    @Html.Partial("_PartialMenuLogin")
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="main" class="ui container">
+        @RenderBody()
+    </div>
+
 </body>
 </html>
