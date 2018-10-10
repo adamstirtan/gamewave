@@ -2,3 +2,7 @@
 */obj
 */node_modules
 
+.vs
+.vscode
+*/.vs
+*/.vscode
