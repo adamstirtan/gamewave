@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "MwC5xKNr0DRU3UHclBS2Uff49/PC8DvFhwNx2Pb3mQiA7lyaBPSwV5rhQdSQsfVzUeqHSf9Yzm3B1F9FBIeMyQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\adams\\GitHub\\finalboss\\FinalBoss\\FinalBoss.ObjectModel\\FinalBoss.ObjectModel.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\adams\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\adams\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\adams\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
