@@ -1,5 +1,0 @@
-C:\Users\adams\GitHub\finalboss\FinalBoss\FinalBoss.ObjectModel\bin\Debug\netstandard2.0\FinalBoss.ObjectModel.deps.json
-C:\Users\adams\GitHub\finalboss\FinalBoss\FinalBoss.ObjectModel\bin\Debug\netstandard2.0\FinalBoss.ObjectModel.dll
-C:\Users\adams\GitHub\finalboss\FinalBoss\FinalBoss.ObjectModel\obj\Debug\netstandard2.0\FinalBoss.ObjectModel.csprojAssemblyReference.cache
-C:\Users\adams\GitHub\finalboss\FinalBoss\FinalBoss.ObjectModel\obj\Debug\netstandard2.0\FinalBoss.ObjectModel.AssemblyInfoInputs.cache
-C:\Users\adams\GitHub\finalboss\FinalBoss\FinalBoss.ObjectModel\obj\Debug\netstandard2.0\FinalBoss.ObjectModel.AssemblyInfo.cs
