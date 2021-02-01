@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss.Server", "FinalBoss.Server\FinalBoss.Server.csproj", "{852C298F-D07B-4DA2-9C4D-D3ACF165082D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Api", "FinalBoss.Api\FinalBoss.Api.csproj", "{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss.Api", "FinalBoss.Api\FinalBoss.Api.csproj", "{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss.ObjectModel", "FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj", "{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.ObjectModel", "FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj", "{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{852C298F-D07B-4DA2-9C4D-D3ACF165082D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{852C298F-D07B-4DA2-9C4D-D3ACF165082D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{852C298F-D07B-4DA2-9C4D-D3ACF165082D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{852C298F-D07B-4DA2-9C4D-D3ACF165082D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
