@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FinalBoss.ObjectModel
 {
-    class Publisher
+    internal class Company
     {
     }
 }

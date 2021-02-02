@@ -1,0 +1,9 @@
+## Visual Studio Code
+.vs/
+
+## Visual Studio
+**/*.csproj.user
+
+## Compiled output
+**/bin/
+**/obj/
