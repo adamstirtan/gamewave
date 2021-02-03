@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Api", "FinalBoss.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.ObjectModel", "FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj", "{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss.Database", "FinalBoss.Database\FinalBoss.Database.csproj", "{523B0823-E1AB-4951-B447-9EE930ACCB13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{523B0823-E1AB-4951-B447-9EE930ACCB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{523B0823-E1AB-4951-B447-9EE930ACCB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{523B0823-E1AB-4951-B447-9EE930ACCB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{523B0823-E1AB-4951-B447-9EE930ACCB13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
