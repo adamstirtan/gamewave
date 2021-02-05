@@ -20,5 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj" />
+    <ProjectReference Include="..\FinalBoss.Shared\FinalBoss.Shared.csproj" />
   </ItemGroup>
 </Project>
