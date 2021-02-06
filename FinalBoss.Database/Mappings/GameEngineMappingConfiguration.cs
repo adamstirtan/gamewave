@@ -9,7 +9,7 @@ namespace FinalBoss.Database.Mappings
     {
         public override void Map(EntityTypeBuilder<GameEngine> builder)
         {
-            builder.ToTable("Notes");
+            builder.ToTable("GameEngines");
 
             builder.HasKey(x => x.Id);
 
