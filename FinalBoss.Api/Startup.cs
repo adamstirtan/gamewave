@@ -53,7 +53,12 @@ namespace FinalBoss.Api
                 });
             });
 
+            services.AddScoped<IAgeRatingService, AgeRatingService>();
+            services.AddScoped<IAgeRatingContentDescriptorService, AgeRatingContentDescriptorService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IGameService, GameService>();
             services.AddScoped<IGameEngineService, GameEngineService>();
+            services.AddScoped<IGenreService, GenreService>();
 
             services.AddSingleton(_environment.WebRootFileProvider);
 

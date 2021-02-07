@@ -5,23 +5,18 @@ using FinalBoss.ObjectModel;
 
 namespace FinalBoss.Database.Mappings
 {
-    internal sealed class AgeRatingContentDescriptorMappingConfiguration : BaseMappingConfiguration<AgeRatingContentDescriptor>
+    internal sealed class GenreMappingConfiguration : BaseMappingConfiguration<Genre>
     {
-        public override void Map(EntityTypeBuilder<AgeRatingContentDescriptor> builder)
+        public override void Map(EntityTypeBuilder<Genre> builder)
         {
-            builder.ToTable("AgeRatingContentDescriptors");
+            builder.ToTable("Genres");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.RatingSystemId)
-                .IsRequired()
-                .HasColumnType(ColumnTypeInteger)
-                .HasColumnName("RatingSystemId");
-
-            builder.Property(x => x.Description)
+            builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(255)
-                .HasColumnName("Description");
+                .HasColumnName("Name");
 
             builder.Property(x => x.Created)
                 .IsRequired()

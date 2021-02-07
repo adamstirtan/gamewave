@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FinalBoss.ObjectModel
+﻿namespace FinalBoss.ObjectModel
 {
-    internal class Company
-    {
-    }
+    public class Company : BaseEntity
+    { }
 }
