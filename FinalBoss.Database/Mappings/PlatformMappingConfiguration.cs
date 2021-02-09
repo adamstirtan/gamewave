@@ -18,6 +18,24 @@ namespace FinalBoss.Database.Mappings
                 .HasMaxLength(255)
                 .HasColumnName("Name");
 
+            builder.Property(x => x.Description)
+                .IsRequired()
+                .HasColumnName("Description");
+
+            builder.Property(x => x.Abbreviation)
+                .HasMaxLength(255)
+                .HasColumnName("Abbreviation");
+
+            builder.Property(x => x.Category)
+                .IsRequired()
+                .HasColumnType(ColumnTypeInteger)
+                .HasColumnName("Category");
+
+            builder.Property(x => x.Generation)
+                .IsRequired()
+                .HasColumnType(ColumnTypeInteger)
+                .HasColumnName("Generation");
+
             builder.Property(x => x.Created)
                 .IsRequired()
                 .HasColumnType(ColumnTypeDateTimeOffset)
