@@ -1,6 +1,6 @@
 using System;
 
-namespace FinalBoss.Web.Data
+namespace FinalBoss.Data
 {
     public class WeatherForecast
     {
