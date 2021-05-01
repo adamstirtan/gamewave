@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Database", "Final
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Shared", "FinalBoss.Shared\FinalBoss.Shared.csproj", "{0DE4783F-AA6A-4216-9B2E-DB0ADBBCEB17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss", "FinalBoss\FinalBoss.csproj", "{FD897D78-B67E-4233-8E17-BF1BDC5FD945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss", "FinalBoss\FinalBoss.csproj", "{FD897D78-B67E-4233-8E17-BF1BDC5FD945}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
