@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Shared", "FinalBo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss", "FinalBoss\FinalBoss.csproj", "{FD897D78-B67E-4233-8E17-BF1BDC5FD945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinallBoss.Tests.Unit", "FinallBoss.Tests.Unit\FinallBoss.Tests.Unit.csproj", "{485939F8-C710-4419-9727-1ACCFBD9EA6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinallBoss.Tests.Unit", "FinallBoss.Tests.Unit\FinallBoss.Tests.Unit.csproj", "{485939F8-C710-4419-9727-1ACCFBD9EA6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

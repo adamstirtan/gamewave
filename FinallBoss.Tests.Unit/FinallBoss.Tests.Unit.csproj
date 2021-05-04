@@ -26,4 +26,8 @@
   <ItemGroup>
     <Folder Include="Services\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalBoss\FinalBoss.csproj" />
+  </ItemGroup>
 </Project>
