@@ -18,13 +18,13 @@ jobs:
       with:
         dotnet-version: '5.0.x'
 
-    - name: Build with dotnet
+    - name: Build
       run: dotnet build -c Release
 
-    - name: dotnet publish api
+    - name: Publish
       run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api
     
-    - name: Azure webapp deploy (API)
+    - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
         app-name: finalboss-api
