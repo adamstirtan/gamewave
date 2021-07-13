@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>7c993324-d498-4dc2-8c57-2459f3493ef2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FinalBoss.Api.Dto\FinalBoss.Api.Dto.csproj" />
     <ProjectReference Include="..\FinalBoss.Database\FinalBoss.Database.csproj" />
     <ProjectReference Include="..\FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj" />
   </ItemGroup>
