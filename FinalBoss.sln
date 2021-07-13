@@ -11,10 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Database", "Final
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Shared", "FinalBoss.Shared\FinalBoss.Shared.csproj", "{0DE4783F-AA6A-4216-9B2E-DB0ADBBCEB17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss", "FinalBoss\FinalBoss.csproj", "{FD897D78-B67E-4233-8E17-BF1BDC5FD945}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinallBoss.Tests.Unit", "FinallBoss.Tests.Unit\FinallBoss.Tests.Unit.csproj", "{485939F8-C710-4419-9727-1ACCFBD9EA6F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss.Api.Dto", "FinalBoss.Api.Dto\FinalBoss.Api.Dto.csproj", "{F2BF99F4-A647-4340-9395-E3184DE33E31}"
 EndProject
 Global
@@ -39,14 +35,6 @@ Global
 		{0DE4783F-AA6A-4216-9B2E-DB0ADBBCEB17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE4783F-AA6A-4216-9B2E-DB0ADBBCEB17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DE4783F-AA6A-4216-9B2E-DB0ADBBCEB17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD897D78-B67E-4233-8E17-BF1BDC5FD945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD897D78-B67E-4233-8E17-BF1BDC5FD945}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD897D78-B67E-4233-8E17-BF1BDC5FD945}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD897D78-B67E-4233-8E17-BF1BDC5FD945}.Release|Any CPU.Build.0 = Release|Any CPU
-		{485939F8-C710-4419-9727-1ACCFBD9EA6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{485939F8-C710-4419-9727-1ACCFBD9EA6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{485939F8-C710-4419-9727-1ACCFBD9EA6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{485939F8-C710-4419-9727-1ACCFBD9EA6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F2BF99F4-A647-4340-9395-E3184DE33E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F2BF99F4-A647-4340-9395-E3184DE33E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2BF99F4-A647-4340-9395-E3184DE33E31}.Release|Any CPU.ActiveCfg = Release|Any CPU

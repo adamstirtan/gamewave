@@ -19,21 +19,10 @@ jobs:
         dotnet-version: '5.0.x'
 
     - name: Build with dotnet
-      run: dotnet build --configuration Release
-
-    - name: dotnet publish webapp
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/_webapp
+      run: dotnet build -c Release
 
     - name: dotnet publish api
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/_api
-
-    - name: Azure webapp deploy (WebApp)
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: finalboss
-        slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5CF3EB5A6D8E4D16A788D754AF8AAA4B }}
-        package: ${{env.DOTNET_ROOT}}/_webapp
+      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api
     
     - name: Azure webapp deploy (API)
       uses: azure/webapps-deploy@v2
