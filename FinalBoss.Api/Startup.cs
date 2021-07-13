@@ -91,7 +91,8 @@ namespace FinalBoss.Api
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "FaaSBank Portal API");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Final Boss API");
+                options.RoutePrefix = string.Empty;
             });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
