@@ -5,35 +5,31 @@
        Title="FinalBoss"
        x:Class="FinalBoss.AppShell">
 
-    <!--
-        The overall app visual hierarchy is defined here, along with navigation.
-
-        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
-    -->
-
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.ForegroundColor" Value="White" />
-                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.BackgroundColor" Value="White" />
+                <Setter Property="Shell.ForegroundColor" Value="Black" />
+                <Setter Property="Shell.TitleColor" Value="Black" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="White" />
-                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarTitleColor" Value="White" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="#FFFFFF" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="Black" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#999999" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
             </Style>
+
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
         </ResourceDictionary>
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Featured" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Library" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-        <ShellContent Title="Search" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:SearchPage}" />
+        <ShellContent Title="Trending" Icon="outline_insights_24.xml" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
+        <ShellContent Title="Browse" Icon="outline_grid_view_24.xml" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Library" Icon="outline_sports_esports_24.xml" ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <ShellContent Title="Search" Icon="outline_search_24.xml" ContentTemplate="{DataTemplate local:SearchPage}" />
     </TabBar>
 
     <!--
