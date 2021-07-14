@@ -12,8 +12,6 @@ namespace FinalBoss.ObjectModel
         [Required]
         public string Description { get; set; }
 
-        public virtual ICollection<AgeRating> AgeRatings { get; set; }
-
         public virtual ICollection<Genre> Genres { get; set; }
     }
 }
