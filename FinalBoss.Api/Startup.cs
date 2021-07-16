@@ -2,6 +2,7 @@ using System.Reflection;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
 
+using FinalBoss.Api.Mapping;
 using FinalBoss.Database;
 using FinalBoss.Database.Services;
 
@@ -53,6 +55,10 @@ namespace FinalBoss.Api
                 });
             });
 
+            var mapperConfiguration = AutoMapperConfiguration.Configure();
+
+            services.AddAutoMapper(mapperConfiguration);
+
             services.AddScoped<IAgeRatingService, AgeRatingService>();
             services.AddScoped<IAgeRatingContentDescriptorService, AgeRatingContentDescriptorService>();
             services.AddScoped<ICompanyService, CompanyService>();
@@ -61,6 +67,8 @@ namespace FinalBoss.Api
             services.AddScoped<IGenreService, GenreService>();
 
             services.AddSingleton(_environment.WebRootFileProvider);
+
+            services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
             services.AddCors(options =>
             {
