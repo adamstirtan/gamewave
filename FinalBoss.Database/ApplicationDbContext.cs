@@ -13,11 +13,6 @@ namespace FinalBoss.Database
             : base(options)
         { }
 
-        public DbSet<AgeRating> AgeRatings { get; set; }
-        public DbSet<AgeRatingContentDescriptor> AgeRatingContentDescriptors { get; set; }
-        public DbSet<Game> Games { get; set; }
-        public DbSet<GameEngine> GameEngines { get; set; }
-        public DbSet<Genre> Genres { get; set; }
         public DbSet<Platform> Platforms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -22,9 +22,9 @@ namespace FinalBoss.Database.Mappings
                 .IsRequired()
                 .HasColumnName("Description");
 
-            builder.Property(x => x.Abbreviation)
+            builder.Property(x => x.Slug)
                 .HasMaxLength(255)
-                .HasColumnName("Abbreviation");
+                .HasColumnName("Slug");
 
             builder.Property(x => x.Category)
                 .IsRequired()

@@ -9,10 +9,11 @@ namespace FinalBoss.ObjectModel
         public string Name { get; set; }
 
         [Required]
-        public string Description { get; set; }
-
         [StringLength(255)]
-        public string Abbreviation { get; set; }
+        public string Slug { get; set; }
+
+        [Required]
+        public string Description { get; set; }
 
         [Required]
         public PlatformCategory Category { get; set; }

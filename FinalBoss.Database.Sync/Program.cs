@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -11,12 +10,13 @@ using Microsoft.Extensions.Hosting;
 
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Sheets.v4;
-using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Services;
+
+using FinalBoss.ObjectModel;
+using FinalBoss.Database.Services;
 
 namespace FinalBoss.Database.Sync
 {
-    // Based on https://developers.google.com/sheets/api/quickstart/dotnet
     internal class Program
     {
         private static readonly string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
@@ -31,21 +31,23 @@ namespace FinalBoss.Database.Sync
                 .AddUserSecrets(Assembly.GetExecutingAssembly())
                 .Build();
 
-            //var host = Host.CreateDefaultBuilder(args)
-            //    .ConfigureServices((context, services) =>
-            //    {
-            //        services.AddDbContext<ApplicationDbContext>(options =>
-            //        {
-            //            options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            //        });
-            //    })
-            //    .Build();
+            var host = Host.CreateDefaultBuilder(args)
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                    {
+                        options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                    });
 
-            //using var scope = host.Services
-            //    .GetRequiredService<IServiceScopeFactory>()
-            //    .CreateScope();
+                    services.AddScoped<IPlatformService, PlatformService>();
+                })
+                .Build();
 
-            //var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            using var scope = host.Services
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope();
+
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             try
             {
@@ -64,28 +66,11 @@ namespace FinalBoss.Database.Sync
                     ApplicationName = Configuration.GetValue<string>("GoogleSheets:ApplicationName"),
                 });
 
-                string spreadsheetId = "1W-kxYa5LodM8cyyXzhzngv_a8wm8AaTXjXrcwvwYBSQ";
-                string range = "Games!A1:B1";
-                SpreadsheetsResource.ValuesResource.GetRequest request =
-                    service.Spreadsheets.Values.Get(spreadsheetId, range);
+                TableImporter importer = new("1W-kxYa5LodM8cyyXzhzngv_a8wm8AaTXjXrcwvwYBSQ");
 
-                ValueRange response = request.Execute();
-
-                IList<IList<Object>> values = response.Values;
-
-                if (values != null && values.Count > 0)
-                {
-                    Console.WriteLine("Name, Major");
-                    foreach (var row in values)
-                    {
-                        // Print columns A and E, which correspond to indices 0 and 4.
-                        Console.WriteLine("{0}, {1}", row[0], row[4]);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No data found");
-                }
+                await importer.ImportAsync<Platform, IPlatformService>(
+                    service, "Platforms",
+                    scope.ServiceProvider.GetRequiredService<IPlatformService>());
             }
             catch (Exception exception)
             {
