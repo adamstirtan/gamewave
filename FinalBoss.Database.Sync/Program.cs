@@ -66,7 +66,7 @@ namespace FinalBoss.Database.Sync
                     ApplicationName = Configuration.GetValue<string>("GoogleSheets:ApplicationName"),
                 });
 
-                TableImporter importer = new("1W-kxYa5LodM8cyyXzhzngv_a8wm8AaTXjXrcwvwYBSQ");
+                TableImporter<Platform> importer = new TableImporter<Platform>("1W-kxYa5LodM8cyyXzhzngv_a8wm8AaTXjXrcwvwYBSQ");
 
                 await importer.ImportAsync<Platform, IPlatformService>(
                     service, "Platforms",
