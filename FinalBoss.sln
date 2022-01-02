@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Api.Client", "Fin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss.Database.Sync", "FinalBoss.Database.Sync\FinalBoss.Database.Sync.csproj", "{62EBEA0E-B854-4F96-BAB4-16B0A15DDA41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalBoss", "FinalBoss\FinalBoss.csproj", "{F1A7757F-CE4A-47E7-BA06-AEF01C261B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalBoss", "FinalBoss\FinalBoss.csproj", "{F1A7757F-CE4A-47E7-BA06-AEF01C261B9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,32 +1,28 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>FinalBoss</PageTitle>
+<PageTitle>Final Boss</PageTitle>
 
 <Layout>
-    <Header Class="header">
-        <NavigationMenu />
-    </Header>
-    <Content Style="padding: 0 50px;">
-        <Breadcrumb Style="margin: 16px 0;">
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            <BreadcrumbItem>List</BreadcrumbItem>
-            <BreadcrumbItem>App</BreadcrumbItem>
-        </Breadcrumb>
-        <div class="site-layout-content">Content</div>
-    </Content>
-    <Footer Style="text-align: center; ">Final Boss &copy;</Footer>
+    <Sider Breakpoint="@BreakpointType.Lg"
+        Id="sider"
+        Style="min-height: 100vh;"
+        CollapsedWidth="64">
+        <Sidebar />
+    </Sider>
+    <Layout>
+        <Content>
+            @Body
+        </Content>
+        <Footer Style="text-align: center;">Final Boss ©2022 Created by @@adam_stirtan</Footer>
+    </Layout>
 </Layout>
 
 <style>
-    #components-layout-demo-top-side-2 .logo {
-        width: 120px;
-        height: 31px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px 28px 16px 0;
-        float: left;
-    }
-
     .site-layout-background {
         background: #fff;
+    }
+
+    .ant-layout-sider-dark {
+        background-color: #000;
     }
 </style>
