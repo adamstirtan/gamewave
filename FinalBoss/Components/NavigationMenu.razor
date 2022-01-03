@@ -1,18 +1,24 @@
-﻿<Menu Theme="MenuTheme.Dark" Mode="MenuMode.Inline" DefaultSelectedKeys=@(new[]{"4"})>
-    <MenuItem Key="1">
-        <Icon Type="user" Theme="outline" />
-        <span class="nav-text">nav 1</span>
-    </MenuItem>
-    <MenuItem Key="2">
-        <Icon Type="video-camera" Theme="outline" />
-        <span class="nav-text">nav 2</span>
-    </MenuItem>
-    <MenuItem Key="3">
-        <Icon Type="upload" Theme="outline" />
-        <span class="nav-text">nav 3</span>
-    </MenuItem>
-    <MenuItem Key="4">
-        <Icon Type="user" Theme="outline" />
-        <span class="nav-text">nav 4</span>
-    </MenuItem>
-</Menu>
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+    <div class="container">
+        <a class="navbar-brand" href="#">Final Boss</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/browse">Browse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/library">Library</a>
+                </li>
+            </ul>
+            <form>
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </form>
+        </div>
+    </div>
+</nav>
