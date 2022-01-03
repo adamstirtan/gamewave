@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using FinalBoss.ObjectModel;
@@ -7,7 +8,7 @@ using FinalBoss.Database.Extensions;
 
 namespace FinalBoss.Database
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -19,7 +20,7 @@ namespace FinalBoss.Database
         {
             base.OnModelCreating(builder);
 
-            builder.AddEntityConfigurationsFromAssembly(GetType().GetTypeInfo().Assembly);
+            //builder.AddEntityConfigurationsFromAssembly(GetType().GetTypeInfo().Assembly);
         }
     }
 }
