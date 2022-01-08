@@ -11,13 +11,8 @@ namespace FinalBoss.Database
             : base(options)
         { }
 
+        public DbSet<Game> Games { get; set; }
+
         public DbSet<Platform> Platforms { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            //builder.AddEntityConfigurationsFromAssembly(GetType().GetTypeInfo().Assembly);
-        }
     }
 }
