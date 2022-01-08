@@ -121,7 +121,7 @@ namespace FinalBoss.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("FinalBoss.ObjectModel.Game", b =>
@@ -168,7 +168,7 @@ namespace FinalBoss.Database.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
                 });
 
             modelBuilder.Entity("FinalBoss.ObjectModel.Platform", b =>
@@ -211,7 +211,7 @@ namespace FinalBoss.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platforms");
+                    b.ToTable("Platforms", (string)null);
                 });
 
             modelBuilder.Entity("FinalBoss.ObjectModel.Release", b =>
@@ -243,7 +243,7 @@ namespace FinalBoss.Database.Migrations
 
                     b.HasIndex("PlatformId");
 
-                    b.ToTable("Releases");
+                    b.ToTable("Releases", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

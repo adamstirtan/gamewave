@@ -1,0 +1,44 @@
+﻿@page "/games/add"
+
+@using Microsoft.Extensions.Logging
+@using FinalBoss.Database.Services
+
+@inject ILogger<AddGame> Logger;
+@inject IGameService GameService;
+
+<PageTitle>Final Boss - Add Game</PageTitle>
+
+<div class="container my-5">
+
+    <div class="row">
+        <h3>Add Game</h3>
+    </div>
+
+    <EditForm Model="@form" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3 col-md-6">
+            <label for="input-name" class="form-label">Name</label>
+            <InputText id="input-name" class="form-control" @bind-Value="form.Name" />
+        </div>
+        <div class="mb-3">
+            <label for="input-description" class="form-label">Description</label>
+            <InputTextArea id="input-description" class="form-control" rows="10" @bind-Value="form.Description" />
+        </div>
+        <div class="mb-3 col-md-4">
+            <label for="input-image" class="form-label">Image URL</label>
+            <input id="input-image" type="file" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Game</button>
+    </EditForm>
+
+</div>
+
+@code {
+    private AddGameForm form = new();
+
+    private void HandleValidSubmit()
+    {
+        
+    }
+}

@@ -24,4 +24,8 @@
     <ProjectReference Include="..\FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
 </Project>

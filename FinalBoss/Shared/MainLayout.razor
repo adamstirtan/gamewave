@@ -1,19 +1,36 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>FinalBoss</PageTitle>
+<PageTitle>Final Boss</PageTitle>
 
-<!-- NavMenu -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Final Boss</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/featured">Featured</a></li>
-                <li class="nav-item"><a class="nav-link" href="/game">My Collection</a></li>
-                <LoginDisplay />
+        <a class="navbar-brand" href="/">
+            <img src="images/1646014_console_controller_games_joypad_icon.svg" class="pe-2" alt="Final Boss logo" height="36">
+            Final Boss
+        </a>
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/games/recent">Browse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/games/discover">Discover</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/games/add">Contribute</a>
+                </li>
             </ul>
+            <div class="d-flex">
+                <form>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
+                    </div>
+                </form>
+                <LoginDisplay />
+            </div>
         </div>
     </div>
 </nav>
