@@ -8,29 +8,32 @@
 
 <PageTitle>Final Boss - Add Game</PageTitle>
 
-<div class="container my-5">
+<div class="container my-4">
 
-    <div class="row">
-        <h3>Add Game</h3>
+    <div class="card shadow">
+        <h1 class="h4 card-header">
+            Add Game
+        </h1>
+        <div class="card-body">
+            <EditForm Model="@form" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="mb-3 col-md-6">
+                    <label for="input-name" class="form-label">Name</label>
+                    <InputText id="input-name" class="form-control" @bind-Value="form.Name" />
+                </div>
+                <div class="mb-3">
+                    <label for="input-description" class="form-label">Description</label>
+                    <InputTextArea id="input-description" class="form-control" rows="10" @bind-Value="form.Description" />
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="input-image" class="form-label">Image URL</label>
+                    <input id="input-image" type="file" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Add Game</button>
+            </EditForm>
+        </div>
     </div>
-
-    <EditForm Model="@form" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="mb-3 col-md-6">
-            <label for="input-name" class="form-label">Name</label>
-            <InputText id="input-name" class="form-control" @bind-Value="form.Name" />
-        </div>
-        <div class="mb-3">
-            <label for="input-description" class="form-label">Description</label>
-            <InputTextArea id="input-description" class="form-control" rows="10" @bind-Value="form.Description" />
-        </div>
-        <div class="mb-3 col-md-4">
-            <label for="input-image" class="form-label">Image URL</label>
-            <input id="input-image" type="file" class="form-control" />
-        </div>
-        <button type="submit" class="btn btn-primary">Add Game</button>
-    </EditForm>
 
 </div>
 

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using FinalBoss.Areas.Identity;
-using FinalBoss.Data;
 using FinalBoss.Database;
 using FinalBoss.ObjectModel;
 using FinalBoss.Database.Services;
@@ -29,7 +28,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<IPlatformService, PlatformService>();
 
