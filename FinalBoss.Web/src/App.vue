@@ -1,27 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <v-app>
+    <v-app-bar app color="primary">
+      <v-icon class="mx-4" large>
+          mdi-gamepad-square
+        </v-icon>
+      <v-toolbar-title>Final Boss</v-toolbar-title>
+    </v-app-bar>
+    <v-navigation-drawer app>
+      <v-list>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title>Popular</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title>Games</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title>Systems</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+    </v-navigation-drawer>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script setup lang="ts">
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-});
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
