@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 using FinalBoss.ObjectModel;
 
-namespace FinalBoss.Database.Services
+namespace FinalBoss.Api.Services
 {
     public interface IService<T> where T : BaseEntity
     {

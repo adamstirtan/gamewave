@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using FinalBoss.ObjectModel;
 
-namespace FinalBoss.Database.Services
+namespace FinalBoss.Api.Services
 {
     public interface IServiceAsync<T> where T : BaseEntity
     {

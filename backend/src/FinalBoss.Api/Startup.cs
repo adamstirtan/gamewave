@@ -13,7 +13,6 @@ using Serilog;
 using Serilog.Events;
 
 using FinalBoss.Api.Mapping;
-using FinalBoss.Database;
 using FinalBoss.Database.Services;
 
 namespace FinalBoss.Api
@@ -31,7 +30,7 @@ namespace FinalBoss.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = _configuration.GetConnectionString(_environment.EnvironmentName);
+            string connectionString = _configuration.GetConnectionString("Default");
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -48,7 +47,7 @@ namespace FinalBoss.Api
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(_configuration.GetConnectionString(_environment.EnvironmentName), database =>
+                options.UseSqlServer(connectionString, database =>
                 {
                     database.MigrationsAssembly(typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName().Name);
                     database.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);

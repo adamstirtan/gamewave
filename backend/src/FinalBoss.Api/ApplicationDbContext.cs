@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 using FinalBoss.ObjectModel;
 
-namespace FinalBoss.Database
+namespace FinalBoss.Api
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
