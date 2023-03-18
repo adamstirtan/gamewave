@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 
 using FinalBoss.Api.Dto;
-using FinalBoss.Database.Services;
+using FinalBoss.Api.Services;
 using FinalBoss.ObjectModel;
 
 namespace FinalBoss.Api.Controllers

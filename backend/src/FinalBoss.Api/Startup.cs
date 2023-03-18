@@ -13,7 +13,7 @@ using Serilog;
 using Serilog.Events;
 
 using FinalBoss.Api.Mapping;
-using FinalBoss.Database.Services;
+using FinalBoss.Api.Services;
 
 namespace FinalBoss.Api
 {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 using FinalBoss.ObjectModel;
-using FinalBoss.Core.Extensions;
+using FinalBoss.Extensions;
 
 namespace FinalBoss.Api.Services
 {

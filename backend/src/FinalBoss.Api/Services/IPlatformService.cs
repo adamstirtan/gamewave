@@ -1,6 +1,6 @@
 ﻿using FinalBoss.ObjectModel;
 
-namespace FinalBoss.Database.Services
+namespace FinalBoss.Api.Services
 {
     public interface IPlatformService : IService<Platform>, IServiceAsync<Platform>
     { }

@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using FinalBoss.Api.Dto;
-using FinalBoss.Core.Extensions;
-using FinalBoss.Database.Services;
+using FinalBoss.Api.Services;
+using FinalBoss.Extensions;
 using FinalBoss.ObjectModel;
 
 namespace FinalBoss.Api.Controllers
