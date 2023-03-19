@@ -13,6 +13,10 @@ namespace FinalBoss.Api.Mapping
         {
             return config =>
             {
+                config.CreateMap<Company, CompanyDto>()
+                    .ForMember(dest => dest.Id, x => x.MapFrom(src => src.Id))
+                    .ReverseMap();
+
                 config.CreateMap<Game, GameDto>()
                     .ForMember(dest => dest.Id, x => x.MapFrom(src => src.Id))
                     .ForMember(dest => dest.DeveloperId, x => x.MapFrom(src => src.Developer.Id))
