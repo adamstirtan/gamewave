@@ -44,8 +44,6 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         protected virtual IActionResult Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
         {
-            _logger.LogInformation("Test!");
-
             try
             {
                 string sortProperty = _mapper
@@ -87,8 +85,6 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> GetById(long id)
         {
-            _logger.LogInformation("Test!");
-
             try
             {
                 var entity = await Service.GetByIdAsync(id);
@@ -98,7 +94,7 @@ namespace FinalBoss.Api.Controllers
                     return NotFound();
                 }
 
-                return Ok(entity);
+                return Ok(_mapper.Map<TDto>(entity));
             }
             catch (Exception exception)
             {

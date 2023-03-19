@@ -30,7 +30,7 @@ namespace FinalBoss.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = _configuration.GetConnectionString("Default");
+            string connectionString = _configuration.GetConnectionString("Synology");
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
