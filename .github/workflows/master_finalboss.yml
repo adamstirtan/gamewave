@@ -1,34 +1,36 @@
-# name: Azure App Service - finalboss(Production), Build and deploy DotnetCore app
+name: Deploy to Azure App Service
 
-# on:
-#   push:
-#     branches:
-#       - master
+on:
+  push:
+    branches:
+      - master
 
-# jobs:
-#   build-and-deploy:
-#     runs-on: windows-latest
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
 
-#     steps:
-#     - name: 'Checkout Github Action'
-#       uses: actions/checkout@master
+    steps:
+    - name: 'Checkout Github Action'
+      uses: actions/checkout@master
 
-#     - name: Set up .NET Core
-#       uses: actions/setup-dotnet@v1
-#       with:
-#         dotnet-version: '5.0.x'
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0.x'
 
-#     - name: Build
-#       run: dotnet build -c Release
+    - name: Build
+      run: dotnet build -c Release
+      working-directory: ./backend/src/
 
-#     - name: Publish
-#       run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api
+    - name: Publish
+      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api
+      working-directory: ./backend/src/
     
-#     - name: Deploy
-#       uses: azure/webapps-deploy@v2
-#       with:
-#         app-name: finalboss-api
-#         slot-name: Production
-#         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A788D754AF8AAA4B5CF3EB5A6D8E4D16 }}
-#         package: ${{env.DOTNET_ROOT}}/_api
+    - name: Deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: finalboss-api
+        slot-name: Production
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A788D754AF8AAA4B5CF3EB5A6D8E4D16 }}
+        package: ${{env.DOTNET_ROOT}}/_api
 
