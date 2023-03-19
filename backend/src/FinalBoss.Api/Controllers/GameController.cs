@@ -11,15 +11,15 @@ namespace FinalBoss.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class GamesController : ApiController<Game, GameDto, IGameService>
+    public class GameController : ApiController<Game, GameDto, IGameService>
     {
-        public GamesController(
-            ILogger<GamesController> logger,
+        public GameController(
+            ILogger<GameController> logger,
             IMapper mapper,
             IGameService gameService)
             : base(logger, mapper, gameService)
         { }
 
-        protected override string RouteName => "games";
+        protected override string RouteName => "game";
     }
 }
