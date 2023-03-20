@@ -18,8 +18,12 @@ jobs:
       with:
         dotnet-version: '7.0.x'
 
+    - name: NuGet Restore
+      run: dotnet restore
+      working-directory: ./backend/src/
+
     - name: Build
-      run: dotnet build -c Release
+      run: dotnet build -c Release --no-restore
       working-directory: ./backend/src/
 
     - name: Publish
