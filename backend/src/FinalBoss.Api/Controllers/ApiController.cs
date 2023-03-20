@@ -147,6 +147,8 @@ namespace FinalBoss.Api.Controllers
 
                 _mapper.Map(dto, entity);
 
+                entity.LastModified = DateTimeOffset.UtcNow;
+
                 bool updated = await Service.UpdateAsync(entity);
 
                 if (updated)
