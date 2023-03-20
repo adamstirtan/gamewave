@@ -27,7 +27,7 @@ jobs:
       working-directory: ./backend/src/
 
     - name: Publish
-      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api
+      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api --no-restore
       working-directory: ./backend/src/
     
     - name: Deploy
