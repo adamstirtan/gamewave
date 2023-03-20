@@ -2,6 +2,8 @@
 {
     public class GameDto : BaseDto
     {
+        public long? Id { get; set; }
+
         public long DeveloperId { get; set; }
 
         public long PublisherId { get; set; }

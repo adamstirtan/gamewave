@@ -24,6 +24,12 @@ namespace FinalBoss.Api.Mapping
 
                 config.CreateMap<Platform, PlatformDto>()
                     .ForMember(dest => dest.Id, x => x.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Name, x => x.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.Description, x => x.MapFrom(src => src.Description))
+                    .ForMember(dest => dest.Slug, x => x.MapFrom(src => src.Slug))
+                    .ForMember(dest => dest.ImageUrl, x => x.MapFrom(src => src.ImageUrl))
+                    .ForMember(dest => dest.Category, x => x.MapFrom(src => src.Category))
+                    .ForMember(dest => dest.Generation, x => x.MapFrom(src => src.Generation))
                     .ReverseMap();
             };
         }

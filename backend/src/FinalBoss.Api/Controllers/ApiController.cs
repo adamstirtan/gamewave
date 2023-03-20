@@ -113,6 +113,11 @@ namespace FinalBoss.Api.Controllers
             {
                 var entity = _mapper.Map<TEntity>(dto);
 
+                DateTimeOffset now = DateTimeOffset.UtcNow;
+
+                entity.Created = now;
+                entity.LastModified = now;
+
                 entity = await Service.CreateAsync(entity);
 
                 return Created($"/{RouteName}/{entity.Id}", _mapper.Map<TDto>(entity));
