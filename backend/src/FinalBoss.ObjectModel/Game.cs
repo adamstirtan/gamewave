@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinalBoss.ObjectModel
 {
+    [Table("Games")]
     public class Game : BaseEntity
     {
         [Required]

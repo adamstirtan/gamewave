@@ -65,6 +65,7 @@ namespace FinalBoss.Api
             services.AddScoped<IGameEngineService, GameEngineService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IPlatformService, PlatformService>();
+            services.AddScoped<IReleaseService, ReleaseService>();
 
             services.AddSingleton(_environment.WebRootFileProvider);
 

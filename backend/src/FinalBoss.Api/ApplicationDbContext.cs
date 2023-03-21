@@ -11,8 +11,12 @@ namespace FinalBoss.Api
             : base(options)
         { }
 
+        public DbSet<Company> Companies { get; set; }
+
         public DbSet<Game> Games { get; set; }
 
         public DbSet<Platform> Platforms { get; set; }
+
+        public DbSet<Release> Releases { get; set; }
     }
 }

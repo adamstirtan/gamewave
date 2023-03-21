@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using AutoMapper;
+using AutoMapper.Internal;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,12 +43,13 @@ namespace FinalBoss.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        protected virtual IActionResult Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
+        protected virtual ActionResult<IEnumerable<TDto>> Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
         {
             try
             {
                 string sortProperty = _mapper
                     .ConfigurationProvider
+                    .Internal()
                     .FindTypeMapFor(typeof(TEntity), typeof(TDto))
                     .PropertyMaps
                     .FirstOrDefault(x =>
@@ -83,7 +85,7 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<IActionResult> GetById(long id)
+        public virtual async Task<ActionResult> GetById(long id)
         {
             try
             {
@@ -107,7 +109,7 @@ namespace FinalBoss.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<IActionResult> Create(TDto dto)
+        public virtual async Task<ActionResult> Create(TDto dto)
         {
             try
             {
@@ -134,7 +136,7 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<IActionResult> Update(long id, TDto dto)
+        public virtual async Task<ActionResult> Update(long id, TDto dto)
         {
             try
             {
@@ -168,7 +170,7 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<IActionResult> Delete(long id)
+        public virtual async Task<ActionResult> Delete(long id)
         {
             try
             {
