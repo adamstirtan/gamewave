@@ -15,11 +15,25 @@ namespace FinalBoss.Api.Mapping
             {
                 config.CreateMap<Company, CompanyDto>()
                     .ForMember(dest => dest.Id, x => x.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Created, x => x.MapFrom(src => src.Created))
+                    .ForMember(dest => dest.LastModified, x => x.MapFrom(src => src.LastModified))
+                    .ForMember(dest => dest.Name, x => x.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.Description, x => x.MapFrom(src => src.Description))
+                    .ForMember(dest => dest.Slug, x => x.MapFrom(src => src.Slug))
+                    .ForMember(dest => dest.ImageUrl, x => x.MapFrom(src => src.ImageUrl))
                     .ReverseMap();
 
                 config.CreateMap<Game, GameDto>()
                     .ForMember(dest => dest.Id, x => x.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Created, x => x.MapFrom(src => src.Created))
+                    .ForMember(dest => dest.LastModified, x => x.MapFrom(src => src.LastModified))
+                    .ForMember(dest => dest.Name, x => x.MapFrom(src => src.Name))
+                    .ForMember(dest => dest.Description, x => x.MapFrom(src => src.Description))
+                    .ForMember(dest => dest.Slug, x => x.MapFrom(src => src.Slug))
+                    .ForMember(dest => dest.ImageUrl, x => x.MapFrom(src => src.ImageUrl))
                     .ForMember(dest => dest.DeveloperId, x => x.MapFrom(src => src.Developer.Id))
+                    .ForMember(dest => dest.PublisherId, x => x.MapFrom(src => src.Publisher.Id))
+                    .ForMember(dest => dest.Releases, x => x.MapFrom(src => src.Releases))
                     .ReverseMap();
 
                 config.CreateMap<Platform, PlatformDto>()
