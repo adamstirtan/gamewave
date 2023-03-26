@@ -65,6 +65,7 @@
 
 <script setup>
     import { ref } from 'vue'
+    import PlatformService from '@/services/PlatformService';
 
     const valid = ref(false)
     const name = ref('')
@@ -73,4 +74,14 @@
     function hide() {
 
     }
+
+    const platforms = PlatformService
+        .getAll()
+        .then(response => {
+            console.log(response)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+
 </script>
