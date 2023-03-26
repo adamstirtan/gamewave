@@ -1,5 +1,7 @@
 <template>
-    <v-form v-model="valid">
+    <v-form v-model="valid" class="px-4 py-4">
+
+        <h1>Add Game</h1>
 
         <v-row>
             <v-col cols="12" md="6">
@@ -22,7 +24,7 @@
             </v-col>
         </v-row>
 
-        <v-row>
+        <!-- <v-row>
             <v-col cols="12" md="4">
                 <v-text-field
                     v-model="name"
@@ -47,7 +49,7 @@
                     label="Name"
                 ></v-text-field>
             </v-col>
-        </v-row>
+        </v-row> -->
 
         <v-card-actions>
     <v-spacer></v-spacer>
@@ -66,7 +68,7 @@
 
     const valid = ref(false)
     const name = ref('')
-    const deescription = ref('')
+    const description = ref('')
 
     function hide() {
 
