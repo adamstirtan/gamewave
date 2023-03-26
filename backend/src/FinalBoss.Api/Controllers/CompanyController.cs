@@ -11,15 +11,15 @@ namespace FinalBoss.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class PlatformController : ApiController<Platform, PlatformDto, IPlatformService>
+    public class CompanyController : ApiController<Company, CompanyDto, ICompanyService>
     {
-        public PlatformController(
-            ILogger<PlatformController> logger,
+        public CompanyController(
+            ILogger<CompanyController> logger,
             IMapper mapper,
-            IPlatformService platformService)
-            : base(logger, mapper, platformService)
+            ICompanyService companyService)
+            : base(logger, mapper, companyService)
         { }
 
-        protected override string RouteName => "platform";
+        protected override string RouteName => "company";
     }
 }
