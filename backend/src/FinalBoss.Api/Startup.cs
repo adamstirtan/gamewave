@@ -73,7 +73,11 @@ namespace FinalBoss.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
+                options.AddPolicy("Open", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod();
+                    policy.AllowAnyOrigin();
+                });
             });
 
             services.AddControllers();
@@ -96,7 +100,7 @@ namespace FinalBoss.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors();
+            app.UseCors("Open");
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
