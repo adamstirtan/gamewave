@@ -12,7 +12,6 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
 
-using FinalBoss.Api.Mapping;
 using FinalBoss.Api.Services;
 
 namespace FinalBoss.Api
@@ -53,10 +52,6 @@ namespace FinalBoss.Api
                     database.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 });
             });
-
-            var mapperConfiguration = AutoMapperConfiguration.Configure();
-
-            services.AddAutoMapper(mapperConfiguration);
 
             services.AddScoped<IAgeRatingService, AgeRatingService>();
             services.AddScoped<IAgeRatingContentDescriptorService, AgeRatingContentDescriptorService>();

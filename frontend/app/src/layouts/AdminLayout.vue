@@ -15,7 +15,7 @@
   <v-navigation-drawer color="grey-lighten-2">
     <v-list density="compact" nav>
       <v-list-subheader>PLATFORM</v-list-subheader>
-      <v-list-item prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
+      <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
       <v-list-item prepend-icon="mdi-gamepad-outline" title="Game Modes" value="game-modes"></v-list-item>
       <v-list-item prepend-icon="mdi-select-group" title="Genres" value="genres"></v-list-item>
       <v-list-item prepend-icon="mdi-image" title="Media" value="media"></v-list-item>

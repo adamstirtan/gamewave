@@ -3,37 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using AutoMapper;
-using AutoMapper.Internal;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using FinalBoss.Api.Dto;
 using FinalBoss.Api.Services;
 using FinalBoss.Extensions;
 using FinalBoss.ObjectModel;
 
 namespace FinalBoss.Api.Controllers
 {
-    public abstract class ApiController<TEntity, TDto, TService> : ControllerBase
+    public abstract class ApiController<TEntity, TService> : ControllerBase
         where TEntity : BaseEntity
-        where TDto : BaseDto
         where TService : IService<TEntity>, IServiceAsync<TEntity>
     {
-        private readonly ILogger<ApiController<TEntity, TDto, TService>> _logger;
-        private readonly IMapper _mapper;
+        private readonly ILogger<ApiController<TEntity, TService>> _logger;
 
         protected readonly TService Service;
 
         protected ApiController(
-            ILogger<ApiController<TEntity, TDto, TService>> logger,
-            IMapper mapper,
+            ILogger<ApiController<TEntity, TService>> logger,
             TService service)
         {
             _logger = logger;
-            _mapper = mapper;
 
             Service = service;
         }
@@ -43,35 +35,38 @@ namespace FinalBoss.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual ActionResult<IEnumerable<TDto>> Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
+        public virtual ActionResult<IEnumerable<TEntity>> Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
         {
             try
             {
-                string sortProperty = _mapper
-                    .ConfigurationProvider
-                    .Internal()
-                    .FindTypeMapFor(typeof(TEntity), typeof(TDto))
-                    .PropertyMaps
-                    .FirstOrDefault(x =>
-                        string.Equals(x.DestinationName, sort, StringComparison.InvariantCultureIgnoreCase))?.SourceMember.Name ?? sort;
+                string sortProperty = "Id";
+                //string sortProperty = _mapper
+                //    .ConfigurationProvider
+                //    .Internal()
+                //    .FindTypeMapFor(typeof(TEntity), typeof(TDto))
+                //    .PropertyMaps
+                //    .FirstOrDefault(x =>
+                //        string.Equals(x.DestinationName, sort, StringComparison.InvariantCultureIgnoreCase))?.SourceMember.Name ?? sort;
 
                 if (!paged)
                 {
-                    return Ok(_mapper.Map<TDto[]>(
+                    return Ok(
                         Service
                         .All()
-                        .OrderByPropertyOrField(sortProperty, ascending)));
+                        .OrderByPropertyOrField(sortProperty, ascending));
                 }
 
                 page = Math.Max(1, page);
                 pageSize = Math.Max(1, pageSize);
 
-                return Ok(CreatePagedResults(
-                    Service.Page(x => true, sortProperty, page, pageSize, ascending),
-                    Service.Count(),
-                    page, pageSize,
-                    sort,
-                    ascending));
+                throw new NotImplementedException();
+
+                //return Ok(CreatePagedResults(
+                //    Service.Page(x => true, sortProperty, page, pageSize, ascending),
+                //    Service.Count(),
+                //    page, pageSize,
+                //    sort,
+                //    ascending));
             }
             catch (Exception exception)
             {
@@ -96,7 +91,7 @@ namespace FinalBoss.Api.Controllers
                     return NotFound();
                 }
 
-                return Ok(_mapper.Map<TDto>(entity));
+                return Ok(entity);
             }
             catch (Exception exception)
             {
@@ -109,12 +104,10 @@ namespace FinalBoss.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> Create(TDto dto)
+        public virtual async Task<ActionResult> Create(TEntity entity)
         {
             try
             {
-                var entity = _mapper.Map<TEntity>(dto);
-
                 DateTimeOffset now = DateTimeOffset.UtcNow;
 
                 entity.Created = now;
@@ -122,7 +115,7 @@ namespace FinalBoss.Api.Controllers
 
                 entity = await Service.CreateAsync(entity);
 
-                return Created($"/{RouteName}/{entity.Id}", _mapper.Map<TDto>(entity));
+                return Created($"/{RouteName}/{entity.Id}", entity);
             }
             catch (Exception exception)
             {
@@ -136,18 +129,16 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> Update(long id, TDto dto)
+        public virtual async Task<ActionResult> Update(long id, TEntity entity)
         {
             try
             {
-                var entity = await Service.GetByIdAsync(id);
+                var existingEntity = await Service.GetByIdAsync(id);
 
-                if (entity is null)
+                if (existingEntity is null)
                 {
                     return NotFound();
                 }
-
-                _mapper.Map(dto, entity);
 
                 entity.LastModified = DateTimeOffset.UtcNow;
 
@@ -155,7 +146,7 @@ namespace FinalBoss.Api.Controllers
 
                 if (updated)
                 {
-                    return Ok(_mapper.Map<TDto>(entity));
+                    return Ok(entity);
                 }
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
@@ -196,50 +187,50 @@ namespace FinalBoss.Api.Controllers
             }
         }
 
-        private PagedDto<TDto> CreatePagedResults(IEnumerable<TEntity> enumerable,
-            int totalItems,
-            int page,
-            int pageSize,
-            string sort,
-            bool ascending)
-        {
-            var items = _mapper.Map<TDto[]>(enumerable);
+        //private PagedEntity<TDto> CreatePagedResults(IEnumerable<TEntity> enumerable,
+        //    int totalItems,
+        //    int page,
+        //    int pageSize,
+        //    string sort,
+        //    bool ascending)
+        //{
+        //    var items = _mapper.Map<TDto[]>(enumerable);
 
-            var mod = totalItems % pageSize;
-            var totalPageCount = totalItems / pageSize + (mod == 0 ? 0 : 1);
+        //    var mod = totalItems % pageSize;
+        //    var totalPageCount = totalItems / pageSize + (mod == 0 ? 0 : 1);
 
-            var previousUrl = page <= 1
-                ? null
-                : Url?.Link(null, new
-                {
-                    paged = true,
-                    page = page - 1,
-                    pageSize,
-                    sort,
-                    ascending
-                }).ToLower();
+        //    var previousUrl = page <= 1
+        //        ? null
+        //        : Url?.Link(null, new
+        //        {
+        //            paged = true,
+        //            page = page - 1,
+        //            pageSize,
+        //            sort,
+        //            ascending
+        //        }).ToLower();
 
-            var nextUrl = page >= totalPageCount
-                ? null
-                : Url?.Link(null, new
-                {
-                    paged = true,
-                    page = page + 1,
-                    pageSize,
-                    sort,
-                    ascending
-                }).ToLower();
+        //    var nextUrl = page >= totalPageCount
+        //        ? null
+        //        : Url?.Link(null, new
+        //        {
+        //            paged = true,
+        //            page = page + 1,
+        //            pageSize,
+        //            sort,
+        //            ascending
+        //        }).ToLower();
 
-            return new PagedDto<TDto>
-            {
-                Items = items,
-                PageNumber = page,
-                PageSize = items.Length,
-                TotalPages = totalPageCount,
-                TotalItems = totalItems,
-                PreviousUrl = previousUrl,
-                NextUrl = nextUrl
-            };
-        }
+        //    return new PagedEntity<TDto>
+        //    {
+        //        Items = items,
+        //        PageNumber = page,
+        //        PageSize = items.Length,
+        //        TotalPages = totalPageCount,
+        //        TotalItems = totalItems,
+        //        PreviousUrl = previousUrl,
+        //        NextUrl = nextUrl
+        //    };
+        //}
     }
 }

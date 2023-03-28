@@ -16,8 +16,15 @@ const routes = [
       layout: 'Public'
     }
   }, {
+    path: '/admin/games',
+    name: 'Admin Games',
+    component: () => import('@/components/Games.vue'),
+    meta: {
+      layout: 'Admin'
+    }
+  }, {
     path: '/admin/addgame',
-    name: 'Add Game',
+    name: 'Admin Add Game',
     component: () => import('@/components/AddGame.vue'),
     meta: {
       layout: 'Admin'

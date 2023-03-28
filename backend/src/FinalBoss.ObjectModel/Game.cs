@@ -21,10 +21,16 @@ namespace FinalBoss.ObjectModel
         [StringLength(255)]
         public string ImageUrl { get; set; }
 
-        public virtual Company Developer { get; set; }
+        [ForeignKey("Developer")]
+        public long DeveloperId { get; set; }
 
-        public virtual Company Publisher { get; set; }
+        public Company? Developer { get; set; }
 
-        public virtual ICollection<Release> Releases { get; set; }
+        [ForeignKey("Publisher")]
+        public long PublisherId { get; set; }
+
+        public Company? Publisher { get; set; }
+
+        public ICollection<Release> Releases { get; set; }
     }
 }

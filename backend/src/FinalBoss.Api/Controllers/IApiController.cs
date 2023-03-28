@@ -2,19 +2,19 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using FinalBoss.Api.Dto;
+using FinalBoss.ObjectModel;
 
 namespace FinalBoss.Api.Controllers
 {
-    internal interface IApiController<TDto> where TDto : BaseDto
+    internal interface IApiController<TEntity> where TEntity : BaseEntity
     {
         IActionResult Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true);
 
         Task<IActionResult> GetById(long id);
 
-        Task<IActionResult> Create(TDto dto);
+        Task<IActionResult> Create(TEntity dto);
 
-        Task<IActionResult> Update(long id, TDto dto);
+        Task<IActionResult> Update(long id, TEntity entity);
 
         Task<IActionResult> Delete(long id);
     }

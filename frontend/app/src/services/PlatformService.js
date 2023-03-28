@@ -2,7 +2,7 @@ import http from '@/http-common'
 
 class PlatformService {
     search(name) {
-        return http.get(`/platform?name=${name}`)
+        return http.get(`/v1/platform?name=${name}`)
     } 
 
     getAll() {
@@ -10,19 +10,19 @@ class PlatformService {
     }
 
     get(id) {
-        return http.get(`/platform/${id}`)
+        return http.get(`/v1/platform/${id}`)
     }
 
     create(dto) {
-        return http.post('/platform/', dto)
+        return http.post('/v1/platform/', dto)
     }
 
     update(id, dto) {
-        return http.post(`/platform/${id}`, dto)
+        return http.post(`/v1/platform/${id}`, dto)
     }
 
     delete(id) {
-        return http.delete(`/platform/${id}`)
+        return http.delete(`/v1/platform/${id}`)
     }
 }
 
