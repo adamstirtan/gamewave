@@ -6,7 +6,7 @@ class PlatformService {
     } 
 
     getAll() {
-        return http.get('/v1/platform')
+        return http.get('/v1/platform?sort=name')
     }
 
     get(id) {

@@ -42,7 +42,7 @@
                     :items="platforms"
                     item-value="id"
                     item-title="name"
-                    label="Select platform">
+                    label="Platform">
                 </v-select>
             </v-col>
             <v-col cols="12" md="4">
@@ -51,7 +51,7 @@
                     :items="companies"
                     item-value="id"
                     item-title="name"
-                    label="Select publisher">
+                    label="Publisher">
                 </v-select>
             </v-col>
             <v-col cols="12" md="4">
@@ -60,7 +60,7 @@
                     :items="companies"
                     item-value="id"
                     item-title="name"
-                    label="Select developer">
+                    label="Developer">
                 </v-select>
             </v-col>
         </v-row>
