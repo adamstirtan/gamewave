@@ -36,7 +36,7 @@ namespace FinalBoss.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual ActionResult<IEnumerable<TEntity>> Get(string sort = "id", bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
+        public virtual ActionResult<IEnumerable<TEntity>> Get(string sort, bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
         {
             try
             {
