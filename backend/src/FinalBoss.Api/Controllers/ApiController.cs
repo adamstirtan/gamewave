@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using FinalBoss.Api.Services;
 using FinalBoss.Extensions;
 using FinalBoss.ObjectModel;
+using System.Reflection;
 
 namespace FinalBoss.Api.Controllers
 {
@@ -39,14 +40,10 @@ namespace FinalBoss.Api.Controllers
         {
             try
             {
-                string sortProperty = "Id";
-                //string sortProperty = _mapper
-                //    .ConfigurationProvider
-                //    .Internal()
-                //    .FindTypeMapFor(typeof(TEntity), typeof(TDto))
-                //    .PropertyMaps
-                //    .FirstOrDefault(x =>
-                //        string.Equals(x.DestinationName, sort, StringComparison.InvariantCultureIgnoreCase))?.SourceMember.Name ?? sort;
+                string sortProperty = typeof(TEntity)
+                    .GetProperties()
+                    .FirstOrDefault(x =>
+                        string.Equals(x.Name, sort, StringComparison.InvariantCultureIgnoreCase))?.Name ?? "id";
 
                 if (!paged)
                 {
