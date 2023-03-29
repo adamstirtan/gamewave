@@ -18,7 +18,7 @@ const routes = [
   }, {
     path: '/admin/games',
     name: 'Admin Games',
-    component: () => import('@/components/Games.vue'),
+    component: () => import('@/components/admin/GameList.vue'),
     meta: {
       layout: 'Admin'
     }

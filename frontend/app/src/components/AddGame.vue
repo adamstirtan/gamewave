@@ -121,19 +121,19 @@
 
     const handleSubmit = async () => {
         GameService.create({
-                name: name.value,
-                description: description.value,
-                slug: slug.value,
-                platformId: platformId.value,
-                publisherId: publisherId.value,
-                developerId: developerId.value
-            })
-            .then(response => {
-                console.log(response)
-            })
-            .catch(e => {
-                console.log(e);
-            })
+            name: name.value,
+            description: description.value,
+            slug: slug.value,
+            platformId: platformId.value,
+            publisherId: publisherId.value,
+            developerId: developerId.value
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(e => {
+            console.log(e);
+        })
     }
 
 </script>
