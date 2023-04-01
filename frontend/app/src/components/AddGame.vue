@@ -79,6 +79,7 @@
 
 <script setup>
     import { ref, watch, onMounted } from 'vue'
+    import { useRouter } from 'vue-router'
 
     import CompanyService from '@/services/CompanyService'
     import GameService from '@/services/GameService'
@@ -94,6 +95,8 @@
     const platformId = ref(null)
     const publisherId = ref(null)
     const developerId = ref(null)
+
+    const router = useRouter()
 
     const companyService = new CompanyService()
     const gameService = new GameService()
@@ -132,8 +135,8 @@
             publisherId: publisherId.value,
             developerId: developerId.value
         })
-        .then(response => {
-            console.log(response)
+        .then(() => {
+            router.push('/admin/games')
         })
         .catch(e => {
             console.error(e);
