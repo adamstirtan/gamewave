@@ -12,9 +12,12 @@
     </v-btn>
   </v-app-bar>
 
-  <v-navigation-drawer color="grey-lighten-2">
+  <v-navigation-drawer
+    color="grey-lighten-2"
+    rail
+    expand-on-hover
+    permanent>
     <v-list density="compact" nav>
-      <v-list-subheader>PLATFORM</v-list-subheader>
       <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
       <v-list-item prepend-icon="mdi-gamepad-outline" title="Game Modes" value="game-modes"></v-list-item>
       <v-list-item prepend-icon="mdi-select-group" title="Genres" value="genres"></v-list-item>
@@ -25,7 +28,6 @@
     </v-list>
     <v-divider></v-divider>
     <v-list density="compact" nav>
-      <v-list-subheader>ADMINISTRATION</v-list-subheader>
       <v-list-item prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
       <v-list-item prepend-icon="mdi-cog" title="Settings" value="settings"></v-list-item>
     </v-list>
