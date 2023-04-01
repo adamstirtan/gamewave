@@ -26,4 +26,4 @@ class CompanyService {
     }
 }
 
-export default new CompanyService()
+export default CompanyService

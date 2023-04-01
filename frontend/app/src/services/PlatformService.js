@@ -26,4 +26,4 @@ class PlatformService {
     }
 }
 
-export default new PlatformService()
+export default PlatformService

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using FinalBoss.Api.Services;
 using FinalBoss.Extensions;
 using FinalBoss.ObjectModel;
-using System.Reflection;
 
 namespace FinalBoss.Api.Controllers
 {
@@ -56,14 +56,13 @@ namespace FinalBoss.Api.Controllers
                 page = Math.Max(1, page);
                 pageSize = Math.Max(1, pageSize);
 
-                throw new NotImplementedException();
-
-                //return Ok(CreatePagedResults(
-                //    Service.Page(x => true, sortProperty, page, pageSize, ascending),
-                //    Service.Count(),
-                //    page, pageSize,
-                //    sort,
-                //    ascending));
+                return Ok(CreatePagedResults(
+                    Service.Page(x => true, sortProperty, page, pageSize, ascending),
+                    Service.Count(),
+                    sort,
+                    ascending,
+                    page,
+                    pageSize));
             }
             catch (Exception exception)
             {
@@ -184,50 +183,50 @@ namespace FinalBoss.Api.Controllers
             }
         }
 
-        //private PagedEntity<TDto> CreatePagedResults(IEnumerable<TEntity> enumerable,
-        //    int totalItems,
-        //    int page,
-        //    int pageSize,
-        //    string sort,
-        //    bool ascending)
-        //{
-        //    var items = _mapper.Map<TDto[]>(enumerable);
+        private PagedEntity<TEntity> CreatePagedResults(IEnumerable<TEntity> enumerable,
+            int totalItems,
+            string sort,
+            bool ascending,
+            int page,
+            int pageSize)
+        {
+            var mod = totalItems % pageSize;
+            var totalPageCount = totalItems / pageSize + (mod == 0 ? 0 : 1);
 
-        //    var mod = totalItems % pageSize;
-        //    var totalPageCount = totalItems / pageSize + (mod == 0 ? 0 : 1);
+            var previousUrl = page <= 1
+                ? null
+                : Url?.Link(null, new
+                {
+                    paged = true,
+                    page = page - 1,
+                    pageSize,
+                    sort,
+                    ascending
+                }).ToLower();
 
-        //    var previousUrl = page <= 1
-        //        ? null
-        //        : Url?.Link(null, new
-        //        {
-        //            paged = true,
-        //            page = page - 1,
-        //            pageSize,
-        //            sort,
-        //            ascending
-        //        }).ToLower();
+            var nextUrl = page >= totalPageCount
+                ? null
+                : Url?.Link(null, new
+                {
+                    paged = true,
+                    page = page + 1,
+                    pageSize,
+                    sort,
+                    ascending
+                }).ToLower();
 
-        //    var nextUrl = page >= totalPageCount
-        //        ? null
-        //        : Url?.Link(null, new
-        //        {
-        //            paged = true,
-        //            page = page + 1,
-        //            pageSize,
-        //            sort,
-        //            ascending
-        //        }).ToLower();
-
-        //    return new PagedEntity<TDto>
-        //    {
-        //        Items = items,
-        //        PageNumber = page,
-        //        PageSize = items.Length,
-        //        TotalPages = totalPageCount,
-        //        TotalItems = totalItems,
-        //        PreviousUrl = previousUrl,
-        //        NextUrl = nextUrl
-        //    };
-        //}
+            return new PagedEntity<TEntity>
+            {
+                Items = enumerable,
+                PageNumber = page,
+                PageSize = enumerable.Count(),
+                TotalPages = totalPageCount,
+                TotalItems = totalItems,
+                PreviousUrl = previousUrl,
+                NextUrl = nextUrl,
+                Sort = sort,
+                Ascending = ascending
+            };
+        }
     }
 }

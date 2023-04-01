@@ -95,32 +95,36 @@
     const publisherId = ref(null)
     const developerId = ref(null)
 
+    const companyService = new CompanyService()
+    const gameService = new GameService()
+    const platformService = new PlatformService()
+
     watch(name, (newValue) => {
-      slug.value = newValue.replaceAll(' ', '-').toLowerCase()
+      slug.value = newValue.replaceAll(' ', '-').replaceAll('.', '').toLowerCase()
     })
 
     onMounted(() => {
-        CompanyService
+        companyService
             .getAll()
             .then(response => {
                 companies.value = response.data
             })
             .catch(e => {
-                console.log(e)
+                console.error(e)
             })
 
-        PlatformService
+        platformService
             .getAll()
             .then(response => {
                 platforms.value = response.data
             })
             .catch(e => {
-                console.log(e)
+                console.error(e)
             })
     })
 
     const handleSubmit = async () => {
-        GameService.create({
+        gameService.create({
             name: name.value,
             description: description.value,
             slug: slug.value,
@@ -132,7 +136,7 @@
             console.log(response)
         })
         .catch(e => {
-            console.log(e);
+            console.error(e);
         })
     }
 

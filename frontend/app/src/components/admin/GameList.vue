@@ -1,13 +1,18 @@
 <template>
-    <div class="root">
+    <ListHeader title="Games" />
+    <div class="pa-5">
         <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="4">
                 <v-text-field
-                    label="Search Games...">
+                    label="Search..."
+                    prepend-inner-icon="mdi-magnify"
+                    outlined
+                    clearable>
                 </v-text-field>
             </v-col>
-            <v-col cols="12" md="8" class="text-right">
-                <v-btn to="/admin/addgame" variant="tonal">
+            <v-col cols="8" class="text-right">
+                <v-btn
+                    to="/admin/addgame">
                     Add Game
                 </v-btn>
             </v-col>
@@ -15,71 +20,126 @@
         <v-data-table-server
             :headers="state.headers"
             :items="state.items"
+            :items-length="state.itemsLength"
             :loading="state.loading"
-            :items-length="1"
             :total-items="state.totalItems"
             :options.sync="state.options"
-            @server-item-length="onServerItemLength"
-            @server-items="onServerItems">
+            @update:options="onUpdateOptions"
+            @update:page="onUpdatePage"
+            class="elevation-1">
+
+            <template v-slot:item.lastModified="{ item }">
+                <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
+            </template>
+
+            <template v-slot:item.created="{ item }">
+                <span>{{ new Date(Date.parse(item.raw.created)).toLocaleString() }}</span>
+            </template>
+
         </v-data-table-server>
     </div>
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue'
+
+import { reactive, watch, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
+import ListHeader from '@/components/admin/ListHeader'
 import GameService from '@/services/GameService'
 
 const state = reactive({
-    items: [],
     headers: [
-        { text: 'ID', value: 'id' },
-        { text: 'Name', value: 'name' }
+        {
+            title: 'ID',
+            align: 'start',
+            key: 'id',
+            sortable: true,
+            width: '80',
+            minWidth: '80'
+        },
+        {
+            title: 'Name',
+            key: 'name',
+        },
+        {
+            title: 'Modified',
+            key: 'lastModified',
+            width: '215',
+            minWidth: '215'
+        },
+        {
+            title: 'Created',
+            key: 'created',
+            width: '215',
+            minWidth: '215'
+        }
     ],
-    loading: true,
+    items: [],
+    loading: false,
+    itemsLength: 0,
     totalItems: 0,
     options: {
-      sortBy: ['name'],
-      sortDesc: [false],
-      page: 1,
-      itemsPerPage: 25,
+        sortBy: ['created'],
+        sortDesc: [false],
+        page: 1,
+        itemsPerPage: 10,
+    },
+    serverItemsLength: 0
+})
+
+const gameService = new GameService()
+
+async function onUpdateOptions(options) {
+    state.options = options
+
+    await fetchData()
+}
+
+// TODO: is this needed with the method above?
+function onUpdatePage(page) {
+    state.options.page = page
+}
+
+async function fetchData() {
+    state.loading = true
+    
+    const params = {
+        sort: computed(() => state.options.sortBy || ['created']).value,
+        ascending: computed(() => state.options.sortDesc || [false]).value,
+        page: state.options.page,
+        pageSize: state.options.itemsPerPage,
+        paged: true
     }
-})
 
-onMounted(() => {
-    // GameService
-    //     .getAll()
-    //     .then(response => {
-    //         state.items = response.data
-    //         state.totalItems = state.items.length;
-    //     })
-    //     .catch(e => {
-    //         console.error(e)
-    //     })
-    //     .finally(() => {
-    //         state.loading = false
-    //     })
-})
+    try {
+        const response = await gameService.search(params)
 
-function onServerItemLength(length) {
-    state.totalItems = length
+        state.items = response.data.items
+        state.totalItems = response.data.totalItems
+        state.itemsLength = response.data.pageSize
+        state.options.sortBy[0] = response.data.sort
+
+        state.options.sortDesc = [response.data.ascending]
+    } catch (error) {
+        console.error(error);
+    }
+
+    state.loading = false
 }
 
-function onServerItems(params) {
-    const { sortBy, ascending, page, itemsPerPage } = params;
-    const query = `?sort=${sortBy}&ascending=${ascending}&page=${page}&pageSize=${itemsPerPage}`;
+watch(
+    () => state.options.itemsPerPage,
+    () => {
+        fetchData()
+    }
+)
 
-    loading.value = true;
-    axios.get(`/api/items${query}`).then(({ data }) => {
-        items.value = data.data
-        loading.value = false
-    })
-}
 </script>
 
 <style scoped>
-.root {
-    padding: 2rem;
+
+.fb-header {
+    margin: 1rem;
 }
 </style>
