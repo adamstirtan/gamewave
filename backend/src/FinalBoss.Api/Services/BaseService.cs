@@ -38,7 +38,7 @@ namespace FinalBoss.Api.Services
                 .Where(query)
                 .Skip(pageSize * (page - 1))
                 .Take(pageSize)
-                .OrderByPropertyOrField(sort)
+                .OrderByPropertyOrField(sort, ascending)
                 .AsQueryable();
         }
 

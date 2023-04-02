@@ -21,14 +21,15 @@
         </v-row>
         <v-data-table-server
             :headers="state.headers"
+            :items-per-page-options="state.itemsPerPageOptions"
             :loading="state.loading"
             :items="state.items"
             :items-length="state.itemsLength"
             :total-items="state.totalItems"
+            :must-sort="true"
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
             @update:options="onUpdateOptions"
-            @update:page="onUpdatePage"
             class="elevation-1">
 
             <template v-slot:item.lastModified="{ item }">
@@ -52,6 +53,7 @@ import AdminHeader from '@/components/admin/AdminHeader'
 import GameService from '@/services/GameService'
 
 const state = reactive({
+    loading: false,
     headers: [
         {
             title: 'ID',
@@ -79,19 +81,17 @@ const state = reactive({
         }
     ],
     items: [],
-    loading: false,
+    serverItemsLength: 0,
     itemsLength: 0,
-    totalItems: 0,
     options: {
         sortBy: [{
-            key: 'id',
-            order: 'asc'
+            key: 'lastModified',
+            order: 'desc'
         }],
         groupBy: [false],
         page: 1,
-        itemsPerPage: 10,
-    },
-    serverItemsLength: 0
+        itemsPerPage: 10
+    }
 })
 
 const gameService = new GameService()
@@ -101,23 +101,18 @@ async function onUpdateOptions(options) {
     await fetchData()
 }
 
-// TODO: is this needed with the method above?
-function onUpdatePage(page) {
-    state.options.page = page
-}
-
 async function fetchData() {
     state.loading = true
     
     const params = {
         ascending: computed(() => {
-            if (state.options.sortBy && state.options.sortBy.length) {
+            if (state.options.sortBy && state.options.sortBy.length > 0) {
                 return state.options.sortBy[0].order === 'asc' ? true : false
             }
             return false
         }).value,
         sort: computed(() => {
-            if (state.options.sortBy && state.options.sortBy.length) {
+            if (state.options.sortBy && state.options.sortBy.length > 0) {
                 return state.options.sortBy[0].key
             }
             return ''
@@ -133,8 +128,6 @@ async function fetchData() {
         state.items = response.data.items
         state.totalItems = response.data.totalItems
         state.itemsLength = response.data.pageSize
-        //state.options.sortBy[0] = response.data.sort
-        //state.options.sortDesc = [response.data.ascending]
     } catch (error) {
         console.error(error);
     }
