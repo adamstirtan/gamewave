@@ -1,8 +1,16 @@
 <template>
-    <ListHeader title="Games" />
+    <ListHeader title="Games">
+        <template #actions>
+            <v-btn
+                to="/admin/addgame"
+                variant="outlined">
+                Add Game
+            </v-btn>
+        </template>
+    </ListHeader>
     <div class="pa-5">
         <v-row>
-            <v-col cols="4">
+            <v-col cols="5">
                 <v-text-field
                     label="Search..."
                     prepend-inner-icon="mdi-magnify"
@@ -10,20 +18,15 @@
                     clearable>
                 </v-text-field>
             </v-col>
-            <v-col cols="8" class="text-right">
-                <v-btn
-                    to="/admin/addgame">
-                    Add Game
-                </v-btn>
-            </v-col>
         </v-row>
         <v-data-table-server
             :headers="state.headers"
+            :loading="state.loading"
             :items="state.items"
             :items-length="state.itemsLength"
-            :loading="state.loading"
             :total-items="state.totalItems"
-            :options.sync="state.options"
+            :sort-by.sync="state.options.sortBy"
+            :sort-desc.sync="state.options.sortDesc"
             @update:options="onUpdateOptions"
             @update:page="onUpdatePage"
             class="elevation-1">
@@ -42,7 +45,7 @@
 
 <script setup>
 
-import { reactive, watch, computed } from 'vue'
+import { reactive, watch } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import ListHeader from '@/components/admin/ListHeader'
@@ -80,8 +83,8 @@ const state = reactive({
     itemsLength: 0,
     totalItems: 0,
     options: {
-        sortBy: ['created'],
-        sortDesc: [false],
+        sortBy: ['name'],
+        sortDesc: ['desc'],
         page: 1,
         itemsPerPage: 10,
     },
@@ -105,12 +108,13 @@ async function fetchData() {
     state.loading = true
     
     const params = {
-        sort: computed(() => state.options.sortBy || ['created']).value,
-        ascending: computed(() => state.options.sortDesc || [false]).value,
+        sort: state.options.sortBy[0],
+        //ascending: state.options.sortDesc[0],
         page: state.options.page,
         pageSize: state.options.itemsPerPage,
         paged: true
     }
+    debugger;
 
     try {
         const response = await gameService.search(params)
