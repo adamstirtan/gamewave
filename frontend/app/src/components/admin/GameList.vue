@@ -1,5 +1,5 @@
 <template>
-    <ListHeader title="Games">
+    <AdminHeader title="Games">
         <template #actions>
             <v-btn
                 to="/admin/addgame"
@@ -7,7 +7,7 @@
                 Add Game
             </v-btn>
         </template>
-    </ListHeader>
+    </AdminHeader>
     <div class="pa-5">
         <v-row>
             <v-col cols="5">
@@ -45,10 +45,10 @@
 
 <script setup>
 
-import { reactive, watch } from 'vue'
+import { reactive, watch, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
-import ListHeader from '@/components/admin/ListHeader'
+import AdminHeader from '@/components/admin/AdminHeader'
 import GameService from '@/services/GameService'
 
 const state = reactive({
@@ -83,8 +83,11 @@ const state = reactive({
     itemsLength: 0,
     totalItems: 0,
     options: {
-        sortBy: ['name'],
-        sortDesc: ['desc'],
+        sortBy: [{
+            key: 'id',
+            order: 'asc'
+        }],
+        groupBy: [false],
         page: 1,
         itemsPerPage: 10,
     },
@@ -95,7 +98,6 @@ const gameService = new GameService()
 
 async function onUpdateOptions(options) {
     state.options = options
-
     await fetchData()
 }
 
@@ -108,13 +110,22 @@ async function fetchData() {
     state.loading = true
     
     const params = {
-        sort: state.options.sortBy[0],
-        //ascending: state.options.sortDesc[0],
+        ascending: computed(() => {
+            if (state.options.sortBy && state.options.sortBy.length) {
+                return state.options.sortBy[0].order === 'asc' ? true : false
+            }
+            return false
+        }).value,
+        sort: computed(() => {
+            if (state.options.sortBy && state.options.sortBy.length) {
+                return state.options.sortBy[0].key
+            }
+            return ''
+        }).value,
         page: state.options.page,
         pageSize: state.options.itemsPerPage,
         paged: true
     }
-    debugger;
 
     try {
         const response = await gameService.search(params)
@@ -122,9 +133,8 @@ async function fetchData() {
         state.items = response.data.items
         state.totalItems = response.data.totalItems
         state.itemsLength = response.data.pageSize
-        state.options.sortBy[0] = response.data.sort
-
-        state.options.sortDesc = [response.data.ascending]
+        //state.options.sortBy[0] = response.data.sort
+        //state.options.sortDesc = [response.data.ascending]
     } catch (error) {
         console.error(error);
     }
@@ -140,10 +150,3 @@ watch(
 )
 
 </script>
-
-<style scoped>
-
-.fb-header {
-    margin: 1rem;
-}
-</style>

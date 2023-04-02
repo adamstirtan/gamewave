@@ -2,7 +2,6 @@ import http from '@/http-common'
 
 class GameService {
     search(params) {
-
         let query = `sort=${params.sort}&ascending=${params.ascending}&paged=${params.paged}`
 
         if (params.paged) {

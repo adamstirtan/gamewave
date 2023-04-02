@@ -1,10 +1,16 @@
 <template>
+    <AdminHeader title="Add Game">
+        <template #actions>
+            <v-btn
+                variant="outlined">
+                Save
+            </v-btn>
+        </template>
+    </AdminHeader>
+    <div class="pa-5">
     <v-form class="root"
         v-model="valid"
         @submit.prevent="handleSubmit">
-
-        <h1>Add Game</h1>
-        <v-divider class="mb-10"></v-divider>
 
         <v-row>
             <v-col cols="12" md="6">
@@ -75,11 +81,13 @@
     </v-btn>
   </v-card-actions>
     </v-form>
+</div>
 </template>
 
 <script setup>
     import { ref, watch, onMounted } from 'vue'
     import { useRouter } from 'vue-router'
+    import AdminHeader from '@/components/admin/AdminHeader'
 
     import CompanyService from '@/services/CompanyService'
     import GameService from '@/services/GameService'
@@ -142,15 +150,4 @@
             console.error(e);
         })
     }
-
 </script>
-
-<style scoped>
-    .root {
-        padding: 2rem;
-    }
-    h1 {
-        font-size: 2em;
-        margin-bottom: 2rem;
-    }
-</style>
