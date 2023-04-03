@@ -12,7 +12,7 @@ namespace FinalBoss.Api.Controllers
 
         Task<IActionResult> GetById(long id);
 
-        Task<IActionResult> Create(TEntity dto);
+        Task<IActionResult> Create(TEntity entity);
 
         Task<IActionResult> Update(long id, TEntity entity);
 
