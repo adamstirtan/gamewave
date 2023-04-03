@@ -1,8 +1,14 @@
 import http from '@/http-common'
 
 class CompanyService {
-    search(name) {
-        return http.get(`/v1/company?name=${name}`)
+    search(params) {
+        let query = `sort=${params.sort}&ascending=${params.ascending}&paged=${params.paged}`
+
+        if (params.paged) {
+            query += `&page=${params.page}&pageSize=${params.pageSize}`
+        }
+
+        return http.get(`/v1/company?${query}`)
     } 
 
     getAll() {

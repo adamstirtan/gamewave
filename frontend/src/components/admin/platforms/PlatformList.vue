@@ -1,10 +1,10 @@
 <template>
-    <AdminHeader title="Games">
+    <AdminHeader title="Platforms">
         <template #actions>
             <v-btn
-                to="/admin/addgame"
+                to="/admin/platforms/add"
                 variant="outlined">
-                Add Game
+                Add Platform
             </v-btn>
         </template>
     </AdminHeader>
@@ -50,7 +50,7 @@ import { useRouter } from 'vue-router'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
-import GameService from '@/services/GameService'
+import PlatformService from '@/services/PlatformService'
 
 const state = reactive({
     loading: false,
@@ -94,7 +94,7 @@ const state = reactive({
 })
 
 const router = useRouter()
-const gameService = new GameService()
+const platformService = new PlatformService()
 
 async function onUpdateOptions(options) {
     state.options = options
@@ -102,7 +102,7 @@ async function onUpdateOptions(options) {
 }
 
 function onRowClicked(item, row) {
-    router.push(`/admin/games/${row.item.value}`)
+    router.push(`/admin/platforms/${row.item.value}`)
 }
 
 async function fetchData() {
@@ -127,7 +127,7 @@ async function fetchData() {
     }
 
     try {
-        const response = await gameService.search(params)
+        const response = await platformService.search(params)
 
         state.items = response.data.items
         state.itemsLength = response.data.totalItems

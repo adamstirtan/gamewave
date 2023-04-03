@@ -6,7 +6,7 @@ namespace FinalBoss.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<T> OrderByPropertyOrField<T>(this IEnumerable<T> enumerable, string propertyOrFieldName, bool ascending = true)
+        public static IEnumerable<T> OrderByPropertyOrField<T>(this IEnumerable<T> enumerable, string propertyOrFieldName, bool ascending)
         {
             var elementType = typeof(T);
             var orderByMethodName = ascending ? "OrderBy" : "OrderByDescending";
