@@ -23,7 +23,7 @@
             :headers="state.headers"
             :loading="state.loading"
             :items="state.items"
-            :server-items-length="state.serverItemsLength"
+            :items-length="state.itemsLength"
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
@@ -46,7 +46,7 @@
 <script setup>
 
 import { reactive, watch, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
@@ -81,7 +81,7 @@ const state = reactive({
         }
     ],
     items: [],
-    serverItemsLength: 0,
+    itemsLength: 0,
     options: {
         sortBy: [{
             key: 'lastModified',
@@ -130,8 +130,7 @@ async function fetchData() {
         const response = await gameService.search(params)
 
         state.items = response.data.items
-        //state.itemsLength = response.data.pageSize
-        state.serverItemsLength = response.data.totalItems
+        state.itemsLength = response.data.totalItems
     } catch (error) {
         console.error(error);
     }
