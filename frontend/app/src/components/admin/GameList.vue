@@ -21,15 +21,14 @@
         </v-row>
         <v-data-table-server
             :headers="state.headers"
-            :items-per-page-options="state.itemsPerPageOptions"
             :loading="state.loading"
             :items="state.items"
-            :items-length="state.itemsLength"
-            :total-items="state.totalItems"
-            :must-sort="true"
+            :server-items-length="state.serverItemsLength"
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
+            :must-sort="true"
             @update:options="onUpdateOptions"
+            @click:row="onRowClicked"
             class="elevation-1">
 
             <template v-slot:item.lastModified="{ item }">
@@ -47,6 +46,7 @@
 <script setup>
 
 import { reactive, watch, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
@@ -82,7 +82,6 @@ const state = reactive({
     ],
     items: [],
     serverItemsLength: 0,
-    itemsLength: 0,
     options: {
         sortBy: [{
             key: 'lastModified',
@@ -94,11 +93,16 @@ const state = reactive({
     }
 })
 
+const router = useRouter()
 const gameService = new GameService()
 
 async function onUpdateOptions(options) {
     state.options = options
     await fetchData()
+}
+
+function onRowClicked(item, row) {
+    router.push(`/admin/games/${row.item.value}`)
 }
 
 async function fetchData() {
@@ -126,8 +130,8 @@ async function fetchData() {
         const response = await gameService.search(params)
 
         state.items = response.data.items
-        state.totalItems = response.data.totalItems
-        state.itemsLength = response.data.pageSize
+        //state.itemsLength = response.data.pageSize
+        state.serverItemsLength = response.data.totalItems
     } catch (error) {
         console.error(error);
     }
