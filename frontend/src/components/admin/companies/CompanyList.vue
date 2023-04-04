@@ -3,7 +3,7 @@
         <template #actions>
             <v-btn
                 to="/admin/companies/add"
-                variant="outlined">
+                color="primary">
                 Add Company
             </v-btn>
         </template>

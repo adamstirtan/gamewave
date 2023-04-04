@@ -1,5 +1,5 @@
 <template>
-    <div class="fb-header mx-0 my-0 pa-6">
+    <div class="mx-0 my-0 pa-8 bg-grey-lighten-3 elevation-2">
         <v-row>
             <v-col cols="8">
                 <span class="text-h4">{{ title }}</span>
@@ -19,10 +19,3 @@ const props = defineProps({
     }
 })
 </script>
-
-<style scoped>
-    .fb-header {
-        background-color: #f0f0f0;
-        width: 100%;
-    }
-</style>

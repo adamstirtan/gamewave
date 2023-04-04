@@ -26,6 +26,14 @@ const routes = [
     }
   },
   {
+    path: '/admin/companies/add',
+    name: 'Admin Companies Add',
+    component: () => import('@/components/admin/companies/AddCompany.vue'),
+    meta: {
+      layout: 'Admin'
+    }
+  },
+  {
     path: '/admin/games',
     name: 'Admin Games List',
     component: () => import('@/components/admin/games/GameList.vue'),
