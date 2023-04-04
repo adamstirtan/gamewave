@@ -1,8 +1,8 @@
 <template>
   
-  <v-app-bar color="primary elevation-3">
+  <v-app-bar color="indigo-lighten-1 elevation-3">
     <v-app-bar-nav-icon icon="mdi-gamepad"></v-app-bar-nav-icon>
-    <v-app-bar-title>Final Boss Administration</v-app-bar-title>
+    <v-app-bar-title>Final Boss</v-app-bar-title>
     <v-spacer></v-spacer>
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
