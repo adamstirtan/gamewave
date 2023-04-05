@@ -1,4 +1,5 @@
 <template>
+
     <AdminHeader title="Add Game">
         <template #actions>
             <v-btn
@@ -8,72 +9,74 @@
             </v-btn>
         </template>
     </AdminHeader>
-    <div class="pa-5">
-    <v-form class="root"
-        v-model="valid"
-        @submit.prevent="handleSubmit">
 
-        <v-row>
-            <v-col cols="12" md="6">
-                <v-text-field
-                    v-model="name"
-                    :value="name"
-                    :counter="255"
-                    label="Name">
-                </v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-text-field
-                    v-model="slug"
-                    :value="slug"
-                    :counter="255"
-                    label="Slug">
-                </v-text-field>
-            </v-col>
-        </v-row>
+    <v-card class="ma-5">
+        <v-form
+            v-model="valid"
+            @submit.prevent="handleSubmit"
+            class="pa-5">
 
-        <v-row>
-            <v-col cols="12" md="12">
-                <v-textarea
-                    v-model="description"
-                    :value="description"
-                    label="Description">
-                </v-textarea>
-            </v-col>
-        </v-row>
+            <v-row>
+                <v-col cols="12" md="6">
+                    <v-text-field
+                        v-model="name"
+                        :value="name"
+                        :counter="255"
+                        label="Name">
+                    </v-text-field>
+                </v-col>
+                <v-col cols="12" md="4">
+                    <v-text-field
+                        v-model="slug"
+                        :value="slug"
+                        :counter="255"
+                        label="Slug">
+                    </v-text-field>
+                </v-col>
+            </v-row>
 
-        <v-row>
-            <v-col cols="12" md="4">
-                <v-select
-                    v-model="platformId"
-                    :items="platforms"
-                    item-value="id"
-                    item-title="name"
-                    label="Platform">
-                </v-select>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-select
-                    v-model="publisherId"
-                    :items="companies"
-                    item-value="id"
-                    item-title="name"
-                    label="Publisher">
-                </v-select>
-            </v-col>
-            <v-col cols="12" md="4">
-                <v-select
-                    v-model="developerId"
-                    :items="companies"
-                    item-value="id"
-                    item-title="name"
-                    label="Developer">
-                </v-select>
-            </v-col>
-        </v-row>
-        
-    </v-form>
-</div>
+            <v-row>
+                <v-col cols="12" md="12">
+                    <v-textarea
+                        v-model="description"
+                        :value="description"
+                        label="Description">
+                    </v-textarea>
+                </v-col>
+            </v-row>
+
+            <v-row>
+                <v-col cols="12" md="4">
+                    <v-select
+                        v-model="platformId"
+                        :items="platforms"
+                        item-value="id"
+                        item-title="name"
+                        label="Platform">
+                    </v-select>
+                </v-col>
+                <v-col cols="12" md="4">
+                    <v-select
+                        v-model="publisherId"
+                        :items="companies"
+                        item-value="id"
+                        item-title="name"
+                        label="Publisher">
+                    </v-select>
+                </v-col>
+                <v-col cols="12" md="4">
+                    <v-select
+                        v-model="developerId"
+                        :items="companies"
+                        item-value="id"
+                        item-title="name"
+                        label="Developer">
+                    </v-select>
+                </v-col>
+            </v-row>
+            
+        </v-form>
+    </v-card>
 </template>
 
 <script setup>

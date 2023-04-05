@@ -11,7 +11,7 @@
         </template>
     </AdminHeader>
 
-    <div class="pa-5">
+    <v-card class="ma-5">
         <v-data-table-server
             :headers="state.headers"
             :loading="state.loading"
@@ -33,7 +33,7 @@
             </template>
 
         </v-data-table-server>
-    </div>
+    </v-card>
 
 </template>
 

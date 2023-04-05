@@ -13,7 +13,7 @@
   </v-app-bar>
 
   <v-navigation-drawer
-    color="grey-lighten-2"
+    color="grey-lighten-4"
     rail
     expand-on-hover
     permanent>
@@ -34,7 +34,7 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-main>
+  <v-main class="bg-grey-lighten-3">
     <slot></slot>
   </v-main>
 
