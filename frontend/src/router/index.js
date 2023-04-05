@@ -18,6 +18,14 @@ const routes = [
     }
   },
   {
+    path: '/admin',
+    name: 'Admin Dashboard',
+    component: () => import('@/components/admin/Dashboard.vue'),
+    meta: {
+      layout: 'Admin'
+    }
+  },
+  {
     path: '/admin/companies',
     name: 'Admin Companies List',
     component: () => import('@/components/admin/companies/CompanyList.vue'),
