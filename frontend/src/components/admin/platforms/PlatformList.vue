@@ -1,24 +1,17 @@
 <template>
+
     <AdminHeader title="Platforms">
         <template #actions>
             <v-btn
                 to="/admin/platforms/add"
-                variant="outlined">
-                Add Platform
+                append-icon="mdi-plus-box"
+                color="indigo">
+                Add
             </v-btn>
         </template>
     </AdminHeader>
+
     <div class="pa-5">
-        <v-row>
-            <v-col cols="5">
-                <v-text-field
-                    label="Search..."
-                    prepend-inner-icon="mdi-magnify"
-                    outlined
-                    clearable>
-                </v-text-field>
-            </v-col>
-        </v-row>
         <v-data-table-server
             :headers="state.headers"
             :loading="state.loading"
@@ -40,7 +33,9 @@
             </template>
 
         </v-data-table-server>
+
     </div>
+    
 </template>
 
 <script setup>

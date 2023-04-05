@@ -1,71 +1,70 @@
 <template>
-    <AdminHeader title="Add Company">
+    <AdminHeader title="Companies">
         <template #actions>
             <v-btn
                 form="component-form"
                 type="submit"
                 color="primary"
+                append-icon="mdi-database-plus"
                 @click="v$.$validate">
                 Save
             </v-btn>
         </template>
     </AdminHeader>
     
-    <div class="pa-5">
-        <form id="component-form">
-            <v-row>
-                <v-col cols="12" md="5">
-                    <v-text-field
-                        v-model="state.name"
-                        :error-messages="v$.name.$errors.map(e => e.$message)"
-                        :counter="255"
-                        label="Name"
-                        required
-                        @input="v$.name.$touch"
-                        @blur="v$.name.$touch"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="4">
-                    <v-text-field
-                        v-model="state.slug"
-                        :error-messages="v$.slug.$errors.map(e => e.$message)"
-                        :counter="255"
-                        label="Slug"
-                        required
-                        @input="v$.slug.$touch"
-                        @blur="v$.slug.$touch"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+    <form id="component-form" class="pa-5">
+        <v-row>
+            <v-col cols="12" md="5">
+                <v-text-field
+                    v-model="state.name"
+                    :error-messages="v$.name.$errors.map(e => e.$message)"
+                    :counter="255"
+                    label="Name"
+                    required
+                    @input="v$.name.$touch"
+                    @blur="v$.name.$touch"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+                <v-text-field
+                    v-model="state.slug"
+                    :error-messages="v$.slug.$errors.map(e => e.$message)"
+                    :counter="255"
+                    label="Slug"
+                    required
+                    @input="v$.slug.$touch"
+                    @blur="v$.slug.$touch"
+                ></v-text-field>
+            </v-col>
+        </v-row>
 
-            <v-row>
-                <v-col cols="12" md="5">
-                    <v-text-field
-                        v-model="state.imageUrl"
-                        :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
-                        :counter="255"
-                        label="Image URL"
-                        required
-                        @input="v$.imageUrl.$touch"
-                        @blur="v$.imageUrl.$touch"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+        <v-row>
+            <v-col cols="12" md="5">
+                <v-text-field
+                    v-model="state.imageUrl"
+                    :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
+                    :counter="255"
+                    label="Image URL"
+                    required
+                    @input="v$.imageUrl.$touch"
+                    @blur="v$.imageUrl.$touch"
+                ></v-text-field>
+            </v-col>
+        </v-row>
 
-            <v-row>
-                <v-col cols="12" md="12">
-                    <v-textarea
-                        v-model="state.description"
-                        :error-messages="v$.description.$errors.map(e => e.$message)"
-                        label="Description"
-                        @input="v$.description.$touch"
-                        @blur="v$.description.$touch"
-                    ></v-textarea>
-                </v-col>
-            </v-row>
+        <v-row>
+            <v-col cols="12" md="12">
+                <v-textarea
+                    v-model="state.description"
+                    :error-messages="v$.description.$errors.map(e => e.$message)"
+                    label="Description"
+                    @input="v$.description.$touch"
+                    @blur="v$.description.$touch"
+                ></v-textarea>
+            </v-col>
+        </v-row>
 
-        </form>
-    </div>
+    </form>
 
 </template>
 

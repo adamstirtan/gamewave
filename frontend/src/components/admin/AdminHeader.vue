@@ -1,15 +1,16 @@
 <template>
-    <div class="mx-0 my-0 pa-8 bg-grey-lighten-2 elevation-1">
+    <div class="mx-0 my-0 pa-6 bg-grey-lighten-3 elevation-1">
         <v-row>
             <v-col cols="8">
-                <div>
-                    <span class="text-h4 text-grey-darken-3 font-weight-bold">{{ title }}</span>
+                <div class="text-h4 text-grey-darken-3 font-weight-bold">
+                    {{ title }}
                 </div>
-                <div>
-                    <AdminBreadcrumbs></AdminBreadcrumbs>
-                </div>
+                <AdminBreadcrumbs></AdminBreadcrumbs>
             </v-col>
-            <v-col cols="4" class="text-right">
+            <v-col
+                cols="4"
+                align-self="center"
+                class="text-right">
                 <slot name="actions"></slot>
             </v-col>
         </v-row>
@@ -28,3 +29,12 @@ const props = defineProps({
 })
 
 </script>
+
+<style scoped>
+.align-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+</style>

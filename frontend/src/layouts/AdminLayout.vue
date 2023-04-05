@@ -1,6 +1,6 @@
 <template>
-  
-  <v-app-bar color="indigo-lighten-1 elevation-3">
+
+  <v-app-bar color="primary elevation-3">
     <v-app-bar-nav-icon icon="mdi-gamepad"></v-app-bar-nav-icon>
     <v-app-bar-title>Final Boss</v-app-bar-title>
     <v-spacer></v-spacer>
@@ -17,7 +17,8 @@
     rail
     expand-on-hover
     permanent>
-    <v-list density="compact" nav>
+    <v-list nav>
+      <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
       <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
       <v-list-item prepend-icon="mdi-gamepad-outline" title="Game Modes" value="game-modes"></v-list-item>
       <v-list-item prepend-icon="mdi-select-group" title="Genres" value="genres"></v-list-item>
@@ -36,6 +37,7 @@
   <v-main>
     <slot></slot>
   </v-main>
+
 </template>
 
 <script setup>

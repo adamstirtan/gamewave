@@ -2,7 +2,8 @@
     <AdminHeader title="Add Game">
         <template #actions>
             <v-btn
-                variant="outlined">
+                append-icon="mdi-database-plus"
+                color="indigo">
                 Save
             </v-btn>
         </template>
@@ -70,16 +71,7 @@
                 </v-select>
             </v-col>
         </v-row>
-
-        <v-card-actions>
-    <v-spacer></v-spacer>
-    <v-btn to="/">
-      Cancel
-    </v-btn>
-    <v-btn type="submit" color="primary" :disabled="!valid">
-      Save
-    </v-btn>
-  </v-card-actions>
+        
     </v-form>
 </div>
 </template>

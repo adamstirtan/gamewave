@@ -9,6 +9,7 @@
     import { useRoute } from 'vue-router'
 
     const route = useRoute()
+    
     const layout = computed(() => {
         const file = route?.meta?.layout
         
