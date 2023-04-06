@@ -47,13 +47,13 @@
 
             <v-row>
                 <v-col cols="12" md="4">
-                    <v-select
+                    <v-autocomplete
                         v-model="platformId"
                         :items="platforms"
                         item-value="id"
                         item-title="name"
                         label="Platform">
-                    </v-select>
+                    </v-autocomplete>
                 </v-col>
                 <v-col cols="12" md="4">
                     <v-select

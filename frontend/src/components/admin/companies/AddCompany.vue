@@ -7,14 +7,17 @@
                 type="submit"
                 color="primary"
                 append-icon="mdi-database-plus"
-                @click="v$.$validate">
+                :disabled="state.loading"
+                @click="submit">
                 Save
             </v-btn>
         </template>
     </AdminHeader>
     
     <v-card class="ma-5">
-        <form id="component-form" class="pa-5">
+        <form
+            id="component-form"
+            class="pa-5">
             <v-row>
                 <v-col cols="12" md="5">
                     <v-text-field
@@ -32,7 +35,9 @@
                         v-model="state.slug"
                         :error-messages="v$.slug.$errors.map(e => e.$message)"
                         :counter="255"
-                        label="Slug"
+                        :readonly="true"
+                        label="Slug (Read only)"
+                        tabindex="-1"
                         required
                         @input="v$.slug.$touch"
                         @blur="v$.slug.$touch"
@@ -72,58 +77,68 @@
 </template>
 
 <script setup>
-    import { reactive, watch } from 'vue'
-    import { useRouter } from 'vue-router'
-    import { useVuelidate } from '@vuelidate/core'
-    import { required, maxLength, url } from '@vuelidate/validators'
 
-    import AdminHeader from '@/components/admin/AdminHeader'
+import { reactive, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useVuelidate } from '@vuelidate/core'
+import { required, maxLength, url } from '@vuelidate/validators'
 
-    import CompanyService from '@/services/CompanyService'
+import AdminHeader from '@/components/admin/AdminHeader'
+import CompanyService from '@/services/CompanyService'
 
-    const router = useRouter()
-    const companyService = new CompanyService()
+const router = useRouter()
+const companyService = new CompanyService()
 
-    const state = reactive({
-        name: '',
-        slug: '',
-        description: '',
-        imageUrl: ''
-    })
+const state = reactive({
+    loading: false,
+    name: '',
+    slug: '',
+    description: '',
+    imageUrl: ''
+})
 
-    const rules = {
-        name: {
-            required,
-            maxLengthValue: maxLength(255)
-        },
-        slug: {
-            required,
-            maxLengthValue: maxLength(255)
-        },
-        description: { },
-        imageUrl: { required, url }
+const rules = {
+    name: {
+        required,
+        maxLengthValue: maxLength(255)
+    },
+    slug: {
+        required,
+        maxLengthValue: maxLength(255)
+    },
+    description: { },
+    imageUrl: { required, url }
+}
+
+const v$ = useVuelidate(rules, state)
+
+watch(() => state.name, (newValue) => {
+    state.slug = newValue.trim().toLowerCase().replace(' ', '-').replace(/[^a-z0-9-_]/g, '')
+})
+
+const submit = async () => {
+    const result = await v$.value.$validate()
+    if (!result) {
+        return
     }
 
-    const v$ = useVuelidate(rules, state)
+    state.loading = true
 
-    watch(() => state.name, (newValue) => {
-        state.slug = newValue.replaceAll(' ', '-').replaceAll('.', '').toLowerCase()
+    await companyService.create({
+        name: state.name,
+        slug: state.slug,
+        imageUrl: state.imageUrl,
+        description: state.description
     })
+    .then(() => {
+        router.push('/admin/companies')
+    })
+    .catch(e => {
+        console.error(e);
+    })
+    .finally(() => {
+        state.loading = false
+    })
+}
 
-    // const handleSubmit = async () => {
-    //     gameService.create({
-    //         name: name.value,
-    //         description: description.value,
-    //         slug: slug.value,
-    //         platformId: platformId.value,
-    //         publisherId: publisherId.value,
-    //         developerId: developerId.value
-    //     })
-    //     .then(() => {
-    //         router.push('/admin/games')
-    //     })
-    //     .catch(e => {
-    //         console.error(e);
-    //     })
-    // }
 </script>
