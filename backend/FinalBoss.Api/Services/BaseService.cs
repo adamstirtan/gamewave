@@ -35,10 +35,10 @@ namespace FinalBoss.Api.Services
         public virtual IEnumerable<T> Page(Func<T, bool> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
         {
             return Set
+                .OrderByPropertyOrField(sort, ascending)
                 .Where(query)
                 .Skip(pageSize * (page - 1))
                 .Take(pageSize)
-                .OrderByPropertyOrField(sort, ascending)
                 .AsQueryable();
         }
 
