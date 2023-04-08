@@ -4,9 +4,11 @@
         :items="breadcrumbs"
         divider="-"
         class="pl-0 pb-0 pt-2 text-uppercase">
+
         <template v-slot:divider>
             <v-icon icon="mdi-chevron-right"></v-icon>
         </template>
+        
     </v-breadcrumbs>
     
 </template>

@@ -2,6 +2,20 @@
     
     <AdminHeader title="Companies">
         <template #actions>
+
+            <v-btn
+                v-show="state.editMode"
+                form="component-form"
+                type="button"
+                variant="tonal"
+                color="red"
+                append-icon="mdi-delete"
+                :disabled="state.loading"
+                @click="trash"
+                class="mr-5">
+                Trash
+            </v-btn>
+
             <v-btn
                 form="component-form"
                 type="submit"
@@ -9,8 +23,9 @@
                 append-icon="mdi-database-plus"
                 :disabled="state.loading"
                 @click="submit">
-                Save
+                Save Changes
             </v-btn>
+            
         </template>
     </AdminHeader>
     
@@ -77,7 +92,7 @@
 
 <script setup>
 
-import { reactive, watch } from 'vue'
+import { reactive, watch, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required, maxLength, url } from '@vuelidate/validators'
@@ -85,10 +100,20 @@ import { required, maxLength, url } from '@vuelidate/validators'
 import AdminHeader from '@/components/admin/AdminHeader'
 import CompanyService from '@/services/CompanyService'
 
+const props = defineProps({
+    id: {
+        type: String,
+        required: false
+    }
+})
+
+const { id } = toRefs(props)
+
 const router = useRouter()
 const companyService = new CompanyService()
 
 const state = reactive({
+    editMode: !isNaN(new Number(id.value)),
     loading: false,
     name: '',
     slug: '',
@@ -115,6 +140,24 @@ watch(() => state.name, (newValue) => {
     state.slug = newValue.trim().toLowerCase().replace(' ', '-').replace(/[^a-z0-9-_]/g, '')
 })
 
+if (state.editMode) {
+    state.loading = true
+
+    companyService.get(id.value)
+        .then(response => {
+            state.name = response.data.name
+            state.slug = response.data.slug
+            state.description = response.data.description
+            state.imageUrl = response.data.imageUrl
+        })
+        .catch(e => {
+            console.error(e)
+        })
+        .finally(() => {
+            state.loading = false
+        })
+}
+
 const submit = async () => {
     const result = await v$.value.$validate()
     if (!result) {
@@ -130,7 +173,22 @@ const submit = async () => {
         description: state.description
     })
     .then(() => {
-        router.push('/admin/companies')
+        router.push('/admin/company')
+    })
+    .catch(e => {
+        console.error(e);
+    })
+    .finally(() => {
+        state.loading = false
+    })
+}
+
+const trash = async () => {
+    state.loading = true
+
+    await companyService.delete(id.value)
+    .then(() => {
+        router.push({ path: '/admin/company', replace: true })
     })
     .catch(e => {
         console.error(e);

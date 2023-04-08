@@ -26,17 +26,18 @@ const routes = [
     }
   },
   {
-    path: '/admin/companies',
-    name: 'Admin Companies List',
-    component: () => import('@/components/admin/companies/CompanyList.vue'),
+    path: '/admin/company',
+    name: 'admin-companies',
+    component: () => import('@/components/admin/company/CompanyList.vue'),
     meta: {
       layout: 'Admin'
     }
   },
   {
-    path: '/admin/companies/add',
-    name: 'Admin Companies Add',
-    component: () => import('@/components/admin/companies/AddCompany.vue'),
+    path: '/admin/company/:id',
+    name: 'admin-company-details',
+    props: true,
+    component: () => import('@/components/admin/company/CompanyForm.vue'),
     meta: {
       layout: 'Admin'
     }

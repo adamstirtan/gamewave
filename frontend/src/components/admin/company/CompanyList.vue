@@ -2,12 +2,14 @@
     
     <AdminHeader title="Companies">
         <template #actions>
+            
             <v-btn
-                to="/admin/companies/add"
+                to="/admin/company/add"
                 append-icon="mdi-plus-box"
                 color="indigo">
                 Add
             </v-btn>
+
         </template>
     </AdminHeader>
 
@@ -21,8 +23,11 @@
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
             @update:options="onUpdateOptions"
-            @click:row="onRowClicked"
             class="elevation-1">
+
+            <template v-slot:item.name="{ item }">
+                <router-link :to="`/admin/company/${item.raw.id}`">{{ item.raw.name }}</router-link>
+             </template>
 
             <template v-slot:item.lastModified="{ item }">
                 <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
@@ -39,8 +44,7 @@
 
 <script setup>
 
-import { reactive, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { reactive, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
@@ -87,7 +91,6 @@ const state = reactive({
     }
 })
 
-const router = useRouter()
 const companyService = new CompanyService()
 
 async function onUpdateOptions(options) {
@@ -95,13 +98,7 @@ async function onUpdateOptions(options) {
     await fetchData()
 }
 
-function onRowClicked(item, row) {
-    router.push(`/admin/companies/${row.item.value}`)
-}
-
 async function fetchData() {
-    state.loading = true
-    
     const params = {
         ascending: computed(() => {
             if (state.options.sortBy && state.options.sortBy.length > 0) {
@@ -120,23 +117,19 @@ async function fetchData() {
         paged: true
     }
 
-    try {
-        const response = await companyService.search(params)
+    state.loading = true
 
-        state.items = response.data.items
-        state.itemsLength = response.data.totalItems
-    } catch (error) {
-        console.error(error);
-    }
-
-    state.loading = false
+    companyService.search(params)
+        .then(response => {
+            state.items = response.data.items
+            state.itemsLength = response.data.totalItems
+        })
+        .catch(e => {
+            console.error(e)
+        })
+        .finally(() => {
+            state.loading = false
+        })
 }
-
-watch(
-    () => state.options.itemsPerPage,
-    () => {
-        fetchData()
-    }
-)
 
 </script>
