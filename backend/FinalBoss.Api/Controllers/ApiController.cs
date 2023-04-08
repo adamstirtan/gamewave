@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
+using FinalBoss.Api.Extensions;
 using FinalBoss.Api.Services;
-using FinalBoss.Extensions;
 using FinalBoss.ObjectModel;
 
 namespace FinalBoss.Api.Controllers
@@ -17,8 +17,7 @@ namespace FinalBoss.Api.Controllers
         where TEntity : BaseEntity
         where TService : IService<TEntity>, IServiceAsync<TEntity>
     {
-        private readonly ILogger<ApiController<TEntity, TService>> _logger;
-
+        protected readonly ILogger<ApiController<TEntity, TService>> _logger;
         protected readonly TService Service;
 
         protected ApiController(
@@ -182,7 +181,7 @@ namespace FinalBoss.Api.Controllers
             }
         }
 
-        private PagedEntity<TEntity> CreatePagedResults(IEnumerable<TEntity> enumerable,
+        protected PagedEntity<TEntity> CreatePagedResults(IEnumerable<TEntity> enumerable,
             int totalItems,
             string sort,
             bool ascending,

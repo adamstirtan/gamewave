@@ -35,7 +35,6 @@
                         v-model="state.slug"
                         :error-messages="v$.slug.$errors.map(e => e.$message)"
                         :counter="255"
-                        :readonly="true"
                         label="Slug (Read only)"
                         tabindex="-1"
                         required

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
+using FinalBoss.Api.Extensions;
 using FinalBoss.ObjectModel;
-using FinalBoss.Extensions;
 
 namespace FinalBoss.Api.Services
 {
@@ -27,12 +27,17 @@ namespace FinalBoss.Api.Services
             return Set.Count();
         }
 
+        public virtual int Count(Expression<Func<T, bool>> expression)
+        {
+            return Set.Where(expression).Count();
+        }
+
         public virtual IQueryable<T> All()
         {
             return Set;
         }
 
-        public virtual IEnumerable<T> Page(Func<T, bool> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
+        public virtual IEnumerable<T> Page(Expression<Func<T, bool>> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
         {
             return Set
                 .OrderByPropertyOrField(sort, ascending)

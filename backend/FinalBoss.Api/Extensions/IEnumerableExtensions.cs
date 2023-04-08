@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace FinalBoss.Api.Extensions
 {
-    public static class IQueryableExtensions
+    public static class IEnumerableExtensions
     {
-        public static IQueryable<T> OrderByPropertyOrField<T>(this IQueryable<T> queryable, string propertyOrFieldName, bool ascending)
+        public static IEnumerable<T> OrderByPropertyOrField<T>(this IEnumerable<T> enumerable, string propertyOrFieldName, bool ascending)
         {
             var elementType = typeof(T);
             var orderByMethodName = ascending ? "OrderBy" : "OrderByDescending";
@@ -13,6 +14,8 @@ namespace FinalBoss.Api.Extensions
             var parameterExpression = Expression.Parameter(elementType);
             var propertyOrFieldExpression = Expression.PropertyOrField(parameterExpression, propertyOrFieldName);
             var selector = Expression.Lambda(propertyOrFieldExpression, parameterExpression);
+
+            var queryable = enumerable.AsQueryable();
 
             var orderByExpression = Expression.Call(
                 typeof(Queryable),

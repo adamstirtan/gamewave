@@ -11,9 +11,13 @@ namespace FinalBoss.Api.Services
     {
         int Count();
 
+        int Count(Expression<Func<T, bool>> query);
+
         IQueryable<T> All();
 
-        IEnumerable<T> Page(Func<T, bool> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
+        IEnumerable<T> Page(Expression<Func<T, bool>> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
+
+        //IEnumerable<T> Page(Func<T, bool> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
 
         IEnumerable<T> Where(Expression<Func<T, bool>> expression);
 
