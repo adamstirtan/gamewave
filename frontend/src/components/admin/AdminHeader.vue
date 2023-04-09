@@ -1,11 +1,17 @@
 <template>
-    <div class="mx-0 my-0 pa-6 bg-grey-lighten-2 elevation-1">
+    <div class="mx-0 my-0 pa-6 bg-grey-lighten-3">
         <v-row>
             <v-col>
-                <div class="text-h4 text-grey-darken-3 font-weight-bold">
+                <div class="text-h4">
                     {{ title }}
                 </div>
-                <AdminBreadcrumbs></AdminBreadcrumbs>
+                <v-btn
+                    prepend-icon="mdi-arrow-left"
+                    variant="plain"
+                    @click="$router.go(-1)"
+                    class="pl-1">
+                    Back
+                </v-btn>
             </v-col>
             <v-col
                 align-self="center"
@@ -17,8 +23,6 @@
 </template>
 
 <script setup>
-
-import AdminBreadcrumbs from '@/components/admin/AdminBreadcrumbs'
 
 const props = defineProps({
     title: {

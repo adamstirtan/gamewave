@@ -22,8 +22,15 @@
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
+            :hover="true"
             @update:options="onUpdateOptions"
             class="elevation-1">
+
+            <template v-slot:item.id="{ item }">
+                <v-chip prepend-icon="mdi-database">
+                    {{ item.raw.id }}
+                </v-chip>
+             </template>
 
             <template v-slot:item.name="{ item }">
                 <router-link :to="`/admin/company/${item.raw.id}`">{{ item.raw.name }}</router-link>

@@ -4,15 +4,11 @@
         <template #actions>
 
             <v-btn
-                v-show="state.editMode"
-                form="component-form"
-                type="button"
-                color="error"
-                append-icon="mdi-delete"
+                prepend-icon="mdi-refresh"
                 :disabled="state.loading"
-                @click="onDelete"
+                @click="fetchData"
                 class="mr-5">
-                Delete
+                Refresh
             </v-btn>
 
             <v-btn
@@ -27,75 +23,105 @@
             
         </template>
     </AdminHeader>
-    
-    <v-card class="ma-5">
-        
-        <v-card-text>
 
-            <form
-                id="component-form"
-                class="">
-                <v-row>
-                    <v-col cols="12" md="5">
-                        <v-text-field
-                            v-model="state.name"
-                            :error-messages="v$.name.$errors.map(e => e.$message)"
-                            :counter="255"
-                            label="Name"
-                            required
-                            @input="v$.name.$touch"
-                            @blur="v$.name.$touch"
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="4">
-                        <v-text-field
-                            v-model="state.slug"
-                            :error-messages="v$.slug.$errors.map(e => e.$message)"
-                            :counter="255"
-                            label="Slug"
-                            tabindex="-1"
-                            required
-                            @input="v$.slug.$touch"
-                            @blur="v$.slug.$touch"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+    <div v-show="state.editMode">
+        <v-row class="pa-6">
+            <v-col cols="2">
+                <v-chip prepend-icon="mdi-database">
+                    {{ id }}
+                </v-chip>
+            </v-col>
+            <v-col align-self="center" class="text-right">
+                <span class="text-subtitle-2">
+                    Last modified:
+                    {{ new Date(Date.parse(state.lastModified)).toLocaleString() }}
+                </span>
+            </v-col>
+        </v-row>
+        <v-divider class="mb-5"></v-divider>
+    </div>
 
-                <v-row>
-                    <v-col cols="12" md="5">
-                        <v-text-field
-                            v-model="state.imageUrl"
-                            :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
-                            :counter="255"
-                            label="Image URL"
-                            required
-                            @input="v$.imageUrl.$touch"
-                            @blur="v$.imageUrl.$touch"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+    <form
+        id="component-form"
+        class="ma-5">
 
-                <v-row>
-                    <v-col cols="12" md="12">
-                        <v-textarea
-                            v-model="state.description"
-                            :error-messages="v$.description.$errors.map(e => e.$message)"
-                            label="Description"
-                            @input="v$.description.$touch"
-                            @blur="v$.description.$touch"
-                        ></v-textarea>
-                    </v-col>
-                </v-row>
-            </form>
+        <v-row>
+            <v-col md="4">
+                <v-text-field
+                    v-model="state.name"
+                    :error-messages="v$.name.$errors.map(e => e.$message)"
+                    :counter="255"
+                    label="Name"
+                    required
+                    @input="v$.name.$touch"
+                    @blur="v$.name.$touch"
+                ></v-text-field>
+            </v-col>
+            <v-col md="4">
+                <v-text-field
+                    v-model="state.slug"
+                    :error-messages="v$.slug.$errors.map(e => e.$message)"
+                    :counter="255"
+                    label="Slug"
+                    tabindex="-1"
+                    required
+                    @input="v$.slug.$touch"
+                    @blur="v$.slug.$touch"
+                ></v-text-field>
+            </v-col>
+        </v-row>
 
-        </v-card-text>
+        <v-row>
+            <v-col md="8">
+                <v-text-field
+                    v-model="state.imageUrl"
+                    :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
+                    :counter="255"
+                    label="Image URL"
+                    required
+                    @input="v$.imageUrl.$touch"
+                    @blur="v$.imageUrl.$touch"
+                ></v-text-field>
+            </v-col>
+        </v-row>
 
-        <div v-show="state.editMode">
-            <v-divider></v-divider>
-            <v-card-subtitle class="my-5">Last Modified: {{ new Date(Date.parse(state.lastModified)).toLocaleString() }}</v-card-subtitle>
-        </div>
-        
-    </v-card>
+        <v-row>
+            <v-col cols="12" md="12">
+                <v-textarea
+                    v-model="state.description"
+                    :error-messages="v$.description.$errors.map(e => e.$message)"
+                    label="Description"
+                    @input="v$.description.$touch"
+                    @blur="v$.description.$touch"
+                ></v-textarea>
+            </v-col>
+        </v-row>
+    </form>
+
+    <div v-show="state.editMode">
+        <v-divider></v-divider>
+        <v-row class="pa-5">
+            <v-col align-self="center">
+                <span class="text-subtitle-2">
+                    Created:
+                    {{ new Date(Date.parse(state.created)).toLocaleString() }}
+                </span>
+            </v-col>
+            <v-col class="text-right">
+                <v-btn
+                    v-show="state.editMode"
+                    form="component-form"
+                    type="button"
+                    variant="tonal"
+                    color="red"
+                    append-icon="mdi-delete"
+                    :disabled="state.loading"
+                    @click="onDelete">
+                    Delete
+                </v-btn>
+            </v-col>
+        </v-row>
+    </div>
 
 </template>
 
@@ -124,6 +150,7 @@ const companyService = new CompanyService()
 const state = reactive({
     editMode: !isNaN(new Number(id.value)),
     loading: false,
+    staticName: '',
     name: '',
     slug: '',
     description: '',
@@ -151,11 +178,12 @@ watch(() => state.name, (newValue) => {
     state.slug = newValue.trim().toLowerCase().replace(' ', '-').replace(/[^a-z0-9-_]/g, '')
 })
 
-if (state.editMode) {
+const fetchData = async() => {
     state.loading = true
 
     companyService.get(id.value)
         .then(response => {
+            state.staticName = response.data.name
             state.name = response.data.name
             state.slug = response.data.slug
             state.description = response.data.description
@@ -169,6 +197,10 @@ if (state.editMode) {
         .finally(() => {
             state.loading = false
         })
+}
+
+if (state.editMode) {
+    fetchData()
 }
 
 const onSubmit = async () => {
@@ -190,6 +222,7 @@ const onSubmit = async () => {
     if (state.editMode) {
         await companyService.update(id.value, dto)
             .then(response => {
+                state.staticName = response.data.name
                 state.name = response.data.name
                 state.slug = response.data.slug
                 state.description = response.data.description

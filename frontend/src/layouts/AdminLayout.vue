@@ -34,7 +34,7 @@
     </v-list>
   </v-navigation-drawer>
 
-  <v-main class="bg-grey-lighten-3">
+  <v-main>
     <slot></slot>
   </v-main>
 
