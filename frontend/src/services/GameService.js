@@ -24,7 +24,7 @@ class GameService {
     }
 
     update(id, dto) {
-        return http.post(`/v1/game/${id}`, dto)
+        return http.put(`/v1/game/${id}`, dto)
     }
 
     delete(id) {

@@ -24,7 +24,7 @@ class CompanyService {
     }
 
     update(id, dto) {
-        return http.post(`/v1/company/${id}`, dto)
+        return http.put(`/v1/company/${id}`, dto)
     }
 
     delete(id) {

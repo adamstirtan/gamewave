@@ -17,18 +17,16 @@ namespace FinalBoss.Api.Services
 
         IEnumerable<T> Page(Expression<Func<T, bool>> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
 
-        //IEnumerable<T> Page(Func<T, bool> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
-
         IEnumerable<T> Where(Expression<Func<T, bool>> expression);
 
         T GetById(long id);
 
-        T Create(T entity);
+        T Create(T dto);
 
-        bool Update(T entity);
+        bool Update(T dto);
 
         bool Delete(long id);
 
-        bool Delete(IEnumerable<T> entities);
+        bool Delete(IEnumerable<T> dtos);
     }
 }

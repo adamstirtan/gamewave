@@ -7,13 +7,12 @@
                 v-show="state.editMode"
                 form="component-form"
                 type="button"
-                variant="tonal"
-                color="red"
+                color="error"
                 append-icon="mdi-delete"
                 :disabled="state.loading"
-                @click="trash"
+                @click="onDelete"
                 class="mr-5">
-                Trash
+                Delete
             </v-btn>
 
             <v-btn
@@ -22,70 +21,80 @@
                 color="primary"
                 append-icon="mdi-database-plus"
                 :disabled="state.loading"
-                @click="submit">
-                Save Changes
+                @click="onSubmit">
+                Save
             </v-btn>
             
         </template>
     </AdminHeader>
     
     <v-card class="ma-5">
-        <form
-            id="component-form"
-            class="pa-5">
-            <v-row>
-                <v-col cols="12" md="5">
-                    <v-text-field
-                        v-model="state.name"
-                        :error-messages="v$.name.$errors.map(e => e.$message)"
-                        :counter="255"
-                        label="Name"
-                        required
-                        @input="v$.name.$touch"
-                        @blur="v$.name.$touch"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12" md="4">
-                    <v-text-field
-                        v-model="state.slug"
-                        :error-messages="v$.slug.$errors.map(e => e.$message)"
-                        :counter="255"
-                        label="Slug (Read only)"
-                        tabindex="-1"
-                        required
-                        @input="v$.slug.$touch"
-                        @blur="v$.slug.$touch"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+        
+        <v-card-text>
 
-            <v-row>
-                <v-col cols="12" md="5">
-                    <v-text-field
-                        v-model="state.imageUrl"
-                        :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
-                        :counter="255"
-                        label="Image URL"
-                        required
-                        @input="v$.imageUrl.$touch"
-                        @blur="v$.imageUrl.$touch"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+            <form
+                id="component-form"
+                class="">
+                <v-row>
+                    <v-col cols="12" md="5">
+                        <v-text-field
+                            v-model="state.name"
+                            :error-messages="v$.name.$errors.map(e => e.$message)"
+                            :counter="255"
+                            label="Name"
+                            required
+                            @input="v$.name.$touch"
+                            @blur="v$.name.$touch"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                        <v-text-field
+                            v-model="state.slug"
+                            :error-messages="v$.slug.$errors.map(e => e.$message)"
+                            :counter="255"
+                            label="Slug"
+                            tabindex="-1"
+                            required
+                            @input="v$.slug.$touch"
+                            @blur="v$.slug.$touch"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
 
-            <v-row>
-                <v-col cols="12" md="12">
-                    <v-textarea
-                        v-model="state.description"
-                        :error-messages="v$.description.$errors.map(e => e.$message)"
-                        label="Description"
-                        @input="v$.description.$touch"
-                        @blur="v$.description.$touch"
-                    ></v-textarea>
-                </v-col>
-            </v-row>
+                <v-row>
+                    <v-col cols="12" md="5">
+                        <v-text-field
+                            v-model="state.imageUrl"
+                            :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
+                            :counter="255"
+                            label="Image URL"
+                            required
+                            @input="v$.imageUrl.$touch"
+                            @blur="v$.imageUrl.$touch"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
 
-        </form>
+                <v-row>
+                    <v-col cols="12" md="12">
+                        <v-textarea
+                            v-model="state.description"
+                            :error-messages="v$.description.$errors.map(e => e.$message)"
+                            label="Description"
+                            @input="v$.description.$touch"
+                            @blur="v$.description.$touch"
+                        ></v-textarea>
+                    </v-col>
+                </v-row>
+            </form>
+
+        </v-card-text>
+
+        <div v-show="state.editMode">
+            <v-divider></v-divider>
+            <v-card-subtitle class="my-5">Last Modified: {{ new Date(Date.parse(state.lastModified)).toLocaleString() }}</v-card-subtitle>
+        </div>
+        
     </v-card>
 
 </template>
@@ -118,7 +127,9 @@ const state = reactive({
     name: '',
     slug: '',
     description: '',
-    imageUrl: ''
+    imageUrl: '',
+    lastModified: '',
+    created: ''
 })
 
 const rules = {
@@ -149,6 +160,8 @@ if (state.editMode) {
             state.slug = response.data.slug
             state.description = response.data.description
             state.imageUrl = response.data.imageUrl
+            state.lastModified = response.data.lastModified
+            state.created = response.data.created
         })
         .catch(e => {
             console.error(e)
@@ -158,44 +171,64 @@ if (state.editMode) {
         })
 }
 
-const submit = async () => {
+const onSubmit = async () => {
     const result = await v$.value.$validate()
+
     if (!result) {
         return
     }
 
-    state.loading = true
-
-    await companyService.create({
+    const dto = {
         name: state.name,
         slug: state.slug,
         imageUrl: state.imageUrl,
         description: state.description
-    })
-    .then(() => {
-        router.push('/admin/company')
-    })
-    .catch(e => {
-        console.error(e);
-    })
-    .finally(() => {
-        state.loading = false
-    })
+    }
+
+    state.loading = true
+
+    if (state.editMode) {
+        await companyService.update(id.value, dto)
+            .then(response => {
+                state.name = response.data.name
+                state.slug = response.data.slug
+                state.description = response.data.description
+                state.imageUrl = response.data.imageUrl
+                state.lastModified = response.data.lastModified
+            })
+            .catch(e => {
+                console.error(e);
+            })
+            .finally(() => {
+                state.loading = false
+            })
+    } else {
+        await companyService.create(dto)
+            .then(() => {
+                router.push('/admin/company')
+            })
+            .catch(e => {
+                console.error(e);
+            })
+            .finally(() => {
+                state.loading = false
+            })
+    }
 }
 
-const trash = async () => {
+const onDelete = async () => {
     state.loading = true
 
     await companyService.delete(id.value)
-    .then(() => {
-        router.push({ path: '/admin/company', replace: true })
-    })
-    .catch(e => {
-        console.error(e);
-    })
-    .finally(() => {
-        state.loading = false
-    })
+        .then(() => {
+            router.push({ path: '/admin/company', replace: true })
+        })
+        .catch(e => {
+            console.error(e);
+        })
+        .finally(() => {
+            state.loading = false
+        })
 }
 
 </script>

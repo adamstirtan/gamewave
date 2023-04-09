@@ -24,7 +24,7 @@ class PlatformService {
     }
 
     update(id, dto) {
-        return http.post(`/v1/platform/${id}`, dto)
+        return http.put(`/v1/platform/${id}`, dto)
     }
 
     delete(id) {
