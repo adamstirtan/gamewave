@@ -1,6 +1,6 @@
 <template>
 
-  <v-app-bar color="primary">
+  <v-app-bar color="primary elevation-0">
     <v-app-bar-nav-icon icon="mdi-gamepad"></v-app-bar-nav-icon>
     <v-app-bar-title>Final Boss</v-app-bar-title>
     <v-spacer></v-spacer>
@@ -13,6 +13,7 @@
   </v-app-bar>
 
   <v-navigation-drawer
+    class="elevation-1"
     color="grey-lighten-4"
     rail
     expand-on-hover

@@ -5,6 +5,7 @@
 
             <v-btn
                 prepend-icon="mdi-refresh"
+                variant="plain"
                 :disabled="state.loading"
                 @click="fetchData"
                 class="mr-5">
@@ -14,7 +15,7 @@
             <v-btn
                 form="component-form"
                 type="submit"
-                color="primary"
+                color="success"
                 append-icon="mdi-database-plus"
                 :disabled="state.loading"
                 @click="onSubmit">
