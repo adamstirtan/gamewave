@@ -64,7 +64,7 @@ namespace FinalBoss.Api.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception.Message);
+                Logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

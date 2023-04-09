@@ -17,15 +17,14 @@ namespace FinalBoss.Api.Controllers
         where TEntity : BaseEntity
         where TService : IService<TEntity>, IServiceAsync<TEntity>
     {
-        protected readonly ILogger<ApiController<TEntity, TService>> _logger;
+        protected readonly ILogger<ApiController<TEntity, TService>> Logger;
         protected readonly TService Service;
 
         protected ApiController(
             ILogger<ApiController<TEntity, TService>> logger,
             TService service)
         {
-            _logger = logger;
-
+            Logger = logger;
             Service = service;
         }
 
@@ -64,7 +63,7 @@ namespace FinalBoss.Api.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception.Message);
+                Logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -89,7 +88,7 @@ namespace FinalBoss.Api.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, exception.Message);
+                Logger.LogError(exception, exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -113,7 +112,7 @@ namespace FinalBoss.Api.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, exception.Message);
+                Logger.LogError(exception, exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -123,17 +122,18 @@ namespace FinalBoss.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> Update(long id, TEntity entity)
+        public virtual async Task<ActionResult> Update(long id, TEntity dto)
         {
             try
             {
-                var existingEntity = await Service.GetByIdAsync(id);
+                var entity = await Service.GetByIdAsync(id);
 
-                if (existingEntity is null)
+                if (entity is null)
                 {
                     return NotFound();
                 }
 
+                entity.Merge(entity, dto);
                 entity.LastModified = DateTimeOffset.UtcNow;
 
                 bool updated = await Service.UpdateAsync(entity);
@@ -145,8 +145,10 @@ namespace FinalBoss.Api.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-            catch
+            catch (Exception exception)
             {
+                Logger.LogError(exception.Message);
+
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -175,8 +177,10 @@ namespace FinalBoss.Api.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-            catch
+            catch (Exception exception)
             {
+                Logger.LogError(exception.Message);
+
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
