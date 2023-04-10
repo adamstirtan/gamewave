@@ -1,17 +1,19 @@
 <template>
 
-    <AdminHeader title="Platforms">
+<AdminHeader title="Platforms">
         <template #actions>
+            
             <v-btn
-                to="/admin/platforms/add"
+                to="/admin/platform/add"
                 append-icon="mdi-plus-box"
                 color="indigo">
                 Add
             </v-btn>
+
         </template>
     </AdminHeader>
 
-    <div class="pa-5">
+    <v-card class="ma-5">
         <v-data-table-server
             :headers="state.headers"
             :loading="state.loading"
@@ -20,9 +22,19 @@
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
+            :hover="true"
             @update:options="onUpdateOptions"
-            @click:row="onRowClicked"
             class="elevation-1">
+
+            <template v-slot:item.id="{ item }">
+                <span class="text-subtitle-2">
+                    {{ item.raw.id }}
+                </span>
+             </template>
+
+            <template v-slot:item.name="{ item }">
+                <router-link :to="`/admin/platform/${item.raw.id}`">{{ item.raw.name }}</router-link>
+             </template>
 
             <template v-slot:item.lastModified="{ item }">
                 <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
@@ -33,15 +45,13 @@
             </template>
 
         </v-data-table-server>
-
-    </div>
+    </v-card>
     
 </template>
 
 <script setup>
 
-import { reactive, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { reactive, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
@@ -65,14 +75,12 @@ const state = reactive({
         {
             title: 'Modified',
             key: 'lastModified',
-            width: '215',
-            minWidth: '215'
+            width: '215'
         },
         {
             title: 'Created',
             key: 'created',
-            width: '215',
-            minWidth: '215'
+            width: '215'
         }
     ],
     items: [],
@@ -88,7 +96,6 @@ const state = reactive({
     }
 })
 
-const router = useRouter()
 const platformService = new PlatformService()
 
 async function onUpdateOptions(options) {
@@ -96,13 +103,7 @@ async function onUpdateOptions(options) {
     await fetchData()
 }
 
-function onRowClicked(item, row) {
-    router.push(`/admin/platforms/${row.item.value}`)
-}
-
 async function fetchData() {
-    state.loading = true
-    
     const params = {
         ascending: computed(() => {
             if (state.options.sortBy && state.options.sortBy.length > 0) {
@@ -121,23 +122,19 @@ async function fetchData() {
         paged: true
     }
 
-    try {
-        const response = await platformService.search(params)
+    state.loading = true
 
-        state.items = response.data.items
-        state.itemsLength = response.data.totalItems
-    } catch (error) {
-        console.error(error);
-    }
-
-    state.loading = false
+    platformService.search(params)
+        .then(response => {
+            state.items = response.data.items
+            state.itemsLength = response.data.totalItems
+        })
+        .catch(e => {
+            console.error(e)
+        })
+        .finally(() => {
+            state.loading = false
+        })
 }
-
-watch(
-    () => state.options.itemsPerPage,
-    () => {
-        fetchData()
-    }
-)
 
 </script>
