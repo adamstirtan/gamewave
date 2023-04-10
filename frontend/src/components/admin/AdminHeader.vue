@@ -2,9 +2,6 @@
     <div class="mx-0 my-0 pa-6 bg-grey-lighten-3">
         <v-row>
             <v-col>
-                <div class="text-h4">
-                    {{ title }}
-                </div>
                 <v-btn
                     prepend-icon="mdi-arrow-left"
                     variant="plain"
@@ -12,6 +9,9 @@
                     class="pl-1">
                     Back
                 </v-btn>
+                <div class="text-h4">
+                    {{ title }}
+                </div>
             </v-col>
             <v-col
                 align-self="center"

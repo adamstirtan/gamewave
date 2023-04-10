@@ -1,6 +1,6 @@
 <template>
     
-    <AdminHeader title="Companies">
+    <AdminHeader :title="state.editMode ? state.staticName : 'Add Company'">
         <template #actions>
 
             <v-btn
