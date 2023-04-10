@@ -67,17 +67,18 @@ const routes = [
     }
   },
   {
-    path: '/admin/platforms',
-    name: 'Admin Platform List',
+    path: '/admin/platform',
+    name: 'admin-platform-list',
     component: () => import('@/components/admin/platforms/PlatformList.vue'),
     meta: {
       layout: 'Admin'
     }
   },
   {
-    path: '/admin/platforms/add',
-    name: 'Admin Platforms Add',
-    component: () => import('@/components/admin/platforms/PlatformList.vue'),
+    path: '/admin/platform/:id',
+    name: 'admin-platform-details',
+    props: true,
+    component: () => import('@/components/admin/platforms/PlatformForm.vue'),
     meta: {
       layout: 'Admin'
     }

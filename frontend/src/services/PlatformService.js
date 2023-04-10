@@ -19,6 +19,10 @@ class PlatformService {
         return http.get(`/v1/platform/${id}`)
     }
 
+    getCategories() {
+        return http.get('/v1/platform/category')
+    }
+
     create(dto) {
         return http.post('/v1/platform/', dto)
     }
