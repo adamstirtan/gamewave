@@ -192,7 +192,7 @@ const rules = {
 const v$ = useVuelidate(rules, state)
 
 watch(() => state.name, (newValue) => {
-    state.slug = newValue.trim().toLowerCase().replace(' ', '-').replace(/[^a-z0-9-_]/g, '')
+    state.slug = newValue.trim().toLowerCase().replaceAll(' ', '-').replace(/[^a-z0-9-_]/g, '')
 })
 
 onMounted(() => {
