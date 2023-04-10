@@ -1,23 +1,25 @@
 <template>
 
   <v-app-bar color="primary elevation-0">
-    <v-app-bar-nav-icon icon="mdi-gamepad"></v-app-bar-nav-icon>
-    <v-app-bar-title>Final Boss</v-app-bar-title>
+
+    <v-app-bar-nav-icon
+      icon="mdi-menu"
+      @click.stop="showDrawer = !showDrawer"
+    ></v-app-bar-nav-icon>
+    <v-app-bar-title class="font-weight-bold">GameWave</v-app-bar-title>
+
     <v-spacer></v-spacer>
+
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
-    <v-btn icon>
-      <v-icon>mdi-dots-vertical</v-icon>
-    </v-btn>
+
   </v-app-bar>
 
   <v-navigation-drawer
     class="elevation-1"
-    color="grey-lighten-4"
-    rail
-    expand-on-hover
-    permanent>
+    color="grey-lighten-4">
+
     <v-list nav>
       <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
       <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
@@ -28,11 +30,31 @@
       <v-list-item to="/admin/company" prepend-icon="mdi-domain" title="Companies" value="companies"></v-list-item>
       <v-list-item prepend-icon="mdi-account-child" title="Age Ratings" value="age-ratings"></v-list-item>
     </v-list>
+
     <v-divider></v-divider>
+
     <v-list density="compact" nav>
       <v-list-item prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
       <v-list-item prepend-icon="mdi-cog" title="Settings" value="settings"></v-list-item>
     </v-list>
+
+    <template v-slot:append>
+      <v-divider></v-divider>
+      <v-list>
+        <v-list-item
+          prepend-avatar="/profile.jpg"
+          title="Adam Stirtan">
+          <template v-slot:append>
+            <v-btn
+              icon="mdi-menu-up"
+              size="small"
+              variant="text">
+            </v-btn>
+          </template>
+        </v-list-item>
+      </v-list>
+    </template>
+
   </v-navigation-drawer>
 
   <v-main>

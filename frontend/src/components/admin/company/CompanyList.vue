@@ -27,9 +27,9 @@
             class="elevation-1">
 
             <template v-slot:item.id="{ item }">
-                <v-chip prepend-icon="mdi-database">
+                <span class="text-subtitle-2">
                     {{ item.raw.id }}
-                </v-chip>
+                </span>
              </template>
 
             <template v-slot:item.name="{ item }">
@@ -76,13 +76,11 @@ const state = reactive({
             title: 'Modified',
             key: 'lastModified',
             width: '215',
-            minWidth: '215'
         },
         {
             title: 'Created',
             key: 'created',
             width: '215',
-            minWidth: '215'
         }
     ],
     items: [],
