@@ -4,6 +4,7 @@
         <template #actions>
 
             <v-btn
+                v-show="state.editMode"
                 prepend-icon="mdi-refresh"
                 variant="plain"
                 :disabled="state.loading"
