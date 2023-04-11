@@ -1,4 +1,4 @@
-name: Deploy to Azure App Service
+name: Deploy API
 
 on:
   push:
@@ -20,21 +20,21 @@ jobs:
 
     - name: NuGet Restore
       run: dotnet restore
-      working-directory: ./backend/src/
+      working-directory: ./backend/
 
     - name: Build
       run: dotnet build -c Release --no-restore
-      working-directory: ./backend/src/
+      working-directory: ./backend/
 
     - name: Publish
-      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/_api --no-restore
-      working-directory: ./backend/src/
+      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/deploy/backend --no-restore
+      working-directory: ./backend/
     
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
-        app-name: finalboss-api
+        app-name: gamewave-api
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A788D754AF8AAA4B5CF3EB5A6D8E4D16 }}
-        package: ${{env.DOTNET_ROOT}}/_api
+        package: ${{env.DOTNET_ROOT}}/deploy/backend
 
