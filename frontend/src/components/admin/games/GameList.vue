@@ -2,18 +2,20 @@
 
     <AdminHeader title="Games">
         <template #actions>
+
             <v-btn
                 to="/admin/games/add"
                 append-icon="mdi-plus-box"
                 color="indigo">
                 Add
             </v-btn>
+            
         </template>
     </AdminHeader>
 
-    <div class="pa-5">
+    <v-card class="ma-5">
         <v-data-table-server
-            :headers="state.headers"
+        :headers="state.headers"
             :loading="state.loading"
             :items="state.items"
             :items-length="state.itemsLength"
@@ -21,8 +23,11 @@
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
             @update:options="onUpdateOptions"
-            @click:row="onRowClicked"
             class="elevation-1">
+
+            <template v-slot:item.name="{ item }">
+                <router-link :to="`/admin/games/${item.raw.id}`">{{ item.raw.name }}</router-link>
+             </template>
 
             <template v-slot:item.lastModified="{ item }">
                 <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
@@ -33,7 +38,7 @@
             </template>
 
         </v-data-table-server>
-    </div>
+    </v-card>
     
 </template>
 
@@ -49,14 +54,6 @@ import GameService from '@/services/GameService'
 const state = reactive({
     loading: false,
     headers: [
-        {
-            title: 'ID',
-            align: 'start',
-            key: 'id',
-            sortable: true,
-            width: '80',
-            minWidth: '80'
-        },
         {
             title: 'Name',
             key: 'name',
@@ -95,10 +92,6 @@ async function onUpdateOptions(options) {
     await fetchData()
 }
 
-function onRowClicked(item, row) {
-    router.push(`/admin/games/${row.item.value}`)
-}
-
 async function fetchData() {
     state.loading = true
     
@@ -120,23 +113,17 @@ async function fetchData() {
         paged: true
     }
 
-    try {
-        const response = await gameService.search(params)
-
-        state.items = response.data.items
-        state.itemsLength = response.data.totalItems
-    } catch (error) {
-        console.error(error);
-    }
-
-    state.loading = false
+    gameService.search(params)
+        .then(response => {
+            state.items = response.data.items
+            state.itemsLength = response.data.totalItems
+        })
+        .catch(e => {
+            console.error(e)
+        })
+        .finally(() => {
+            state.loading = false
+        })
 }
-
-watch(
-    () => state.options.itemsPerPage,
-    () => {
-        fetchData()
-    }
-)
 
 </script>

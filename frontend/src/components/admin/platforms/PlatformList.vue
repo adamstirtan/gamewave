@@ -1,6 +1,6 @@
 <template>
 
-<AdminHeader title="Platforms">
+    <AdminHeader title="Platforms">
         <template #actions>
             
             <v-btn
@@ -22,13 +22,8 @@
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
-            :hover="true"
             @update:options="onUpdateOptions"
             class="elevation-1">
-
-            <template v-slot:item.name="{ item }">
-                <router-link :to="`/admin/platform/${item.raw.id}`">{{ item.raw.name }}</router-link>
-             </template>
 
             <template v-slot:item.lastModified="{ item }">
                 <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>

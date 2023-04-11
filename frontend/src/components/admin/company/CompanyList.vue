@@ -22,7 +22,6 @@
             :sort-by.sync="state.options.sortBy"
             :sort-desc.sync="state.options.sortDesc"
             :must-sort="true"
-            :hover="true"
             @update:options="onUpdateOptions"
             class="elevation-1">
 
