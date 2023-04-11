@@ -15,7 +15,7 @@
 
     <v-card class="ma-5">
         <v-data-table-server
-        :headers="state.headers"
+            :headers="state.headers"
             :loading="state.loading"
             :items="state.items"
             :items-length="state.itemsLength"
