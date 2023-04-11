@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace FinalBoss.ObjectModel
 {
@@ -24,12 +25,20 @@ namespace FinalBoss.ObjectModel
         [ForeignKey("Developer")]
         public long DeveloperId { get; set; }
 
-        public Company? Developer { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Company Developer { get; set; }
 
         [ForeignKey("Publisher")]
         public long PublisherId { get; set; }
 
-        public Company? Publisher { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Company Publisher { get; set; }
+
+        [ForeignKey("Platform")]
+        public long PlatformId { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Platform Platform { get; set; }
 
         public ICollection<Release> Releases { get; set; }
     }

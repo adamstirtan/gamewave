@@ -31,10 +31,4 @@
   <ItemGroup>
     <ProjectReference Include="..\FinalBoss.ObjectModel\FinalBoss.ObjectModel.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="Mapping\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mapping\" />
-  </ItemGroup>
 </Project>

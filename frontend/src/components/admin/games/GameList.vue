@@ -27,7 +27,11 @@
 
             <template v-slot:item.name="{ item }">
                 <router-link :to="`/admin/games/${item.raw.id}`">{{ item.raw.name }}</router-link>
-             </template>
+            </template>
+
+             <template v-slot:item.platform="{ item }">
+                <router-link :to="`/admin/platform/${item.raw.platformId}`">{{ getPlatformById(item.raw.platformId) }}</router-link>
+            </template>
 
             <template v-slot:item.lastModified="{ item }">
                 <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
@@ -44,12 +48,14 @@
 
 <script setup>
 
-import { reactive, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
+import PlatformService from '@/services/PlatformService'
 import GameService from '@/services/GameService'
+
+const platforms = ref([])
 
 const state = reactive({
     loading: false,
@@ -57,6 +63,10 @@ const state = reactive({
         {
             title: 'Name',
             key: 'name',
+        },
+        {
+            title: 'Platform',
+            key: 'platform'
         },
         {
             title: 'Modified',
@@ -84,8 +94,24 @@ const state = reactive({
     }
 })
 
-const router = useRouter()
+const platformService = new PlatformService()
 const gameService = new GameService()
+
+platformService.getAll()
+    .then(response => {
+        platforms.value = response.data
+    })
+    .catch(e => {
+        console.error(e)
+    })
+    .finally(() => {
+        state.loading = false
+    })
+
+function getPlatformById(id) {
+    const item = platforms.value.find(x => x.id === id)
+    return item ? item.name : ''
+}
 
 async function onUpdateOptions(options) {
     state.options = options

@@ -13,10 +13,18 @@ namespace FinalBoss.Api.Services
             : base(context)
         { }
 
+        public override IQueryable<Game> All()
+        {
+            return Set
+                .Include(x => x.Developer)
+                .Include(x => x.Publisher);
+        }
+
         public override Game GetById(long id)
         {
             return Context.Games
                 .Include(x => x.Developer)
+                .Include(x => x.Publisher)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -24,6 +32,7 @@ namespace FinalBoss.Api.Services
         {
             return await Context.Games
                 .Include(x => x.Developer)
+                .Include(x => x.Publisher)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
