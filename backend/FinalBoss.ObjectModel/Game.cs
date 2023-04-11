@@ -40,6 +40,7 @@ namespace FinalBoss.ObjectModel
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Platform Platform { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ICollection<Release> Releases { get; set; }
     }
 }
