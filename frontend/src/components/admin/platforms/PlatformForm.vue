@@ -92,10 +92,24 @@
                 <v-autocomplete
                     v-model="state.category"
                     :items="state.categories"
+                    :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
                     item-value="id"
                     item-title="name"
                     label="Category"
+                    required
                 ></v-autocomplete>
+            </v-col>
+            <v-col md="2">
+                <v-text-field
+                    v-model="state.generation"
+                    :error-messages="v$.generation.$errors.map(e => e.$message)"
+                    label="Generation"
+                    type="number"
+                    min="1"
+                    required
+                    @input="v$.generation.$touch"
+                    @blur="v$.generation.$touch"
+                ></v-text-field>
             </v-col>
         </v-row>
 
@@ -171,6 +185,7 @@ const state = reactive({
     description: '',
     imageUrl: '',
     category: null,
+    generation: 0,
     lastModified: '',
     created: ''
 })
@@ -186,7 +201,8 @@ const rules = {
     },
     description: { },
     imageUrl: { required, url },
-    category: { required }
+    category: { required },
+    generation: { required }
 }
 
 const v$ = useVuelidate(rules, state)
@@ -221,6 +237,7 @@ const fetchData = async() => {
             state.description = response.data.description
             state.imageUrl = response.data.imageUrl
             state.category = response.data.category
+            state.generation = response.data.generation
             state.lastModified = response.data.lastModified
             state.created = response.data.created
         })
@@ -248,7 +265,8 @@ const onSubmit = async () => {
         slug: state.slug,
         imageUrl: state.imageUrl,
         description: state.description,
-        category: state.category
+        category: state.category,
+        generation: state.generation
     }
 
     state.loading = true
@@ -262,6 +280,7 @@ const onSubmit = async () => {
                 state.description = response.data.description
                 state.imageUrl = response.data.imageUrl
                 state.category = response.data.category
+                state.generation = response.data.generation
                 state.lastModified = response.data.lastModified
             })
             .catch(e => {
