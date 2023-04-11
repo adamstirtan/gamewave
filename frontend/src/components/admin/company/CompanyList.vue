@@ -26,12 +26,6 @@
             @update:options="onUpdateOptions"
             class="elevation-1">
 
-            <template v-slot:item.id="{ item }">
-                <span class="text-subtitle-2">
-                    {{ item.raw.id }}
-                </span>
-             </template>
-
             <template v-slot:item.name="{ item }">
                 <router-link :to="`/admin/company/${item.raw.id}`">{{ item.raw.name }}</router-link>
              </template>
@@ -60,14 +54,6 @@ import CompanyService from '@/services/CompanyService'
 const state = reactive({
     loading: false,
     headers: [
-        {
-            title: 'ID',
-            align: 'start',
-            key: 'id',
-            sortable: true,
-            width: '80',
-            minWidth: '80'
-        },
         {
             title: 'Name',
             key: 'name',
