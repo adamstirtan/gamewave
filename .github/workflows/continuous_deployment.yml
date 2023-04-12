@@ -19,23 +19,25 @@ jobs:
         dotnet-version: '7.0.x'
 
     - name: NuGet Restore
-      run: dotnet restore
       working-directory: ./backend/
+      run: dotnet restore
 
     - name: Build
-      run: dotnet build -c Release --no-restore
       working-directory: ./backend/
+      run: dotnet build -c Release --no-restore
 
     - name: Install EF Core CLI
       run: dotnet tool install --global dotnet-ef
 
     - name: Build and run EF Core migrations
-      run: dotnet ef database update
       working-directory: ./backend/GameWave.Api/
+      run: dotnet ef database update --connection "$CONNECTION_STRING"
+      env:
+        CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
 
     - name: Publish
-      run: dotnet publish GameWave.Api/GameWave.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/deploy/backend --no-restore
       working-directory: ./backend/
+      run: dotnet publish GameWave.Api/GameWave.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/deploy/backend --no-restore
     
     - name: Deploy
       uses: azure/webapps-deploy@v2
@@ -58,12 +60,12 @@ jobs:
         node-version: 18
 
     - name: Install Dependencies
-      run: npm ci
       working-directory: ./frontend/
+      run: npm ci
 
     - name: Build
-      run: npm run build
       working-directory: ./frontend/
+      run: npm run build
 
     - name: Deploy to Azure Static Web Apps
       uses: azure/static-web-apps-deploy@v1
