@@ -31,7 +31,7 @@ jobs:
 
     - name: Build and run EF Core migrations
       run: dotnet ef database update
-      working-directory: ./backend/GameWave.api/
+      working-directory: ./backend/GameWave.Api/
 
     - name: Publish
       run: dotnet publish GameWave.Api/GameWave.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/deploy/backend --no-restore
