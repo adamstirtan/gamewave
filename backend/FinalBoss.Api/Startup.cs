@@ -21,6 +21,8 @@ namespace FinalBoss.Api
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _environment;
 
+        private const string ApplicationName = "GameWave API";
+
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _configuration = configuration;
@@ -29,9 +31,9 @@ namespace FinalBoss.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = _configuration.GetConnectionString("Synology");
+            string connectionString = _configuration.GetConnectionString(_environment.EnvironmentName);
 
-            Log.Logger = new LoggerConfiguration()
+            var loggerConfiguration = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
@@ -40,9 +42,14 @@ namespace FinalBoss.Api
                 .Enrich.WithProcessId()
                 .Enrich.WithThreadId()
                 .Enrich.WithClientIp()
-                .Enrich.WithClientAgent()
-                .WriteTo.Console()
-                .CreateLogger();
+                .Enrich.WithClientAgent();
+
+            if (_environment.IsDevelopment())
+            {
+                loggerConfiguration.WriteTo.Console();
+            }
+
+            Log.Logger = loggerConfiguration.CreateLogger();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -81,7 +88,7 @@ namespace FinalBoss.Api
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Final Boss API",
+                    Title = ApplicationName,
                     Version = "v1"
                 });
             });
@@ -98,7 +105,7 @@ namespace FinalBoss.Api
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Final Boss API");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", ApplicationName);
                 options.RoutePrefix = string.Empty;
             });
             app.UseHttpsRedirection();
