@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.MSSqlServer;
 
 using GameWave.Api.Services;
 
@@ -43,6 +44,13 @@ namespace GameWave.Api
                 .Enrich.WithThreadId()
                 .Enrich.WithClientIp()
                 .Enrich.WithClientAgent();
+
+            loggerConfiguration.WriteTo.MSSqlServer(connectionString, new MSSqlServerSinkOptions
+            {
+                AutoCreateSqlTable = true,
+                TableName = "Logs",
+                SchemaName = "dbo"
+            }, restrictedToMinimumLevel: LogEventLevel.Information);
 
             if (_environment.IsDevelopment())
             {
