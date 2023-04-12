@@ -26,8 +26,15 @@ jobs:
       run: dotnet build -c Release --no-restore
       working-directory: ./backend/
 
+    - name: Install EF Core CLI
+      run: dotnet tool install --global dotnet-ef
+
+    - name: Build and run EF Core migrations
+      run: dotnet ef database update
+      working-directory: ./backend/GameWave.api/
+
     - name: Publish
-      run: dotnet publish FinalBoss.Api/FinalBoss.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/deploy/backend --no-restore
+      run: dotnet publish GameWave.Api/GameWave.Api.csproj -c Release -o ${{env.DOTNET_ROOT}}/deploy/backend --no-restore
       working-directory: ./backend/
     
     - name: Deploy
