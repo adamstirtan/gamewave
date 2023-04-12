@@ -61,8 +61,9 @@ jobs:
     - name: Deploy to Azure Static Web Apps
       uses: azure/static-web-apps-deploy@v1
       with:
-        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_HILL_089A7DF10 }}
         repo_token: ${{ secrets.GAMEWAVE_REPO_TOKEN }}
         action: "upload"
         app_location: "/frontend"
+        api_location: ""
         output_location: "dist"
