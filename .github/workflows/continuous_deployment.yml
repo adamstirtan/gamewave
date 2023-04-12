@@ -31,7 +31,7 @@ jobs:
 
     - name: Build and run EF Core migrations
       working-directory: ./backend/GameWave.Api/
-      run: dotnet ef database update --connection "$CONNECTION_STRING" --no-build
+      run: dotnet ef database update --connection "$CONNECTION_STRING"
       env:
         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
 
