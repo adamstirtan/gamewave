@@ -26,14 +26,14 @@ jobs:
       working-directory: ./backend/
       run: dotnet build -c Release --no-restore
 
-    - name: Install EF Core CLI
-      run: dotnet tool install --global dotnet-ef
+    # - name: Install EF Core CLI
+    #   run: dotnet tool install --global dotnet-ef
 
-    - name: Build and run EF Core migrations
-      working-directory: ./backend/GameWave.Api/
-      run: dotnet ef database update --connection "$CONNECTION_STRING"
-      env:
-        CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+    # - name: Build and run EF Core migrations
+    #   working-directory: ./backend/GameWave.Api/
+    #   run: dotnet ef database update --connection "$CONNECTION_STRING"
+    #   env:
+    #     CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
 
     - name: Publish
       working-directory: ./backend/
