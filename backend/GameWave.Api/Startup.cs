@@ -14,6 +14,8 @@ using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 
 using GameWave.Api.Services;
+using System;
+using System.Configuration;
 
 namespace GameWave.Api
 {
@@ -32,7 +34,7 @@ namespace GameWave.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = _configuration.GetConnectionString(_environment.EnvironmentName);
+            string connectionString = GetConnectionString();
 
             var loggerConfiguration = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -126,6 +128,40 @@ namespace GameWave.Api
                 endpoints.MapHealthChecks("/status");
                 endpoints.MapControllers();
             });
+        }
+
+        private string GetConnectionString()
+        {
+            if (_environment.IsDevelopment())
+            {
+                return _configuration.GetConnectionString("Development");
+            }
+            else if (_environment.IsProduction() && IsRunningOnAzure())
+            {
+                return _configuration.GetConnectionString("Production");
+            }
+            else if (IsRunningOnGitHubActions())
+            {
+                return Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            }
+            else
+            {
+                return _configuration.GetConnectionString("Default");
+            }
+        }
+
+        private static bool IsRunningOnAzure()
+        {
+            string azureEnvironment = Environment.GetEnvironmentVariable("GAMEWAVE");
+
+            return !string.IsNullOrEmpty(azureEnvironment);
+        }
+
+        private static bool IsRunningOnGitHubActions()
+        {
+            string githubAction = Environment.GetEnvironmentVariable("GITHUB_ACTIONS");
+
+            return !string.IsNullOrEmpty(githubAction);
         }
     }
 }
