@@ -1,5 +1,8 @@
+using System;
 using System.Reflection;
+using System.Text;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -7,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using Serilog;
@@ -14,8 +18,6 @@ using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 
 using GameWave.Api.Services;
-using System;
-using System.Configuration;
 
 namespace GameWave.Api
 {
@@ -78,6 +80,26 @@ namespace GameWave.Api
             services.AddScoped<IPlatformService, PlatformService>();
             services.AddScoped<IReleaseService, ReleaseService>();
 
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "your_issuer", // specify your issuer
+                    ValidAudience = "your_audience", // specify your audience
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key")), // specify your secret key for signing/verifying JWTs
+                };
+            });
+
             services.AddSingleton(_environment.WebRootFileProvider);
 
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
@@ -86,7 +108,8 @@ namespace GameWave.Api
             {
                 options.AddPolicy("Open", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod();
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
                     policy.AllowAnyOrigin();
                 });
             });
@@ -112,17 +135,22 @@ namespace GameWave.Api
             }
 
             app.UseCors("Open");
+
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", ApplicationName);
                 options.RoutePrefix = string.Empty;
             });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSerilogRequestLogging();
+
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/status");

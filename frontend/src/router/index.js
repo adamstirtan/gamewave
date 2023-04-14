@@ -82,6 +82,14 @@ const routes = [
     meta: {
       layout: 'Admin'
     }
+  },
+  {
+    path: '/admin/users',
+    name: 'admin-users-list',
+    component: () => import('@/components/admin/users/UsersList.vue'),
+    meta: {
+      layout: 'Admin'
+    }
   }
 ]
 

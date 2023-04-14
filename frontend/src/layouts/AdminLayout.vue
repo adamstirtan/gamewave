@@ -34,7 +34,7 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
+      <v-list-item to="/admin/users" prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
       <v-list-item prepend-icon="mdi-cog" title="Settings" value="settings"></v-list-item>
     </v-list>
 
