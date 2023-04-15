@@ -72,7 +72,7 @@ namespace GameWave.Api.Controllers
         private string GenerateJwtToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SECRET_KEY"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
@@ -82,8 +82,8 @@ namespace GameWave.Api.Controllers
             };
 
             var token = new JwtSecurityToken(
-                "https://proud-hill-089a7df10.3.azurestaticapps.net/authentication",
-                "https://proud-hill-089a7df10.3.azurestaticapps.net",
+                _configuration["TokenIssuer"],
+                _configuration["TokenAudience"],
                 claims,
                 expires: DateTime.Now.AddDays(1),
                 signingCredentials: credentials

@@ -43,6 +43,18 @@
 
         </v-data-table-server>
     </v-card>
+
+    <v-snackbar
+        v-model="state.snackbar">
+        {{ state.snackbarText }}
+        <template v-slot:actions>
+            <v-btn
+                color="red"
+                @click="state.snackbar = false">
+                Close
+            </v-btn>
+        </template>
+    </v-snackbar>
     
 </template>
 
@@ -59,6 +71,8 @@ const platforms = ref([])
 
 const state = reactive({
     loading: false,
+    snackbar: false,
+    snackbarText: '',
     headers: [
         {
             title: 'Name',
@@ -102,7 +116,8 @@ platformService.getAll()
         platforms.value = response.data
     })
     .catch(e => {
-        console.error(e)
+        state.snackbarText = e
+        state.snackbar = true
     })
     .finally(() => {
         state.loading = false
@@ -145,7 +160,8 @@ async function fetchData() {
             state.itemsLength = response.data.totalItems
         })
         .catch(e => {
-            console.error(e)
+            state.snackbarText = e
+            state.snackbar = true
         })
         .finally(() => {
             state.loading = false

@@ -93,21 +93,15 @@ namespace GameWave.API
             })
             .AddJwtBearer(options =>
             {
-                string secretKey = "development";
-
-                if (_environment.IsProduction() && IsRunningOnAzure())
-                {
-                    secretKey = _configuration["SECRET_KEY"];
-                }
-
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "https://proud-hill-089a7df10.3.azurestaticapps.net/api/v1/auth",
-                    ValidAudience = "https://proud-hill-089a7df10.3.azurestaticapps.net",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                    ValidIssuer = _configuration["TokenIssuser"],
+                    ValidAudience = _configuration["TokenAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(_configuration["SecretKey"])),
                 };
             });
 
@@ -157,7 +151,6 @@ namespace GameWave.API
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSerilogRequestLogging();
-
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
