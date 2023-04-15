@@ -21,7 +21,7 @@
     color="grey-lighten-4">
 
     <v-list nav>
-      <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
+      <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Collection" value="collection"></v-list-item>
       <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
       <v-list-item to="/admin/platform" prepend-icon="mdi-nintendo-game-boy" title="Platforms" value="platforms"></v-list-item>
       <v-list-item to="/admin/company" prepend-icon="mdi-domain" title="Companies" value="companies"></v-list-item>

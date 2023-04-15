@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GameWave.Api.Services
+using GameWave.ObjectModel;
+
+namespace GameWave.API.Contracts
 {
-    public interface IServiceAsync<T> where T : class
+    public interface IServiceAsync<T> where T : BaseEntity
     {
         Task<T> GetByIdAsync(long id);
 

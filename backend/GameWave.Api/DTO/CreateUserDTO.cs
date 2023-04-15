@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace GameWave.Api.DTO
+namespace GameWave.API.DTO
 {
 	public class CreateUserDTO
 	{

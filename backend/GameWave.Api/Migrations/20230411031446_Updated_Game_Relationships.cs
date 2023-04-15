@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace GameWave.Api.Migrations
+namespace GameWave.API.Migrations
 {
     /// <inheritdoc />
     public partial class Updated_Game_Relationships : Migration

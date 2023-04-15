@@ -1,6 +1,6 @@
 ﻿using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Contracts
 {
     public interface IReleaseService : IService<Release>, IServiceAsync<Release>
     { }

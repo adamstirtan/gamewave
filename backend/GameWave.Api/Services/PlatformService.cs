@@ -1,6 +1,7 @@
-﻿using GameWave.ObjectModel;
+﻿using GameWave.API.Contracts;
+using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Services
 {
     public sealed class PlatformService : BaseService<Platform>, IPlatformService
     {

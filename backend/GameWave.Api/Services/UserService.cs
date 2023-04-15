@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
-using GameWave.Api.Extensions;
+using GameWave.API.Contracts;
+using GameWave.API.Extensions;
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Services
 {
     public class UserService : IUserService
     {

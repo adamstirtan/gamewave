@@ -8,11 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using Serilog.Core;
-
-using GameWave.Api.DTO;
-using GameWave.Api.Extensions;
-using GameWave.Api.Services;
+using GameWave.API.Contracts;
+using GameWave.API.DTO;
+using GameWave.API.Extensions;
 using GameWave.ObjectModel;
 
 namespace GameWave.Api.Controllers

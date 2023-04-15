@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GameWave.Api.Migrations
+namespace GameWave.API.Migrations
 {
     /// <inheritdoc />
     public partial class Added_TimeStamps : Migration

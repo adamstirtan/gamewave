@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Contracts
 {
     public interface IUserService
     {

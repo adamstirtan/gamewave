@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,11 +18,11 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 
-using GameWave.Api.Services;
+using GameWave.API.Contracts;
+using GameWave.API.Services;
 using GameWave.ObjectModel;
-using Microsoft.AspNetCore.Identity;
 
-namespace GameWave.Api
+namespace GameWave.API
 {
     public class Startup
     {
@@ -74,8 +75,6 @@ namespace GameWave.Api
                 });
             });
 
-            services.AddScoped<IAgeRatingService, AgeRatingService>();
-            services.AddScoped<IAgeRatingContentDescriptorService, AgeRatingContentDescriptorService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IGenreService, GenreService>();

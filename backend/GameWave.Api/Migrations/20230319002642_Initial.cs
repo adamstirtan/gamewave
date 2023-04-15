@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GameWave.Api.Migrations
+namespace GameWave.API.Migrations
 {
     public partial class Initial : Migration
     {

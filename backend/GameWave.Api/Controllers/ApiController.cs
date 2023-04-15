@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using GameWave.Api.Extensions;
-using GameWave.Api.Services;
+using GameWave.API.Contracts;
+using GameWave.API.Extensions;
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Controllers
+namespace GameWave.API.Controllers
 {
     public abstract class ApiController<TEntity, TService> : ControllerBase
         where TEntity : BaseEntity
