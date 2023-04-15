@@ -88,7 +88,7 @@ namespace GameWave.Api.Controllers
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception, exception.Message);
+                Logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -112,7 +112,7 @@ namespace GameWave.Api.Controllers
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception, exception.Message);
+                Logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

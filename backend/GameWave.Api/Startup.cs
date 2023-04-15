@@ -18,6 +18,8 @@ using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 
 using GameWave.Api.Services;
+using GameWave.ObjectModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameWave.Api
 {
@@ -79,8 +81,11 @@ namespace GameWave.Api
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IPlatformService, PlatformService>();
             services.AddScoped<IReleaseService, ReleaseService>();
-
             services.AddScoped<IUserService, UserService>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddAuthentication(options =>
             {
@@ -89,14 +94,21 @@ namespace GameWave.Api
             })
             .AddJwtBearer(options =>
             {
+                string secretKey = "development";
+
+                if (_environment.IsProduction() && IsRunningOnAzure())
+                {
+                    secretKey = _configuration["SECRET_KEY"];
+                }
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "your_issuer", // specify your issuer
-                    ValidAudience = "your_audience", // specify your audience
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key")), // specify your secret key for signing/verifying JWTs
+                    ValidIssuer = "https://proud-hill-089a7df10.3.azurestaticapps.net/api/v1/auth",
+                    ValidAudience = "https://proud-hill-089a7df10.3.azurestaticapps.net",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                 };
             });
 

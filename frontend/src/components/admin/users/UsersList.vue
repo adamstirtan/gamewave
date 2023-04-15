@@ -25,9 +25,17 @@
             @update:options="onUpdateOptions"
             class="elevation-1">
 
-            <template v-slot:item.name="{ item }">
-                <router-link :to="`/admin/users/${item.raw.id}`">{{ item.raw.name }}</router-link>
+            <template v-slot:item.userName="{ item }">
+                <router-link :to="`/admin/users/${item.raw.id}`">{{ item.raw.userName }}</router-link>
              </template>
+
+             <template v-slot:item.lastModified="{ item }">
+                <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
+            </template>
+
+            <template v-slot:item.created="{ item }">
+                <span>{{ new Date(Date.parse(item.raw.created)).toLocaleString() }}</span>
+            </template>
 
         </v-data-table-server>
     </v-card>
@@ -46,18 +54,18 @@ const state = reactive({
     loading: false,
     headers: [
         {
-            title: 'Name',
-            key: 'name',
+            title: 'User Name',
+            key: 'userName',
         },
         {
             title: 'Modified',
             key: 'lastModified',
-            width: '215',
+            width: '215'
         },
         {
             title: 'Created',
             key: 'created',
-            width: '215',
+            width: '215'
         }
     ],
     items: [],

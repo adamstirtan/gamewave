@@ -49,7 +49,7 @@ namespace GameWave.Api.Controllers
                     return Unauthorized();
                 }
 
-                var passwordHasher = new PasswordHasher<IdentityUser>();
+                var passwordHasher = new PasswordHasher<ApplicationUser>();
                 var verificationResult = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
 
                 if (verificationResult == PasswordVerificationResult.Failed)

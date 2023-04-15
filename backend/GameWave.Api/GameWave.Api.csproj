@@ -33,4 +33,10 @@
   <ItemGroup>
     <ProjectReference Include="..\GameWave.ObjectModel\GameWave.ObjectModel.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="DTO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
 </Project>

@@ -90,6 +90,15 @@ const routes = [
     meta: {
       layout: 'Admin'
     }
+  },
+  {
+    path: '/admin/users/:id',
+    name: 'admin-users-detail',
+    props: true,
+    component: () => import('@/components/admin/users/UserForm.vue'),
+    meta: {
+      layout: 'Admin'
+    }
   }
 ]
 
