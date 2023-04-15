@@ -5,7 +5,7 @@ const environmentURLs = {
     production: 'https://gamewave-api.azurewebsites.net/api'
 }
 
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'development'
 
 export default axios.create({
     baseURL: environmentURLs[environment],
