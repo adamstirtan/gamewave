@@ -6,7 +6,7 @@
             <v-btn
                 to="/admin/games/add"
                 append-icon="mdi-plus-box"
-                color="indigo">
+                color="green">
                 Add
             </v-btn>
             

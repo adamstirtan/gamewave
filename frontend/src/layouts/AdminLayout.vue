@@ -1,11 +1,15 @@
 <template>
 
-  <v-app-bar color="primary elevation-0">
+  <v-app-bar
+    color="#3F88C5"
+    theme="dark"
+    class="elevation-0">
 
     <v-app-bar-nav-icon
       icon="mdi-menu"
       @click.stop="showDrawer = !showDrawer"
     ></v-app-bar-nav-icon>
+    
     <v-app-bar-title class="font-weight-bold">GameWave</v-app-bar-title>
 
     <v-spacer></v-spacer>
@@ -18,7 +22,8 @@
 
   <v-navigation-drawer
     class="elevation-1"
-    color="grey-lighten-4">
+    theme="dark"
+    color="#393E41">
 
     <v-list nav>
       <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Collection" value="collection"></v-list-item>
