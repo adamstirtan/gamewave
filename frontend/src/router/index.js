@@ -10,12 +10,9 @@ const routes = [
     }
   },
   {
-    path: '/game',
-    name: 'Game',
-    component: () => import('@/views/Game.vue'),
-    meta: {
-      layout: 'Public'
-    }
+    path: '/auth/login',
+    name: 'login',
+    component: () => import('@/components/LoginForm.vue')
   },
   {
     path: '/admin',
