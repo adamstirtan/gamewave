@@ -14,9 +14,16 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon>
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+    <v-menu theme="light">
+      <template v-slot:activator="{ props }">
+        <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+      </template>
+      <v-list>
+        <v-list-item to="/auth/logout" prepend-icon="mdi-logout">
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
   </v-app-bar>
 
@@ -32,23 +39,6 @@
       <v-list-item to="/admin/company" prepend-icon="mdi-domain" title="Companies" value="companies"></v-list-item>
       <v-list-item to="/admin/users" prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
     </v-list>
-
-    <template v-slot:append>
-      <v-divider></v-divider>
-      <v-list>
-        <v-list-item
-          prepend-avatar="/profile.jpg"
-          title="Adam Stirtan">
-          <template v-slot:append>
-            <v-btn
-              icon="mdi-menu-up"
-              size="small"
-              variant="text">
-            </v-btn>
-          </template>
-        </v-list-item>
-      </v-list>
-    </template>
 
   </v-navigation-drawer>
 
