@@ -1,10 +1,10 @@
 <template>
-
-    <AdminHeader title="Platforms">
+    
+    <AdminHeader title="Users">
         <template #actions>
             
             <v-btn
-                to="/admin/platform/add"
+                to="/admin/users/add"
                 append-icon="mdi-plus-box"
                 color="green">
                 Add
@@ -25,11 +25,11 @@
             @update:options="onUpdateOptions"
             class="elevation-1">
 
-            <template v-slot:item.name="{ item }">
-                <router-link :to="`/admin/platform/${item.raw.id}`">{{ item.raw.name }}</router-link>
+            <template v-slot:item.userName="{ item }">
+                <router-link :to="`/admin/users/${item.raw.id}`">{{ item.raw.userName }}</router-link>
              </template>
 
-            <template v-slot:item.lastModified="{ item }">
+             <template v-slot:item.lastModified="{ item }">
                 <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
             </template>
 
@@ -51,7 +51,7 @@
             </v-btn>
         </template>
     </v-snackbar>
-    
+
 </template>
 
 <script setup>
@@ -60,7 +60,7 @@ import { reactive, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
 import AdminHeader from '@/components/admin/AdminHeader'
-import PlatformService from '@/services/PlatformService'
+import UserService from '@/services/UserService'
 
 const state = reactive({
     loading: false,
@@ -68,8 +68,8 @@ const state = reactive({
     snackbarText: '',
     headers: [
         {
-            title: 'Name',
-            key: 'name',
+            title: 'User Name',
+            key: 'userName',
         },
         {
             title: 'Modified',
@@ -95,7 +95,7 @@ const state = reactive({
     }
 })
 
-const platformService = new PlatformService()
+const userService = new UserService()
 
 async function onUpdateOptions(options) {
     state.options = options
@@ -123,7 +123,7 @@ async function fetchData() {
 
     state.loading = true
 
-    platformService.search(params)
+    userService.search(params)
         .then(response => {
             state.items = response.data.items
             state.itemsLength = response.data.totalItems

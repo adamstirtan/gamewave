@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-0 my-0 pa-6 bg-grey-lighten-3">
+    <v-sheet class="mx-0 my-0 pa-6" color="grey-lighten-3">
         <v-row>
             <v-col>
                 <v-btn
@@ -19,7 +19,7 @@
                 <slot name="actions"></slot>
             </v-col>
         </v-row>
-    </div>
+    </v-sheet>
 </template>
 
 <script setup>
