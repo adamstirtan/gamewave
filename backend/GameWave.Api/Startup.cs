@@ -1,23 +1,28 @@
+using System;
 using System.Reflection;
+using System.Text;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 
-using GameWave.Api.Services;
-using System;
-using System.Configuration;
+using GameWave.API.Contracts;
+using GameWave.API.Services;
+using GameWave.ObjectModel;
 
-namespace GameWave.Api
+namespace GameWave.API
 {
     public class Startup
     {
@@ -70,13 +75,35 @@ namespace GameWave.Api
                 });
             });
 
-            services.AddScoped<IAgeRatingService, AgeRatingService>();
-            services.AddScoped<IAgeRatingContentDescriptorService, AgeRatingContentDescriptorService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IGameService, GameService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IPlatformService, PlatformService>();
             services.AddScoped<IReleaseService, ReleaseService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = _configuration["TokenIssuser"],
+                    ValidAudience = _configuration["TokenAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(_configuration["SecretKey"])),
+                };
+            });
 
             services.AddSingleton(_environment.WebRootFileProvider);
 
@@ -86,7 +113,8 @@ namespace GameWave.Api
             {
                 options.AddPolicy("Open", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod();
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
                     policy.AllowAnyOrigin();
                 });
             });
@@ -112,17 +140,21 @@ namespace GameWave.Api
             }
 
             app.UseCors("Open");
+
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", ApplicationName);
                 options.RoutePrefix = string.Empty;
             });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSerilogRequestLogging();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/status");

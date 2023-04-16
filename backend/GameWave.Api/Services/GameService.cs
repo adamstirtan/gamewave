@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
+using GameWave.API.Contracts;
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Services
 {
     public sealed class GameService : BaseService<Game>, IGameService
     {

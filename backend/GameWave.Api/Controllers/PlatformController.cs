@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using GameWave.Api.Services;
+using GameWave.API.Contracts;
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Controllers
+namespace GameWave.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]

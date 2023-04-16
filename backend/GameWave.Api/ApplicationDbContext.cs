@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 using GameWave.ObjectModel;
 
-namespace GameWave.Api
+namespace GameWave.API
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

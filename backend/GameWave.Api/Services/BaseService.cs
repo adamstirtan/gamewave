@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
-using GameWave.Api.Extensions;
+using GameWave.API.Contracts;
+using GameWave.API.Extensions;
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Services
 {
     public abstract class BaseService<T> : IService<T>, IServiceAsync<T> where T : BaseEntity
     {
@@ -37,11 +38,11 @@ namespace GameWave.Api.Services
             return Set;
         }
 
-        public virtual IEnumerable<T> Page(Expression<Func<T, bool>> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
+        public virtual IEnumerable<T> Page(Expression<Func<T, bool>> expression, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
         {
             return Set
                 .OrderByPropertyOrField(sort, ascending)
-                .Where(query)
+                .Where(expression)
                 .Skip(pageSize * (page - 1))
                 .Take(pageSize)
                 .AsQueryable();

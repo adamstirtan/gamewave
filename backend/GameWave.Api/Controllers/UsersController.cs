@@ -1,43 +1,48 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using GameWave.API.Contracts;
+using GameWave.API.DTO;
 using GameWave.API.Extensions;
 using GameWave.ObjectModel;
 
-namespace GameWave.API.Controllers
+namespace GameWave.Api.Controllers
 {
-    public abstract class ApiController<TEntity, TService> : ControllerBase
-        where TEntity : BaseEntity
-        where TService : IService<TEntity>, IServiceAsync<TEntity>
+    [Route("api/v1/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
     {
-        protected readonly ILogger<ApiController<TEntity, TService>> Logger;
-        protected readonly TService Service;
+        private static string RouteName = "user";
 
-        protected ApiController(
-            ILogger<ApiController<TEntity, TService>> logger,
-            TService service)
+        private readonly ILogger<UsersController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserService _userService;
+
+        public UsersController(
+            ILogger<UsersController> logger,
+            UserManager<ApplicationUser> userManager,
+            IUserService userService)
         {
-            Logger = logger;
-            Service = service;
+            _logger = logger;
+            _userManager = userManager;
+            _userService = userService;
         }
-
-        protected abstract string RouteName { get; }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual ActionResult<IEnumerable<TEntity>> Get(string sort, bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
+        public virtual ActionResult<IEnumerable<ApplicationUser>> Get(string sort, bool paged = false, int page = 1, int pageSize = 100, bool ascending = true)
         {
             try
             {
-                string sortProperty = typeof(TEntity)
+                string sortProperty = typeof(ApplicationUser)
                     .GetProperties()
                     .FirstOrDefault(x =>
                         string.Equals(x.Name, sort, StringComparison.InvariantCultureIgnoreCase))?.Name ?? "id";
@@ -45,7 +50,7 @@ namespace GameWave.API.Controllers
                 if (!paged)
                 {
                     return Ok(
-                        Service
+                        _userService
                         .All()
                         .OrderByPropertyOrField(sortProperty, ascending));
                 }
@@ -54,8 +59,8 @@ namespace GameWave.API.Controllers
                 pageSize = Math.Max(1, pageSize);
 
                 return Ok(CreatePagedResults(
-                    Service.Page(x => true, sortProperty, page, pageSize, ascending),
-                    Service.Count(),
+                    _userService.Page(x => true, sortProperty, page, pageSize, ascending),
+                    _userService.Count(),
                     sort,
                     ascending,
                     page,
@@ -63,7 +68,7 @@ namespace GameWave.API.Controllers
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception.Message);
+                _logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -73,22 +78,22 @@ namespace GameWave.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> GetById(long id)
+        public virtual async Task<ActionResult> GetById(string id)
         {
             try
             {
-                var entity = await Service.GetByIdAsync(id);
+                var user = await _userManager.FindByIdAsync(id);
 
-                if (entity is null)
+                if (user is null)
                 {
                     return NotFound();
                 }
 
-                return Ok(entity);
+                return Ok(user);
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception.Message);
+                _logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -97,22 +102,39 @@ namespace GameWave.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> Create(TEntity entity)
+        public virtual async Task<ActionResult> Create(CreateUserDTO dto)
         {
             try
             {
                 DateTimeOffset now = DateTimeOffset.UtcNow;
 
-                entity.Created = now;
-                entity.LastModified = now;
+                ApplicationUser user = new()
+                {
+                    UserName = dto.Email,
+                    Email = dto.Email,
+                    LastModified = now,
+                    Created = now
+                };
 
-                entity = await Service.CreateAsync(entity);
+                var result = await _userManager.CreateAsync(user, dto.Password);
 
-                return Created($"/{RouteName}/{entity.Id}", entity);
+                if (result.Succeeded)
+                {
+                    return Created($"/{RouteName}/{user.Id}", user);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+
+                    return BadRequest(ModelState);
+                }
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception.Message);
+                _logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -122,32 +144,33 @@ namespace GameWave.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> Update(long id, TEntity dto)
+        public virtual async Task<ActionResult> Update(string id, ApplicationUser dto)
         {
             try
             {
-                var entity = await Service.GetByIdAsync(id);
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
 
-                if (entity is null)
+                if (user is null)
                 {
                     return NotFound();
                 }
 
-                entity.Merge(entity, dto);
-                entity.LastModified = DateTimeOffset.UtcNow;
+                user.UserName = dto.UserName;
+                user.Email = dto.Email;
+                user.LastModified = DateTimeOffset.UtcNow;
 
-                bool updated = await Service.UpdateAsync(entity);
+                var result = await _userManager.UpdateAsync(user);
 
-                if (updated)
+                if (result.Succeeded)
                 {
-                    return Ok(entity);
+                    return Ok(user);
                 }
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception.Message);
+                _logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -157,20 +180,20 @@ namespace GameWave.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult> Delete(long id)
+        public virtual async Task<ActionResult> Delete(string id)
         {
             try
             {
-                var entity = await Service.GetByIdAsync(id);
+                ApplicationUser user = await _userManager.FindByIdAsync(id);
 
-                if (entity is null)
+                if (user is null)
                 {
                     return NotFound();
                 }
 
-                bool deleted = await Service.DeleteAsync(id);
+                var result = await _userManager.DeleteAsync(user);
 
-                if (deleted)
+                if (result.Succeeded)
                 {
                     return NoContent();
                 }
@@ -179,13 +202,13 @@ namespace GameWave.API.Controllers
             }
             catch (Exception exception)
             {
-                Logger.LogError(exception.Message);
+                _logger.LogError(exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
-        protected PagedEntity<TEntity> CreatePagedResults(IEnumerable<TEntity> enumerable,
+        protected PagedEntity<ApplicationUser> CreatePagedResults(IEnumerable<ApplicationUser> enumerable,
             int totalItems,
             string sort,
             bool ascending,
@@ -217,7 +240,7 @@ namespace GameWave.API.Controllers
                     ascending
                 }).ToLower();
 
-            return new PagedEntity<TEntity>
+            return new PagedEntity<ApplicationUser>
             {
                 Items = enumerable,
                 PageNumber = page,

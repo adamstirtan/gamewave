@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameWave.Api", "GameWave.Api\GameWave.Api.csproj", "{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameWave.API", "GameWave.API\GameWave.API.csproj", "{3466BA2D-212A-4F38-9B9D-29ADA5D78FC5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameWave.ObjectModel", "GameWave.ObjectModel\GameWave.ObjectModel.csproj", "{6BCFE7AE-C80D-4D93-B95F-7EC2C2F9788B}"
 EndProject

@@ -1,11 +1,15 @@
 <template>
 
-  <v-app-bar color="primary elevation-0">
+  <v-app-bar
+    color="#3F88C5"
+    theme="dark"
+    class="elevation-0">
 
     <v-app-bar-nav-icon
       icon="mdi-menu"
       @click.stop="showDrawer = !showDrawer"
     ></v-app-bar-nav-icon>
+    
     <v-app-bar-title class="font-weight-bold">GameWave</v-app-bar-title>
 
     <v-spacer></v-spacer>
@@ -18,24 +22,15 @@
 
   <v-navigation-drawer
     class="elevation-1"
-    color="grey-lighten-4">
+    theme="dark"
+    color="#393E41">
 
     <v-list nav>
-      <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
+      <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Collection" value="collection"></v-list-item>
       <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
-      <v-list-item prepend-icon="mdi-gamepad-outline" title="Game Modes" value="game-modes"></v-list-item>
-      <v-list-item prepend-icon="mdi-select-group" title="Genres" value="genres"></v-list-item>
-      <v-list-item prepend-icon="mdi-image" title="Media" value="media"></v-list-item>
       <v-list-item to="/admin/platform" prepend-icon="mdi-nintendo-game-boy" title="Platforms" value="platforms"></v-list-item>
       <v-list-item to="/admin/company" prepend-icon="mdi-domain" title="Companies" value="companies"></v-list-item>
-      <v-list-item prepend-icon="mdi-account-child" title="Age Ratings" value="age-ratings"></v-list-item>
-    </v-list>
-
-    <v-divider></v-divider>
-
-    <v-list density="compact" nav>
-      <v-list-item prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
-      <v-list-item prepend-icon="mdi-cog" title="Settings" value="settings"></v-list-item>
+      <v-list-item to="/admin/users" prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
     </v-list>
 
     <template v-slot:append>

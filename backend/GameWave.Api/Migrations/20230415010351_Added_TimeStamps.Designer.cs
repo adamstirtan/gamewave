@@ -12,17 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameWave.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230319002642_Initial")]
-    partial class Initial
+    [Migration("20230415010351_Added_TimeStamps")]
+    partial class Added_TimeStamps
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("GameWave.ObjectModel.ApplicationUser", b =>
                 {
@@ -36,12 +37,18 @@ namespace GameWave.API.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -95,7 +102,7 @@ namespace GameWave.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
@@ -132,7 +139,7 @@ namespace GameWave.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
@@ -141,7 +148,7 @@ namespace GameWave.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("DeveloperId")
+                    b.Property<long>("DeveloperId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ImageUrl")
@@ -156,7 +163,10 @@ namespace GameWave.API.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<long?>("PublisherId")
+                    b.Property<long>("PlatformId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PublisherId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Slug")
@@ -167,6 +177,8 @@ namespace GameWave.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DeveloperId");
+
+                    b.HasIndex("PlatformId");
 
                     b.HasIndex("PublisherId");
 
@@ -179,7 +191,7 @@ namespace GameWave.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
@@ -222,7 +234,7 @@ namespace GameWave.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
@@ -233,7 +245,7 @@ namespace GameWave.API.Migrations
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<long?>("PlatformId")
+                    b.Property<long>("PlatformId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("ReleaseDate")
@@ -281,7 +293,7 @@ namespace GameWave.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -306,7 +318,7 @@ namespace GameWave.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -385,13 +397,25 @@ namespace GameWave.API.Migrations
                 {
                     b.HasOne("GameWave.ObjectModel.Company", "Developer")
                         .WithMany()
-                        .HasForeignKey("DeveloperId");
+                        .HasForeignKey("DeveloperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameWave.ObjectModel.Platform", "Platform")
+                        .WithMany()
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GameWave.ObjectModel.Company", "Publisher")
                         .WithMany()
-                        .HasForeignKey("PublisherId");
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Developer");
+
+                    b.Navigation("Platform");
 
                     b.Navigation("Publisher");
                 });
@@ -404,7 +428,9 @@ namespace GameWave.API.Migrations
 
                     b.HasOne("GameWave.ObjectModel.Platform", "Platform")
                         .WithMany()
-                        .HasForeignKey("PlatformId");
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Platform");
                 });

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace GameWave.Api.Extensions
+namespace GameWave.API.Extensions
 {
     public static class IEnumerableExtensions
     {

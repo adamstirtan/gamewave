@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 using GameWave.ObjectModel;
 
-namespace GameWave.Api.Services
+namespace GameWave.API.Contracts
 {
     public interface IService<T> where T : BaseEntity
     {
