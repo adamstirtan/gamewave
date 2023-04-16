@@ -1,11 +1,16 @@
 import axios from 'axios'
 
 const environmentURLs = {
-    development: 'https://localhost:5001/api',
+    development: 'http://localhost:24012/api',
     production: 'https://gamewave-api.azurewebsites.net/api'
 }
 
 const environment = process.env.NODE_ENV || 'development'
+const token = localStorage.getItem('token')
+
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 export default axios.create({
     baseURL: environmentURLs[environment],

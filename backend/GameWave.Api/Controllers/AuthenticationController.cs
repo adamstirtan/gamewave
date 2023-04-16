@@ -12,11 +12,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
+using GameWave.API.DTO;
 using GameWave.ObjectModel;
 
 namespace GameWave.Api.Controllers
 {
-    [Route("api/v1/authentication")]
+    [Route("api/v1/auth")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -37,12 +38,15 @@ namespace GameWave.Api.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Login(string userName, string password)
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> Login(LoginAttemptDTO dto)
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByIdAsync(userName);
+                ApplicationUser user = await _userManager.FindByNameAsync(dto.UserName);
                 
                 if (user == null)
                 {
@@ -50,7 +54,7 @@ namespace GameWave.Api.Controllers
                 }
 
                 var passwordHasher = new PasswordHasher<ApplicationUser>();
-                var verificationResult = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+                var verificationResult = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
 
                 if (verificationResult == PasswordVerificationResult.Failed)
                 {
