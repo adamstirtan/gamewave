@@ -94,19 +94,28 @@ const routes = [
     }
   },
   {
-    path: '/admin/users',
-    name: 'admin-users-list',
-    component: () => import('@/components/admin/users/UsersList.vue'),
+    path: '/users',
+    name: 'users-list',
+    component: () => import('@/components/users/UsersList.vue'),
     meta: {
       layout: 'Admin',
       requiresAuth: true
     }
   },
   {
-    path: '/admin/users/:id',
-    name: 'admin-users-detail',
+    path: '/users/add',
+    name: 'users-add',
+    component: () => import('@/components/users/AddUserForm.vue'),
+    meta: {
+      layout: 'Admin',
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/users/:id',
+    name: 'users-edit',
     props: true,
-    component: () => import('@/components/admin/users/UserForm.vue'),
+    component: () => import('@/components/users/EditUserForm.vue'),
     meta: {
       layout: 'Admin',
       requiresAuth: true

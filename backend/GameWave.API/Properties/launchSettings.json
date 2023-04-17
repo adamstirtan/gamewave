@@ -19,7 +19,7 @@
     "GameWave.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:24012",
+      "applicationUrl": "http://localhost:57394",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

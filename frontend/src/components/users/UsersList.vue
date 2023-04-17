@@ -4,7 +4,7 @@
         <template #actions>
             
             <v-btn
-                to="/admin/users/add"
+                to="/users/add"
                 append-icon="mdi-plus-box"
                 color="green">
                 Add
@@ -26,7 +26,7 @@
             class="elevation-1">
 
             <template v-slot:item.userName="{ item }">
-                <router-link :to="`/admin/users/${item.raw.id}`">{{ item.raw.userName }}</router-link>
+                <router-link :to="`/users/${item.raw.id}`">{{ item.raw.userName }}</router-link>
              </template>
 
              <template v-slot:item.lastModified="{ item }">

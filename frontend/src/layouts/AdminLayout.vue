@@ -5,11 +5,7 @@
     theme="dark"
     class="elevation-0">
 
-    <v-app-bar-nav-icon
-      icon="mdi-menu"
-      @click.stop="showDrawer = !showDrawer"
-    ></v-app-bar-nav-icon>
-    
+    <v-app-bar-nav-icon icon="mdi-controller"></v-app-bar-nav-icon>
     <v-app-bar-title class="font-weight-bold">GameWave</v-app-bar-title>
 
     <v-spacer></v-spacer>
@@ -30,14 +26,16 @@
   <v-navigation-drawer
     class="elevation-1"
     theme="dark"
-    color="#393E41">
+    color="#393E41"
+    rail
+    expand-on-hover>
 
     <v-list nav>
       <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Collection" value="collection"></v-list-item>
       <v-list-item to="/admin/games" prepend-icon="mdi-controller" title="Games" value="games"></v-list-item>
       <v-list-item to="/admin/platform" prepend-icon="mdi-nintendo-game-boy" title="Platforms" value="platforms"></v-list-item>
       <v-list-item to="/admin/company" prepend-icon="mdi-domain" title="Companies" value="companies"></v-list-item>
-      <v-list-item to="/admin/users" prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
+      <v-list-item to="/users" prepend-icon="mdi-account-group" title="Users" value="users"></v-list-item>
     </v-list>
 
   </v-navigation-drawer>
@@ -53,7 +51,9 @@
 </script>
 
 <script>
+
 export default {
   name: 'AdminLayout'
 }
+
 </script>

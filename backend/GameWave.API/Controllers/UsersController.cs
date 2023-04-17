@@ -157,6 +157,7 @@ namespace GameWave.Api.Controllers
 
                 user.UserName = dto.UserName;
                 user.Email = dto.Email;
+                user.PhoneNumber = dto.PhoneNumber;
                 user.LastModified = DateTimeOffset.UtcNow;
 
                 var result = await _userManager.UpdateAsync(user);

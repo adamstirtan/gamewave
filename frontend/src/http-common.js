@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const environmentURLs = {
-    development: 'http://localhost:24012/api',
+    development: 'http://localhost:57394/api',
     production: 'https://gamewave-api.azurewebsites.net/api'
 }
 
