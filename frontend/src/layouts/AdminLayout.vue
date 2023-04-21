@@ -1,8 +1,7 @@
 <template>
 
   <v-app-bar
-    color="#3F88C5"
-    theme="dark"
+    color="primary"
     class="elevation-0">
 
     <v-app-bar-nav-icon icon="mdi-controller"></v-app-bar-nav-icon>
@@ -10,7 +9,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-menu theme="light">
+    <v-menu>
       <template v-slot:activator="{ props }">
         <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
       </template>
@@ -25,10 +24,9 @@
 
   <v-navigation-drawer
     class="elevation-1"
-    theme="dark"
-    color="#393E41"
-    rail
-    expand-on-hover>
+    theme="light"
+    color="secondary"
+    permanent="true">
 
     <v-list nav>
       <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Collection" value="collection"></v-list-item>

@@ -4,7 +4,7 @@
         <template #actions>
             <v-btn
                 append-icon="mdi-database-plus"
-                color="indigo">
+                color="success">
                 Save
             </v-btn>
         </template>

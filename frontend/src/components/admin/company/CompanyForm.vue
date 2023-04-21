@@ -74,7 +74,7 @@
         </v-row>
 
         <v-row>
-            <v-col md="8">
+            <v-col md="6">
                 <v-text-field
                     v-model="state.imageUrl"
                     :error-messages="v$.imageUrl.$errors.map(e => e.$message)"
@@ -93,6 +93,7 @@
                     v-model="state.description"
                     :error-messages="v$.description.$errors.map(e => e.$message)"
                     label="Description"
+                    rows="10"
                     @input="v$.description.$touch"
                     @blur="v$.description.$touch"
                 ></v-textarea>

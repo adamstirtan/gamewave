@@ -1,6 +1,6 @@
 <template>
-    <v-sheet color="grey-lighten-3">
-        <v-row class="px-6 py-5">
+    <v-sheet class="pa-5" color="header">
+        <v-row>
             <v-col>
                 <v-btn
                     prepend-icon="mdi-arrow-left"
