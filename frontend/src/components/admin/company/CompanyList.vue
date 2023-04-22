@@ -13,32 +13,29 @@
         </template>
     </AdminHeader>
 
-    <v-card class="ma-5">
-        <v-data-table-server
-            :headers="state.headers"
-            :loading="state.loading"
-            :items="state.items"
-            :items-length="state.itemsLength"
-            :sort-by.sync="state.options.sortBy"
-            :sort-desc.sync="state.options.sortDesc"
-            :must-sort="true"
-            @update:options="onUpdateOptions"
-            class="elevation-1">
+    <v-data-table-server
+        :headers="state.headers"
+        :loading="state.loading"
+        :items="state.items"
+        :items-length="state.itemsLength"
+        :sort-by.sync="state.options.sortBy"
+        :sort-desc.sync="state.options.sortDesc"
+        :must-sort="true"
+        @update:options="onUpdateOptions">
 
-            <template v-slot:item.name="{ item }">
-                <router-link :to="`/admin/company/${item.raw.id}`">{{ item.raw.name }}</router-link>
-             </template>
-
-            <template v-slot:item.lastModified="{ item }">
-                <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
+        <template v-slot:item.name="{ item }">
+            <router-link :to="`/admin/company/${item.raw.id}`">{{ item.raw.name }}</router-link>
             </template>
 
-            <template v-slot:item.created="{ item }">
-                <span>{{ new Date(Date.parse(item.raw.created)).toLocaleString() }}</span>
-            </template>
+        <template v-slot:item.lastModified="{ item }">
+            <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
+        </template>
 
-        </v-data-table-server>
-    </v-card>
+        <template v-slot:item.created="{ item }">
+            <span>{{ new Date(Date.parse(item.raw.created)).toLocaleString() }}</span>
+        </template>
+
+    </v-data-table-server>
 
     <v-snackbar
         v-model="state.snackbar">

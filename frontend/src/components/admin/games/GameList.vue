@@ -13,36 +13,33 @@
         </template>
     </AdminHeader>
 
-    <v-card class="ma-5">
-        <v-data-table-server
-            :headers="state.headers"
-            :loading="state.loading"
-            :items="state.items"
-            :items-length="state.itemsLength"
-            :sort-by.sync="state.options.sortBy"
-            :sort-desc.sync="state.options.sortDesc"
-            :must-sort="true"
-            @update:options="onUpdateOptions"
-            class="elevation-1">
+    <v-data-table-server
+        :headers="state.headers"
+        :loading="state.loading"
+        :items="state.items"
+        :items-length="state.itemsLength"
+        :sort-by.sync="state.options.sortBy"
+        :sort-desc.sync="state.options.sortDesc"
+        :must-sort="true"
+        @update:options="onUpdateOptions">
 
-            <template v-slot:item.name="{ item }">
-                <router-link :to="`/admin/games/${item.raw.id}`">{{ item.raw.name }}</router-link>
-            </template>
+        <template v-slot:item.name="{ item }">
+            <router-link :to="`/admin/games/${item.raw.id}`">{{ item.raw.name }}</router-link>
+        </template>
 
-             <template v-slot:item.platform="{ item }">
-                <router-link :to="`/admin/platform/${item.raw.platformId}`">{{ getPlatformById(item.raw.platformId) }}</router-link>
-            </template>
+            <template v-slot:item.platform="{ item }">
+            <router-link :to="`/admin/platform/${item.raw.platformId}`">{{ getPlatformById(item.raw.platformId) }}</router-link>
+        </template>
 
-            <template v-slot:item.lastModified="{ item }">
-                <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
-            </template>
+        <template v-slot:item.lastModified="{ item }">
+            <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
+        </template>
 
-            <template v-slot:item.created="{ item }">
-                <span>{{ new Date(Date.parse(item.raw.created)).toLocaleString() }}</span>
-            </template>
+        <template v-slot:item.created="{ item }">
+            <span>{{ new Date(Date.parse(item.raw.created)).toLocaleString() }}</span>
+        </template>
 
-        </v-data-table-server>
-    </v-card>
+    </v-data-table-server>
 
     <v-snackbar
         v-model="state.snackbar">

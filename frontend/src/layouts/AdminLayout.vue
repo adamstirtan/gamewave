@@ -4,7 +4,7 @@
     color="primary"
     class="elevation-0">
 
-    <v-app-bar-nav-icon icon="mdi-controller"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon to="/" icon="mdi-waveform"></v-app-bar-nav-icon>
     <v-app-bar-title class="font-weight-bold">GameWave</v-app-bar-title>
 
     <v-spacer></v-spacer>
@@ -25,8 +25,7 @@
   <v-navigation-drawer
     class="elevation-1"
     theme="light"
-    color="secondary"
-    permanent="true">
+    permanent>
 
     <v-list nav>
       <v-list-item to="/admin" prepend-icon="mdi-view-dashboard" title="Collection" value="collection"></v-list-item>
