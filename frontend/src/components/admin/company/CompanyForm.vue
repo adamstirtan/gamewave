@@ -137,6 +137,7 @@ import { required, maxLength, url } from '@vuelidate/validators'
 
 import AdminHeader from '@/components/admin/AdminHeader'
 import CompanyService from '@/services/CompanyService'
+import { toSlug } from '@/utils/utilities'
 
 const props = defineProps({
     id: {
@@ -178,7 +179,7 @@ const rules = {
 const v$ = useVuelidate(rules, state)
 
 watch(() => state.name, (newValue) => {
-    state.slug = newValue.trim().toLowerCase().replaceAll(' ', '-').replace(/[^a-z0-9-_]/g, '')
+    state.slug = toSlug(newValue)
 })
 
 const fetchData = async() => {
