@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace GameWave.ObjectModel
 {
-	public class PagedEntity<T> where T : class
-	{
+    public class PagedEntity<T> where T : class
+    {
         public string Sort { get; set; }
 
         public bool Ascending { get; set; }
@@ -17,11 +17,6 @@ namespace GameWave.ObjectModel
 
         public int TotalItems { get; set; }
 
-        public string NextUrl { get; set; }
-
-        public string PreviousUrl { get; set; }
-
         public IEnumerable<T> Items { get; set; }
     }
 }
-

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -19,7 +20,7 @@ namespace GameWave.Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private static string RouteName = "user";
+        private static readonly string RouteName = "user";
 
         private readonly ILogger<UsersController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -219,28 +220,6 @@ namespace GameWave.Api.Controllers
             var mod = totalItems % pageSize;
             var totalPageCount = totalItems / pageSize + (mod == 0 ? 0 : 1);
 
-            var previousUrl = page <= 1
-                ? null
-                : Url?.Link(null, new
-                {
-                    paged = true,
-                    page = page - 1,
-                    pageSize,
-                    sort,
-                    ascending
-                }).ToLower();
-
-            var nextUrl = page >= totalPageCount
-                ? null
-                : Url?.Link(null, new
-                {
-                    paged = true,
-                    page = page + 1,
-                    pageSize,
-                    sort,
-                    ascending
-                }).ToLower();
-
             return new PagedEntity<ApplicationUser>
             {
                 Items = enumerable,
@@ -248,9 +227,7 @@ namespace GameWave.Api.Controllers
                 PageSize = enumerable.Count(),
                 TotalPages = totalPageCount,
                 TotalItems = totalItems,
-                PreviousUrl = previousUrl,
-                NextUrl = nextUrl,
-                Sort = sort,
+                Sort = JsonNamingPolicy.CamelCase.ConvertName(sort),
                 Ascending = ascending
             };
         }

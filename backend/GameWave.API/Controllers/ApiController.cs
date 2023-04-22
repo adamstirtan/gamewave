@@ -10,9 +10,11 @@ using Microsoft.Extensions.Logging;
 using GameWave.API.Contracts;
 using GameWave.API.Extensions;
 using GameWave.ObjectModel;
+using System.Text.Json;
 
 namespace GameWave.API.Controllers
 {
+    [Produces("application/json")]
     public abstract class ApiController<TEntity, TService> : ControllerBase
         where TEntity : BaseEntity
         where TService : IService<TEntity>, IServiceAsync<TEntity>
@@ -56,7 +58,7 @@ namespace GameWave.API.Controllers
                 return Ok(CreatePagedResults(
                     Service.Page(x => true, sortProperty, page, pageSize, ascending),
                     Service.Count(),
-                    sort,
+                    sortProperty,
                     ascending,
                     page,
                     pageSize));
@@ -96,6 +98,7 @@ namespace GameWave.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult> Create(TEntity entity)
         {
@@ -120,6 +123,7 @@ namespace GameWave.API.Controllers
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult> Update(long id, TEntity dto)
@@ -195,28 +199,6 @@ namespace GameWave.API.Controllers
             var mod = totalItems % pageSize;
             var totalPageCount = totalItems / pageSize + (mod == 0 ? 0 : 1);
 
-            var previousUrl = page <= 1
-                ? null
-                : Url?.Link(null, new
-                {
-                    paged = true,
-                    page = page - 1,
-                    pageSize,
-                    sort,
-                    ascending
-                }).ToLower();
-
-            var nextUrl = page >= totalPageCount
-                ? null
-                : Url?.Link(null, new
-                {
-                    paged = true,
-                    page = page + 1,
-                    pageSize,
-                    sort,
-                    ascending
-                }).ToLower();
-
             return new PagedEntity<TEntity>
             {
                 Items = enumerable,
@@ -224,9 +206,7 @@ namespace GameWave.API.Controllers
                 PageSize = enumerable.Count(),
                 TotalPages = totalPageCount,
                 TotalItems = totalItems,
-                PreviousUrl = previousUrl,
-                NextUrl = nextUrl,
-                Sort = sort,
+                Sort = JsonNamingPolicy.CamelCase.ConvertName(sort),
                 Ascending = ascending
             };
         }

@@ -7,26 +7,26 @@ using GameWave.ObjectModel;
 
 namespace GameWave.API.Contracts
 {
-    public interface IService<T> where T : BaseEntity
+    public interface IService<TEntity> where TEntity : BaseEntity
     {
         int Count();
 
-        int Count(Expression<Func<T, bool>> query);
+        int Count(Expression<Func<TEntity, bool>> query);
 
-        IQueryable<T> All();
+        IQueryable<TEntity> All();
 
-        IEnumerable<T> Page(Expression<Func<T, bool>> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
+        IEnumerable<TEntity> Page(Expression<Func<TEntity, bool>> query, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true);
 
-        IEnumerable<T> Where(Expression<Func<T, bool>> expression);
+        IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> expression);
 
-        T GetById(long id);
+        TEntity GetById(long id);
 
-        T Create(T dto);
+        TEntity Create(TEntity dto);
 
-        bool Update(T dto);
+        bool Update(TEntity dto);
 
         bool Delete(long id);
 
-        bool Delete(IEnumerable<T> dtos);
+        bool Delete(IEnumerable<TEntity> dtos);
     }
 }

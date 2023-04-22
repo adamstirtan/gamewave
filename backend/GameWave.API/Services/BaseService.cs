@@ -12,15 +12,16 @@ using GameWave.ObjectModel;
 
 namespace GameWave.API.Services
 {
-    public abstract class BaseService<T> : IService<T>, IServiceAsync<T> where T : BaseEntity
+    public abstract class BaseService<TEntity> : IService<TEntity>, IServiceAsync<TEntity>
+        where TEntity : BaseEntity
     {
         protected readonly ApplicationDbContext Context;
-        protected readonly DbSet<T> Set;
+        protected readonly DbSet<TEntity> Set;
 
         public BaseService(ApplicationDbContext context)
         {
             Context = context;
-            Set = context.Set<T>();
+            Set = context.Set<TEntity>();
         }
 
         public virtual int Count()
@@ -28,17 +29,17 @@ namespace GameWave.API.Services
             return Set.Count();
         }
 
-        public virtual int Count(Expression<Func<T, bool>> expression)
+        public virtual int Count(Expression<Func<TEntity, bool>> expression)
         {
             return Set.Where(expression).Count();
         }
 
-        public virtual IQueryable<T> All()
+        public virtual IQueryable<TEntity> All()
         {
             return Set;
         }
 
-        public virtual IEnumerable<T> Page(Expression<Func<T, bool>> expression, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
+        public virtual IEnumerable<TEntity> Page(Expression<Func<TEntity, bool>> expression, string sort = "id", int page = 1, int pageSize = 100, bool ascending = true)
         {
             return Set
                 .OrderByPropertyOrField(sort, ascending)
@@ -48,22 +49,22 @@ namespace GameWave.API.Services
                 .AsQueryable();
         }
 
-        public virtual IEnumerable<T> Where(Expression<Func<T, bool>> expression)
+        public virtual IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
         {
             return Set.Where(expression);
         }
 
-        public virtual T GetById(long id)
+        public virtual TEntity GetById(long id)
         {
             return Set.Find(id);
         }
 
-        public virtual async Task<T> GetByIdAsync(long id)
+        public virtual async Task<TEntity> GetByIdAsync(long id)
         {
             return await Set.FindAsync(id);
         }
 
-        public virtual T Create(T entity)
+        public virtual TEntity Create(TEntity entity)
         {
             _ = Set.Add(entity);
 
@@ -77,7 +78,7 @@ namespace GameWave.API.Services
             return null;
         }
 
-        public virtual async Task<T> CreateAsync(T entity)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
             _ = await Set.AddAsync(entity);
 
@@ -91,14 +92,14 @@ namespace GameWave.API.Services
             return null;
         }
 
-        public virtual bool Update(T entity)
+        public virtual bool Update(TEntity entity)
         {
             _ = Set.Update(entity);
 
             return Context.SaveChanges() > 0;
         }
 
-        public virtual async Task<bool> UpdateAsync(T entity)
+        public virtual async Task<bool> UpdateAsync(TEntity entity)
         {
             _ = Set.Update(entity);
 
@@ -107,7 +108,7 @@ namespace GameWave.API.Services
 
         public virtual bool Delete(long id)
         {
-            T entity = GetById(id);
+            TEntity entity = GetById(id);
 
             if (entity is null)
             {
@@ -121,7 +122,7 @@ namespace GameWave.API.Services
 
         public virtual async Task<bool> DeleteAsync(long id)
         {
-            T entity = GetById(id);
+            TEntity entity = GetById(id);
 
             if (entity is null)
             {
@@ -133,14 +134,14 @@ namespace GameWave.API.Services
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public virtual bool Delete(IEnumerable<T> entities)
+        public virtual bool Delete(IEnumerable<TEntity> entities)
         {
             Set.RemoveRange(entities);
 
             return Context.SaveChanges() > 0;
         }
 
-        public virtual async Task<bool> DeleteAsync(IEnumerable<T> entities)
+        public virtual async Task<bool> DeleteAsync(IEnumerable<TEntity> entities)
         {
             Set.RemoveRange(entities);
 

@@ -5,16 +5,16 @@ using GameWave.ObjectModel;
 
 namespace GameWave.API.Contracts
 {
-    public interface IServiceAsync<T> where T : BaseEntity
+    public interface IServiceAsync<TEntity> where TEntity : BaseEntity
     {
-        Task<T> GetByIdAsync(long id);
+        Task<TEntity> GetByIdAsync(long id);
 
-        Task<T> CreateAsync(T entity);
+        Task<TEntity> CreateAsync(TEntity entity);
 
-        Task<bool> UpdateAsync(T entity);
+        Task<bool> UpdateAsync(TEntity entity);
 
         Task<bool> DeleteAsync(long id);
 
-        Task<bool> DeleteAsync(IEnumerable<T> entities);
+        Task<bool> DeleteAsync(IEnumerable<TEntity> entities);
     }
 }

@@ -8,6 +8,7 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'GameWave.API' " />
   <ItemGroup>
+    <PackageReference Include="LinqKit.Core" Version="1.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
