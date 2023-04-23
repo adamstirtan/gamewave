@@ -14,7 +14,7 @@ if (token) {
 
 export default axios.create({
     baseURL: environmentURLs[environment],
-    timeout: 5000,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
     }
