@@ -125,7 +125,11 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
+    navigationFallback: {
+        rewrite: '/index.html',
+        exclude: ['/images/*.{png,jpg,gif}', '/css/*']
+      }
 })
 
 router.beforeEach((to, from, next) => {
