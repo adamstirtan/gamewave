@@ -16,8 +16,9 @@ using GameWave.ObjectModel;
 
 namespace GameWave.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
     [ApiController]
+    [Produces("application/json")]
+    [Route("api/v1/[controller]")]
     public class UsersController : ControllerBase
     {
         private static readonly string RouteName = "user";
@@ -102,6 +103,7 @@ namespace GameWave.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult> Create(CreateUserDTO dto)
         {

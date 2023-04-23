@@ -10,8 +10,6 @@ using GameWave.ObjectModel;
 
 namespace GameWave.API.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
     public class PlatformController : ApiController<Platform, IPlatformService>
     {
         public PlatformController(

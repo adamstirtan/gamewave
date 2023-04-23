@@ -12,8 +12,6 @@ using GameWave.ObjectModel;
 
 namespace GameWave.API.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
     public class CompanyController : ApiController<Company, ICompanyService>, ISearchableController<Company, CompanySearch>
     {
         public CompanyController(

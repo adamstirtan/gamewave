@@ -14,7 +14,9 @@ using System.Text.Json;
 
 namespace GameWave.API.Controllers
 {
+    [ApiController]
     [Produces("application/json")]
+    [Route("api/v1/[controller]")]
     public abstract class ApiController<TEntity, TService> : ControllerBase
         where TEntity : BaseEntity
         where TService : IService<TEntity>, IServiceAsync<TEntity>

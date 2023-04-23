@@ -17,8 +17,9 @@ using GameWave.ObjectModel;
 
 namespace GameWave.Api.Controllers
 {
-    [Route("api/v1/auth")]
     [ApiController]
+    [Produces("application/json")]
+    [Route("api/v1/auth")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -47,7 +48,7 @@ namespace GameWave.Api.Controllers
             try
             {
                 ApplicationUser user = await _userManager.FindByNameAsync(dto.UserName);
-                
+
                 if (user == null)
                 {
                     return Unauthorized();
