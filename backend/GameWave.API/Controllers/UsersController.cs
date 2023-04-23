@@ -119,7 +119,7 @@ namespace GameWave.Api.Controllers
                     Created = now
                 };
 
-                var result = await _userManager.CreateAsync(user, dto.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, dto.Password);
 
                 if (result.Succeeded)
                 {
@@ -163,7 +163,7 @@ namespace GameWave.Api.Controllers
                 user.PhoneNumber = dto.PhoneNumber;
                 user.LastModified = DateTimeOffset.UtcNow;
 
-                var result = await _userManager.UpdateAsync(user);
+                IdentityResult result = await _userManager.UpdateAsync(user);
 
                 if (result.Succeeded)
                 {
@@ -195,7 +195,7 @@ namespace GameWave.Api.Controllers
                     return NotFound();
                 }
 
-                var result = await _userManager.DeleteAsync(user);
+                IdentityResult result = await _userManager.DeleteAsync(user);
 
                 if (result.Succeeded)
                 {
