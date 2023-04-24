@@ -39,7 +39,7 @@ const routes = [
     },
     {
         path: '/admin/company/:id',
-        name: 'admin-company-details',
+        name: 'company-form',
         props: true,
         component: () => import('@/components/admin/company/CompanyForm.vue'),
         meta: {
@@ -49,7 +49,7 @@ const routes = [
     },
     {
         path: '/admin/games',
-        name: 'Admin Games List',
+        name: 'games-list',
         component: () => import('@/components/admin/games/GameList.vue'),
         meta: {
             layout: 'Admin',
@@ -57,18 +57,10 @@ const routes = [
         }
     },
     {
-        path: '/admin/games/add',
-        name: 'Admin Games Add',
-        component: () => import('@/components/admin/games/AddGame.vue'),
-        meta: {
-            layout: 'Admin',
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/admin/games/edit',
-        name: 'Admin Games Edit',
-        component: () => import('@/components/admin/games/EditGame.vue'),
+        path: '/admin/games/:id',
+        name: 'games-form',
+        props: true,
+        component: () => import('@/components/admin/games/GameForm.vue'),
         meta: {
             layout: 'Admin',
             requiresAuth: true
@@ -76,7 +68,7 @@ const routes = [
     },
     {
         path: '/admin/platform',
-        name: 'admin-platform-list',
+        name: 'platform-list',
         component: () => import('@/components/admin/platforms/PlatformList.vue'),
         meta: {
             layout: 'Admin',
@@ -85,7 +77,7 @@ const routes = [
     },
     {
         path: '/admin/platform/:id',
-        name: 'admin-platform-details',
+        name: 'platform-form',
         props: true,
         component: () => import('@/components/admin/platforms/PlatformForm.vue'),
         meta: {
