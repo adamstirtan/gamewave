@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using GameWave.API.Contracts;
 using GameWave.API.Extensions;
 using GameWave.ObjectModel;
-using System.Text.Json;
 
 namespace GameWave.API.Controllers
 {
