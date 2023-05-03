@@ -202,8 +202,12 @@ const rules = {
         maxLengthValue: maxLength(255)
     },
     description: { },
-    imageUrl: { required, url },
-    category: { required },
+    imageUrl: { 
+        url
+    },
+    category: {
+        required
+    },
     generation: { required }
 }
 

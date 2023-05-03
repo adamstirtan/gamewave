@@ -173,7 +173,9 @@ const rules = {
         maxLengthValue: maxLength(255)
     },
     description: { },
-    imageUrl: { required, url }
+    imageUrl: {
+        url
+    }
 }
 
 const v$ = useVuelidate(rules, state)

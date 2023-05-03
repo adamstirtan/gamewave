@@ -226,7 +226,9 @@ const rules = {
     developerId: {
         required
     },
-    imageUrl: { required, url }
+    imageUrl: {
+        url
+    }
 }
 
 const v$ = useVuelidate(rules, state)
