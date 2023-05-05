@@ -298,7 +298,7 @@ const onSubmit = async () => {
     } else {
         await platformService.create(dto)
             .then(() => {
-                router.push('/admin/platform')
+                router.push('/platform')
             })
             .catch(e => {
                 console.error(e);
@@ -314,7 +314,7 @@ const onDelete = async () => {
 
     await platformService.delete(id.value)
         .then(() => {
-            router.push({ path: '/admin/platform', replace: true })
+            router.push({ path: '/platform', replace: true })
         })
         .catch(e => {
             console.error(e);

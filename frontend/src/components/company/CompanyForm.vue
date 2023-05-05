@@ -244,7 +244,7 @@ const onSubmit = async () => {
     } else {
         await companyService.create(dto)
             .then(() => {
-                router.push('/admin/company')
+                router.push('/company')
             })
             .catch(e => {
                 console.error(e);
@@ -260,7 +260,7 @@ const onDelete = async () => {
 
     await companyService.delete(id.value)
         .then(() => {
-            router.push({ path: '/admin/company', replace: true })
+            router.push({ path: '/company', replace: true })
         })
         .catch(e => {
             console.error(e);

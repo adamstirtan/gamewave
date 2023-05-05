@@ -326,7 +326,7 @@ const onSubmit = async () => {
     } else {
         await gameService.create(dto)
             .then(() => {
-                router.push('/admin/games')
+                router.push('/games')
             })
             .catch(e => {
                 console.error(e);
@@ -342,7 +342,7 @@ const onDelete = async () => {
 
     await gameService.delete(id.value)
         .then(() => {
-            router.push({ path: '/admin/games', replace: true })
+            router.push({ path: '/games', replace: true })
         })
         .catch(e => {
             console.error(e);
