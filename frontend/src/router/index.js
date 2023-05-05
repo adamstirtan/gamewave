@@ -2,14 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        component: () => import('@/views/Home.vue'),
-        meta: {
-            layout: 'Public'
-        }
-    },
-    {
         path: '/auth/login',
         name: 'login',
         component: () => import('@/components/LoginForm.vue')
@@ -20,68 +12,68 @@ const routes = [
         component: () => import('@/components/Logout.vue')
     },
     {
-        path: '/admin',
-        name: 'Admin Dashboard',
-        component: () => import('@/components/admin/Dashboard.vue'),
+        path: '/',
+        name: 'Dashboard',
+        component: () => import('@/components/dashboard/Dashboard.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
     {
-        path: '/admin/company',
-        name: 'admin-companies',
-        component: () => import('@/components/admin/company/CompanyList.vue'),
+        path: '/company',
+        name: 'companies',
+        component: () => import('@/components/company/CompanyList.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
     {
-        path: '/admin/company/:id',
+        path: '/company/:id',
         name: 'company-form',
         props: true,
-        component: () => import('@/components/admin/company/CompanyForm.vue'),
+        component: () => import('@/components/company/CompanyForm.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
     {
-        path: '/admin/games',
+        path: '/games',
         name: 'games-list',
-        component: () => import('@/components/admin/games/GameList.vue'),
+        component: () => import('@/components/games/GameList.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
     {
-        path: '/admin/games/:id',
+        path: '/games/:id',
         name: 'games-form',
         props: true,
-        component: () => import('@/components/admin/games/GameForm.vue'),
+        component: () => import('@/components/games/GameForm.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
     {
-        path: '/admin/platform',
+        path: '/platform',
         name: 'platform-list',
-        component: () => import('@/components/admin/platforms/PlatformList.vue'),
+        component: () => import('@/components/platforms/PlatformList.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
     {
-        path: '/admin/platform/:id',
+        path: '/platform/:id',
         name: 'platform-form',
         props: true,
-        component: () => import('@/components/admin/platforms/PlatformForm.vue'),
+        component: () => import('@/components/platforms/PlatformForm.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
@@ -90,7 +82,7 @@ const routes = [
         name: 'users-list',
         component: () => import('@/components/users/UsersList.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
@@ -99,7 +91,7 @@ const routes = [
         name: 'users-add',
         component: () => import('@/components/users/AddUserForm.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     },
@@ -109,7 +101,7 @@ const routes = [
         props: true,
         component: () => import('@/components/users/EditUserForm.vue'),
         meta: {
-            layout: 'Admin',
+            layout: 'App',
             requiresAuth: true
         }
     }

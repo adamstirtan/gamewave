@@ -65,7 +65,7 @@ const onSubmit = async () => {
         .then(response => {
             const token = response.data
             localStorage.setItem('token', token)
-            router.push("/admin")
+            router.push("/")
         })
         .catch(e => {
             console.error(e)

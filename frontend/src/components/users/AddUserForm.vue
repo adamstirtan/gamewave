@@ -1,6 +1,6 @@
 <template>
     
-    <AdminHeader title="Add User">
+    <Header title="Add User">
         <template #actions>
 
             <v-btn
@@ -14,7 +14,7 @@
             </v-btn>
             
         </template>
-    </AdminHeader>
+    </Header>
 
     <form
         id="component-form"
@@ -71,7 +71,7 @@ import { useRouter } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required, maxLength, email } from '@vuelidate/validators'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import Header from '@/components/Header'
 import UserService from '@/services/UserService'
 
 const router = useRouter()

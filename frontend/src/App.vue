@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <AppLayout />
+    <DefaultLayout />
   </v-app>
 </template>
 

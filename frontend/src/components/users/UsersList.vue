@@ -1,6 +1,6 @@
 <template>
     
-    <AdminHeader title="Users">
+    <Header title="Users">
         <template #actions>
             
             <v-btn
@@ -11,7 +11,7 @@
             </v-btn>
 
         </template>
-    </AdminHeader>
+    </Header>
 
     <v-data-table-server
         :headers="state.headers"
@@ -56,7 +56,7 @@
 import { reactive, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import Header from '@/components/Header'
 import UserService from '@/services/UserService'
 
 const state = reactive({

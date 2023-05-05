@@ -1,6 +1,6 @@
 <template>
     
-    <AdminHeader :title="state.editMode ? state.staticName : 'Add Game'">
+    <Header :title="state.editMode ? state.staticName : 'Add Game'">
         <template #actions>
 
             <v-btn
@@ -24,7 +24,7 @@
             </v-btn>
             
         </template>
-    </AdminHeader>
+    </Header>
 
     <div v-show="state.editMode">
         <v-row class="pa-6">
@@ -168,7 +168,7 @@ import { useRouter } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required, maxLength, url } from '@vuelidate/validators'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import Header from '@/components/Header'
 import CompanyService from '@/services/CompanyService'
 import GameService from '@/services/GameService'
 import PlatformService from '@/services/PlatformService'

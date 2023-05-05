@@ -1,17 +1,17 @@
 <template>
     
-    <AdminHeader title="Companies">
+    <Header title="Companies">
         <template #actions>
             
             <v-btn
-                to="/admin/company/add"
+                to="/company/add"
                 append-icon="mdi-plus-box"
                 color="success">
                 Add
             </v-btn>
 
         </template>
-    </AdminHeader>
+    </Header>
 
     <v-data-table-server
         :headers="state.headers"
@@ -56,7 +56,7 @@
 import { reactive, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import Header from '@/components/Header'
 import CompanyService from '@/services/CompanyService'
 
 const state = reactive({

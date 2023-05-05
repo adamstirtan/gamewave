@@ -1,6 +1,6 @@
 <template>
     
-    <AdminHeader title="Add User">
+    <Header title="Add User">
         <template #actions>
 
             <v-btn
@@ -23,7 +23,7 @@
             </v-btn>
             
         </template>
-    </AdminHeader>
+    </Header>
 
     <v-row class="pa-6">
         <v-col cols="6">
@@ -119,7 +119,7 @@ import { useRouter } from 'vue-router'
 import { useVuelidate } from '@vuelidate/core'
 import { required, maxLength, email } from '@vuelidate/validators'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import Header from '@/components/Header'
 import UserService from '@/services/UserService'
 
 const props = defineProps({

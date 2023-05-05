@@ -1,17 +1,17 @@
 <template>
 
-    <AdminHeader title="Platforms">
+    <Header title="Games">
         <template #actions>
-            
+
             <v-btn
-                to="/admin/platform/add"
+                to="/games/add"
                 append-icon="mdi-plus-box"
                 color="success">
                 Add
             </v-btn>
-
+            
         </template>
-    </AdminHeader>
+    </Header>
 
     <v-data-table-server
         :headers="state.headers"
@@ -24,8 +24,12 @@
         @update:options="onUpdateOptions">
 
         <template v-slot:item.name="{ item }">
-            <router-link :to="`/admin/platform/${item.raw.id}`">{{ item.raw.name }}</router-link>
-            </template>
+            <router-link :to="`/games/${item.raw.id}`">{{ item.raw.name }}</router-link>
+        </template>
+
+            <template v-slot:item.platform="{ item }">
+            <router-link :to="`/platform/${item.raw.platformId}`">{{ getPlatformById(item.raw.platformId) }}</router-link>
+        </template>
 
         <template v-slot:item.lastModified="{ item }">
             <span>{{ new Date(Date.parse(item.raw.lastModified)).toLocaleString() }}</span>
@@ -53,11 +57,14 @@
 
 <script setup>
 
-import { reactive, computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 
-import AdminHeader from '@/components/admin/AdminHeader'
+import Header from '@/components/Header'
 import PlatformService from '@/services/PlatformService'
+import GameService from '@/services/GameService'
+
+const platforms = ref([])
 
 const state = reactive({
     loading: false,
@@ -69,14 +76,20 @@ const state = reactive({
             key: 'name',
         },
         {
+            title: 'Platform',
+            key: 'platform'
+        },
+        {
             title: 'Modified',
             key: 'lastModified',
-            width: '215'
+            width: '215',
+            minWidth: '215'
         },
         {
             title: 'Created',
             key: 'created',
-            width: '215'
+            width: '215',
+            minWidth: '215'
         }
     ],
     items: [],
@@ -93,6 +106,24 @@ const state = reactive({
 })
 
 const platformService = new PlatformService()
+const gameService = new GameService()
+
+platformService.getAll()
+    .then(response => {
+        platforms.value = response.data
+    })
+    .catch(e => {
+        state.snackbarText = e
+        state.snackbar = true
+    })
+    .finally(() => {
+        state.loading = false
+    })
+
+function getPlatformById(id) {
+    const item = platforms.value.find(x => x.id === id)
+    return item ? item.name : ''
+}
 
 async function onUpdateOptions(options) {
     state.options = options
@@ -100,6 +131,8 @@ async function onUpdateOptions(options) {
 }
 
 async function fetchData() {
+    state.loading = true
+    
     const params = {
         ascending: computed(() => {
             if (state.options.sortBy && state.options.sortBy.length > 0) {
@@ -118,9 +151,7 @@ async function fetchData() {
         paged: true
     }
 
-    state.loading = true
-
-    platformService.search(params)
+    gameService.search(params)
         .then(response => {
             state.items = response.data.items
             state.itemsLength = response.data.totalItems
